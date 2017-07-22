@@ -3,8 +3,14 @@ package com.glumes.openglbasicshape.renderers;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 
+import com.glumes.openglbasicshape.R;
+import com.glumes.openglbasicshape.utils.ShaderHelper;
+import com.glumes.openglbasicshape.utils.TextResourceReader;
+
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+
+import static android.opengl.GLES20.glUseProgram;
 
 /**
  * Created by glumes on 2017/7/22.
@@ -14,16 +20,34 @@ public abstract class BaseRenderer implements GLSurfaceView.Renderer {
 
     protected int BYTES_PRE_FLOAT = 4;
 
-
     protected Context mContext;
+
+    protected int program;
+
+
+    String vertexShaderSource;
+    String fragmentShaderSource;
 
     public BaseRenderer(Context mContext) {
         this.mContext = mContext;
+        readShaderSource();
     }
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 
+        if (vertexShaderSource == null || fragmentShaderSource == null) {
+            throw new RuntimeException("Please set Shader Source First");
+        }
+
+        int vertexShader = ShaderHelper.compileVertexShader(vertexShaderSource);
+        int fragmentShader = ShaderHelper.compleFragmentShader(fragmentShaderSource);
+
+        program = ShaderHelper.linkProgram(vertexShader, fragmentShader);
+
+        ShaderHelper.validateProgram(program);
+
+        glUseProgram(program);
     }
 
     @Override
@@ -35,4 +59,6 @@ public abstract class BaseRenderer implements GLSurfaceView.Renderer {
     public void onDrawFrame(GL10 gl) {
 
     }
+
+    public abstract void readShaderSource();
 }
