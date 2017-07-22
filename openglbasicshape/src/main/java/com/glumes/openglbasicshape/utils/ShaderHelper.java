@@ -25,6 +25,9 @@ import static android.opengl.GLES20.glValidateProgram;
  * Created by glumes on 2017/7/9.
  */
 
+/**
+ * 创建一个 OpenGL 程序的通用步骤
+ */
 public class ShaderHelper {
 
     public static int compileVertexShader(String shaderCode) {
