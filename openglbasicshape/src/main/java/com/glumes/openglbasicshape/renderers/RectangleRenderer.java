@@ -22,8 +22,12 @@ import static android.opengl.GLES20.glEnableVertexAttribArray;
 import static android.opengl.GLES20.glGetAttribLocation;
 import static android.opengl.GLES20.glGetUniformLocation;
 import static android.opengl.GLES20.glUniform4f;
+import static android.opengl.GLES20.glUniformMatrix4fv;
 import static android.opengl.GLES20.glVertexAttribPointer;
 import static android.opengl.GLES20.glViewport;
+import static android.opengl.Matrix.rotateM;
+import static android.opengl.Matrix.setIdentityM;
+import static android.opengl.Matrix.translateM;
 
 /**
  * Created by glumes on 2017/7/23.
@@ -33,9 +37,13 @@ public class RectangleRenderer extends BaseRenderer {
 
     private static final String U_COLOR = "u_Color";
     private static final String A_POSITION = "a_Position";
+    private static final String U_MATRIX = "u_Matrix";
+
     private int aColorLocation;
     private int aPositionLocation;
 
+    private int uMatrixLocation;
+    private float[] modelMatrix = new float[16];
 
     float[] rectangleVertex = {
 
@@ -68,8 +76,8 @@ public class RectangleRenderer extends BaseRenderer {
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
         aColorLocation = glGetUniformLocation(program, U_COLOR);
-
         aPositionLocation = glGetAttribLocation(program, A_POSITION);
+        uMatrixLocation = glGetUniformLocation(program, U_MATRIX);
 
         vertexData.position(0);
         glVertexAttribPointer(aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, 0, vertexData);
@@ -79,6 +87,11 @@ public class RectangleRenderer extends BaseRenderer {
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         glViewport(0, 0, width, height);
+
+        setIdentityM(modelMatrix, 0);
+
+//        rotateM(modelMatrix, 0, -60f, 1f, 0f, 0f);
+
     }
 
     @Override
@@ -87,6 +100,9 @@ public class RectangleRenderer extends BaseRenderer {
         gl.glClear(GL_COLOR_BUFFER_BIT);
 
         glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
+
+        glUniformMatrix4fv(uMatrixLocation, 1, false, modelMatrix, 0);
+
         glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
     }
 

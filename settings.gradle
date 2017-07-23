@@ -1,2 +1,2 @@
-include ':app', ':openglbasicshape',
+include ':app', ':openglbasicshape', ':openglbycplusplus',
         ':comlib'
