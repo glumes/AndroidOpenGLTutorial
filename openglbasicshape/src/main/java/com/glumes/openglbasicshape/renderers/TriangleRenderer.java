@@ -54,7 +54,6 @@ public class TriangleRenderer extends BaseRenderer {
                 .asFloatBuffer();
 
         vertexData.put(triangleVertex);
-
     }
 
     @Override
