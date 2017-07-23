@@ -39,9 +39,9 @@ public class TriangleRenderer extends BaseRenderer {
 
     private FloatBuffer vertexData;
     float[] triangleVertex = {
-            -1f, 1f,
-            -1f, -1f,
-            1f, -1f
+            -0.5f, 0.5f,
+            -0.5f, -0.5f,
+            0.5f, -0.5f
     };
 
     public static final int POSITION_COMPONENT_COUNT = 2;
@@ -59,7 +59,6 @@ public class TriangleRenderer extends BaseRenderer {
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         super.onSurfaceCreated(gl, config);
-
 
         aColorLocation = glGetUniformLocation(program, U_COLOR);
 

@@ -50,6 +50,13 @@ public abstract class BaseRenderer implements GLSurfaceView.Renderer {
         glUseProgram(program);
     }
 
+
+    /**
+     * Surface 刚创建的时候，它的 size 是 0，也就是说在画第一次图之前它会被调用一次
+     * @param gl
+     * @param width
+     * @param height
+     */
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
 
