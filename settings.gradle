@@ -1,2 +1,4 @@
-include ':app', ':openglbasicshape', ':openglbycplusplus',
-        ':comlib'
+include ':app',
+        ':opengl_basic_shape',
+        ':opengl_by_cplusplus',
+        ':comlib', ':official_opengl_sample'

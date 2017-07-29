@@ -1,6 +1,7 @@
 package com.glumes.openglbasicshape.renderers;
 
 import android.content.Context;
+import android.opengl.Matrix;
 
 import com.glumes.openglbasicshape.R;
 import com.glumes.openglbasicshape.utils.TextResourceReader;
@@ -26,6 +27,7 @@ import static android.opengl.GLES20.glUniformMatrix4fv;
 import static android.opengl.GLES20.glVertexAttribPointer;
 import static android.opengl.GLES20.glViewport;
 import static android.opengl.Matrix.rotateM;
+import static android.opengl.Matrix.scaleM;
 import static android.opengl.Matrix.setIdentityM;
 import static android.opengl.Matrix.translateM;
 
@@ -43,7 +45,12 @@ public class RectangleRenderer extends BaseRenderer {
     private int aPositionLocation;
 
     private int uMatrixLocation;
+
     private float[] modelMatrix = new float[16];
+
+    private float[] viewMatrix = new float[16];
+
+    private float[] projectionMatrix = new float[16];
 
     float[] rectangleVertex = {
 
@@ -53,9 +60,21 @@ public class RectangleRenderer extends BaseRenderer {
 
             -0.5f, 0.5f,
             -0.5f, -0.5f,
-            0.5f, -0.5f,
+            0.5f, -0.5f
 
     };
+
+//
+//    float[] rectangleVertex = {
+//            0f, 0f, 0f, 1.5f,
+//            -0.5f, -0.8f, 0f, 1f,
+//            0.5f, -0.8f, 0f, 1f,
+//
+//            0.5f, 0.8f, 0f, 2f,
+//            -0.5f, 0.8f, 0f, 2f,
+//            -0.5f, -0.8f, 0f, 1f
+//    };
+
 
     public static final int POSITION_COMPONENT_COUNT = 2;
     private FloatBuffer vertexData;
@@ -88,22 +107,55 @@ public class RectangleRenderer extends BaseRenderer {
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         glViewport(0, 0, width, height);
 
+        // 设置成单位矩阵
         setIdentityM(modelMatrix, 0);
 
-//        rotateM(modelMatrix, 0, -60f, 1f, 0f, 0f);
+        // 对模型矩阵进行一些变换
+        // 移动
+        translateM(modelMatrix, 0, 0.3f, 0f, 0f);
+//        // 旋转
+        rotateM(modelMatrix, 0, 45f, 0f, 1f, 0f);
+//        // 缩放
+        scaleM(modelMatrix, 0, 0.5f, 1.5f, 0f);
 
+        float ratio = (float) width / height;
+
+//        创建正交投影的方法
+//        Matrix.orthoM();
+
+        // 两种创建透视投影的方法
+        Matrix.frustumM(projectionMatrix, 0, -ratio, ratio, -1, 1, 3, 7);
+
+//        Matrix.perspectiveM();
+
+        Matrix.setLookAtM(viewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+
+        final float[] temp = new float[16];
+        Matrix.multiplyMM(temp, 0, viewMatrix, 0, modelMatrix, 0);
+
+        final float[] result = new float[16];
+        Matrix.multiplyMM(result, 0, projectionMatrix, 0, temp, 0);
+
+        System.arraycopy(result, 0, projectionMatrix, 0, result.length);
     }
+
 
     @Override
     public void onDrawFrame(GL10 gl) {
 
         gl.glClear(GL_COLOR_BUFFER_BIT);
 
+
+        float radius = 10.0f;
+
+//        float camX = Math.sin(ge)
+
         glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
 
-        glUniformMatrix4fv(uMatrixLocation, 1, false, modelMatrix, 0);
+        glUniformMatrix4fv(uMatrixLocation, 1, false, projectionMatrix, 0);
 
         glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
+
     }
 
     @Override

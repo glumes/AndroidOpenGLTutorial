@@ -4,6 +4,8 @@ import android.opengl.GLSurfaceView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.SparseArray;
+import android.view.MotionEvent;
+import android.view.View;
 
 import com.glumes.openglbasicshape.renderers.BaseRenderer;
 import com.glumes.openglbasicshape.renderers.LineRenderer;
@@ -40,8 +42,29 @@ public class MainActivity extends AppCompatActivity {
 
         // 两种绘图模式，第一种连续不断的画，适用于动画；第二种有需要时再画，通过 requestRender 调用
         glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
-        glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+//        glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 
+        glSurfaceView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN){
+                    glSurfaceView.queueEvent(new Runnable() {
+                        @Override
+                        public void run() {
+                            //
+                        }
+                    });
+                }else if (event.getAction() ==  MotionEvent.ACTION_MOVE){
+                    glSurfaceView.queueEvent(new Runnable() {
+                        @Override
+                        public void run() {
+
+                        }
+                    });
+                }
+                return false;
+            }
+        });
         setContentView(glSurfaceView);
     }
 

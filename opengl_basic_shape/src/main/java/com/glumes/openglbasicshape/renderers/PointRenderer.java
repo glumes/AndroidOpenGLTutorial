@@ -47,6 +47,7 @@ public class PointRenderer extends BaseRenderer {
             0f, 0f
     };
 
+
     public static final int POSITION_COMPONENT_COUNT = 2;
 
     public PointRenderer(Context mContext) {
