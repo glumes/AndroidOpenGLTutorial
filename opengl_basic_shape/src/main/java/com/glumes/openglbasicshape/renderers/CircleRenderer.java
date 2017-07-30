@@ -11,8 +11,6 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class CircleRenderer extends BaseRenderer {
 
-
-
     public CircleRenderer(Context mContext) {
         super(mContext);
     }
@@ -32,8 +30,4 @@ public class CircleRenderer extends BaseRenderer {
         super.onDrawFrame(gl);
     }
 
-    @Override
-    public void readShaderSource() {
-
-    }
 }

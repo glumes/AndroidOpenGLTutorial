@@ -2,6 +2,8 @@ package com.glumes.openglbasicshape.utils;
 
 import android.content.Context;
 
+import com.glumes.comlib.LogUtil;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,6 +33,7 @@ public class TextResourceReader {
             e.printStackTrace();
         }
 
+        LogUtil.d(body.toString());
         return body.toString();
     }
 

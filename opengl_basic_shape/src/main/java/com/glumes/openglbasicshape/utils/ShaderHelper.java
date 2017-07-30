@@ -1,5 +1,9 @@
 package com.glumes.openglbasicshape.utils;
 
+import android.content.Context;
+import android.opengl.GLES20;
+import android.util.Log;
+
 import timber.log.Timber;
 
 import static android.opengl.GLES20.GL_COMPILE_STATUS;
@@ -29,6 +33,9 @@ import static android.opengl.GLES20.glValidateProgram;
  * 创建一个 OpenGL 程序的通用步骤
  */
 public class ShaderHelper {
+
+
+    private static final String TAG = "ShaderHelper";
 
     public static int compileVertexShader(String shaderCode) {
         return compileShader(GL_VERTEX_SHADER, shaderCode);
@@ -106,5 +113,30 @@ public class ShaderHelper {
         validateProgram(program);
 
         return program;
+    }
+
+
+    public static int buildProgram(Context context, int vertexShaderSource, int fragmentShaderSource) {
+        int program;
+
+        int vertexShader = compileVertexShader(
+                TextResourceReader.readTextFileFromResource(context, vertexShaderSource));
+
+        int fragmentShader = compleFragmentShader(
+                TextResourceReader.readTextFileFromResource(context, fragmentShaderSource));
+
+        program = linkProgram(vertexShader, fragmentShader);
+
+        validateProgram(program);
+
+        return program;
+    }
+
+    public static void checkGlError(String glOperation) {
+        int error;
+        while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
+            Log.e(TAG, glOperation + ": glError " + error);
+            throw new RuntimeException(glOperation + ": glError " + error);
+        }
     }
 }

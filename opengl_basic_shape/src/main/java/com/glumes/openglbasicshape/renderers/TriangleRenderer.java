@@ -3,6 +3,7 @@ package com.glumes.openglbasicshape.renderers;
 import android.content.Context;
 
 import com.glumes.openglbasicshape.R;
+import com.glumes.openglbasicshape.objects.Triangle;
 import com.glumes.openglbasicshape.utils.TextResourceReader;
 
 import org.w3c.dom.Text;
@@ -31,42 +32,20 @@ import static android.opengl.GLES20.glViewport;
 
 public class TriangleRenderer extends BaseRenderer {
 
-
-    private static final String U_COLOR = "u_Color";
-    private static final String A_POSITION = "a_Position";
-    private int aColorLocation;
-    private int aPositionLocation;
-
-    private FloatBuffer vertexData;
-    float[] triangleVertex = {
-            -0.5f, 0.5f,
-            -0.5f, -0.5f,
-            0.5f, -0.5f
-    };
-
-    public static final int POSITION_COMPONENT_COUNT = 2;
+    private Triangle mTriangle;
 
     public TriangleRenderer(Context mContext) {
         super(mContext);
 
-        vertexData = ByteBuffer.allocateDirect(triangleVertex.length * BYTES_PRE_FLOAT)
-                .order(ByteOrder.nativeOrder())
-                .asFloatBuffer();
-
-        vertexData.put(triangleVertex);
     }
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         super.onSurfaceCreated(gl, config);
 
-        aColorLocation = glGetUniformLocation(program, U_COLOR);
+        mTriangle = new Triangle(mContext);
 
-        aPositionLocation = glGetAttribLocation(program, A_POSITION);
-
-        vertexData.position(0);
-        glVertexAttribPointer(aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, 0, vertexData);
-        glEnableVertexAttribArray(aPositionLocation);
+        mTriangle.bindData();
     }
 
     @Override
@@ -78,13 +57,7 @@ public class TriangleRenderer extends BaseRenderer {
     public void onDrawFrame(GL10 gl) {
         gl.glClear(GL_COLOR_BUFFER_BIT);
 
-        glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        mTriangle.draw();
     }
 
-    @Override
-    public void readShaderSource() {
-        vertexShaderSource = TextResourceReader.readTextFileFromResource(mContext, R.raw.triangle_vertex_shader);
-        fragmentShaderSource = TextResourceReader.readTextFileFromResource(mContext, R.raw.triangle_fragment_shader);
-    }
 }

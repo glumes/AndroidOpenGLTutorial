@@ -4,6 +4,7 @@ import android.content.Context;
 import android.opengl.Matrix;
 
 import com.glumes.openglbasicshape.R;
+import com.glumes.openglbasicshape.objects.Line;
 import com.glumes.openglbasicshape.utils.TextResourceReader;
 
 import java.nio.ByteBuffer;
@@ -34,33 +35,11 @@ import static android.opengl.Matrix.setIdentityM;
 
 public class LineRenderer extends BaseRenderer {
 
-    private FloatBuffer vertexData;
 
-    float[] lineVertex = {
-            -0.5f, 0.5f,
-            0.5f, -0.5f
-    };
-
-    public static final int POSITION_COMPONENT_COUNT = 2;
-
-
-    private static final String U_COLOR = "u_Color";
-    private static final String A_POSITION = "a_Position";
-    private static final String U_MATRIX = "u_Matrix";
-    private int aColorLocation;
-    private int aPositionLocation;
-    private int uMatrixLocation;
-
-    private float[] modelMatrix = new float[16];
+    private Line mLine;
 
     public LineRenderer(Context mContext) {
         super(mContext);
-
-        vertexData = ByteBuffer.allocateDirect(lineVertex.length * BYTES_PRE_FLOAT)
-                .order(ByteOrder.nativeOrder())
-                .asFloatBuffer();
-
-        vertexData.put(lineVertex);
     }
 
     @Override
@@ -69,16 +48,9 @@ public class LineRenderer extends BaseRenderer {
 
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
+        mLine = new Line(mContext);
 
-        aColorLocation = glGetUniformLocation(program, U_COLOR);
-
-        aPositionLocation = glGetAttribLocation(program, A_POSITION);
-
-        uMatrixLocation = glGetUniformLocation(program, U_MATRIX);
-
-        vertexData.position(0);
-        glVertexAttribPointer(aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, 0, vertexData);
-        glEnableVertexAttribArray(aPositionLocation);
+        mLine.bindData();
     }
 
     @Override
@@ -93,18 +65,8 @@ public class LineRenderer extends BaseRenderer {
     @Override
     public void onDrawFrame(GL10 gl) {
         glClear(GL_COLOR_BUFFER_BIT);
-
-        glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
-
-        // 使用矩阵平移，将坐标 x 轴平移 0.5 个单位
-        glUniformMatrix4fv(uMatrixLocation, 1, false, modelMatrix, 0);
-        glDrawArrays(GL_LINES, 0, 2);
-
+        mLine.draw();
     }
 
-    @Override
-    public void readShaderSource() {
-        vertexShaderSource = TextResourceReader.readTextFileFromResource(mContext, R.raw.line_vertex_shader);
-        fragmentShaderSource = TextResourceReader.readTextFileFromResource(mContext, R.raw.line_fragment_shader);
-    }
+
 }

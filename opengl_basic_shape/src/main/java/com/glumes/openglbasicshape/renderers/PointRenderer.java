@@ -3,6 +3,7 @@ package com.glumes.openglbasicshape.renderers;
 import android.content.Context;
 
 import com.glumes.openglbasicshape.R;
+import com.glumes.openglbasicshape.objects.Point;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
 import com.glumes.openglbasicshape.utils.TextResourceReader;
 
@@ -36,27 +37,10 @@ import static android.opengl.GLES20.glViewport;
 
 public class PointRenderer extends BaseRenderer {
 
-    private static final String U_COLOR = "u_Color";
-    private static final String A_POSITION = "a_Position";
-    private int aColorLocation;
-    private int aPositionLocation;
-
-    private FloatBuffer vertexData;
-
-    float[] pointVertex = {
-            0f, 0f
-    };
-
-
-    public static final int POSITION_COMPONENT_COUNT = 2;
+    private Point mPoint;
 
     public PointRenderer(Context mContext) {
         super(mContext);
-        vertexData = ByteBuffer.allocateDirect(pointVertex.length * BYTES_PRE_FLOAT)
-                .order(ByteOrder.nativeOrder())
-                .asFloatBuffer();
-
-        vertexData.put(pointVertex);
     }
 
     @Override
@@ -65,13 +49,9 @@ public class PointRenderer extends BaseRenderer {
 
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-        aColorLocation = glGetUniformLocation(program, U_COLOR);
+        mPoint = new Point(mContext);
 
-        aPositionLocation = glGetAttribLocation(program, A_POSITION);
-
-        vertexData.position(0);
-        glVertexAttribPointer(aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, 0, vertexData);
-        glEnableVertexAttribArray(aPositionLocation);
+        mPoint.bindData();
     }
 
 
@@ -84,14 +64,8 @@ public class PointRenderer extends BaseRenderer {
     public void onDrawFrame(GL10 gl) {
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
-        glDrawArrays(GL_POINTS, 0, 1);
-
+        mPoint.draw();
     }
 
-    @Override
-    public void readShaderSource() {
-         vertexShaderSource = TextResourceReader.readTextFileFromResource(mContext, R.raw.point_vertex_shader);
-         fragmentShaderSource = TextResourceReader.readTextFileFromResource(mContext, R.raw.point_fragment_shader);
-    }
+
 }

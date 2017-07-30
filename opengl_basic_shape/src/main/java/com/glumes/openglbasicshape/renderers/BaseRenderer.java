@@ -18,41 +18,29 @@ import static android.opengl.GLES20.glUseProgram;
 
 public abstract class BaseRenderer implements GLSurfaceView.Renderer {
 
-    protected int BYTES_PRE_FLOAT = 4;
 
     protected Context mContext;
 
-    protected int program;
 
+    protected float[] modelMatrix = new float[16];
 
-    String vertexShaderSource;
-    String fragmentShaderSource;
+    protected float[] viewMatrix = new float[16];
+
+    protected float[] projectionMatrix = new float[16];
 
     public BaseRenderer(Context mContext) {
         this.mContext = mContext;
-        readShaderSource();
     }
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 
-        if (vertexShaderSource == null || fragmentShaderSource == null) {
-            throw new RuntimeException("Please set Shader Source First");
-        }
-
-        int vertexShader = ShaderHelper.compileVertexShader(vertexShaderSource);
-        int fragmentShader = ShaderHelper.compleFragmentShader(fragmentShaderSource);
-
-        program = ShaderHelper.linkProgram(vertexShader, fragmentShader);
-
-        ShaderHelper.validateProgram(program);
-
-        glUseProgram(program);
     }
 
 
     /**
      * Surface 刚创建的时候，它的 size 是 0，也就是说在画第一次图之前它会被调用一次
+     *
      * @param gl
      * @param width
      * @param height
@@ -67,5 +55,5 @@ public abstract class BaseRenderer implements GLSurfaceView.Renderer {
 
     }
 
-    public abstract void readShaderSource();
+
 }
