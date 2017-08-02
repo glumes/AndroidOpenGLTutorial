@@ -29,6 +29,9 @@ public abstract class BaseShape {
 
     protected int POSITION_COMPONENT_COUNT;
 
+    protected int TEXTURE_COORDINATES_COMPONENT_COUNT = 2;
+
+    protected int STRIDE;
 
     public BaseShape(Context context) {
         mContext = context;
