@@ -9,6 +9,8 @@ import com.glumes.openglbasicshape.utils.Constant;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
 import com.glumes.openglbasicshape.utils.TextureHelper;
 
+import static android.opengl.GLES20.GL_LINE_LOOP;
+import static android.opengl.GLES20.GL_LINE_STRIP;
 import static android.opengl.GLES20.GL_TEXTURE0;
 import static android.opengl.GLES20.GL_TEXTURE_2D;
 import static android.opengl.GLES20.GL_TRIANGLE_FAN;
@@ -45,11 +47,11 @@ public class Rectangle extends BaseShape {
     private int uTextureUnitLocation;
 
     float[] rectangleVertex = {
-            0f,    0f, 0.5f, 0.5f,
-            -0.5f, -0.8f,   0f, 0.9f,
-            0.5f, -0.8f,   1f, 0.9f,
-            0.5f,  0.8f,   1f, 0.1f,
-            -0.5f,  0.8f,   0f, 0.1f,
+            0f, 0f, 0.5f, 0.5f,
+            -0.5f, -0.8f, 0f, 0.9f,
+            0.5f, -0.8f, 1f, 0.9f,
+            0.5f, 0.8f, 1f, 0.1f,
+            -0.5f, 0.8f, 0f, 0.1f,
             -0.5f, -0.8f,   0f, 0.9f
     };
 
@@ -107,12 +109,12 @@ public class Rectangle extends BaseShape {
 //        glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
         glUniformMatrix4fv(uMatrixLocation, 1, false, mvpMatrix, 0);
         glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
+
     }
 
     @Override
     public void draw() {
         super.draw();
-
 
 //        glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
         glUniformMatrix4fv(uMatrixLocation, 1, false, mvpMatrix, 0);

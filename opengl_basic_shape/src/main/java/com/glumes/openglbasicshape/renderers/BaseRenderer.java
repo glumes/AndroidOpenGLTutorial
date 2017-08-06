@@ -1,6 +1,7 @@
 package com.glumes.openglbasicshape.renderers;
 
 import android.content.Context;
+import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 
 import com.glumes.openglbasicshape.R;
@@ -10,6 +11,8 @@ import com.glumes.openglbasicshape.utils.TextResourceReader;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import static android.opengl.GLES20.GL_COLOR_BUFFER_BIT;
+import static android.opengl.GLES20.glClearColor;
 import static android.opengl.GLES20.glUseProgram;
 
 /**
@@ -34,7 +37,7 @@ public abstract class BaseRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     }
 
 
@@ -52,7 +55,7 @@ public abstract class BaseRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onDrawFrame(GL10 gl) {
-
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
     }
 
 

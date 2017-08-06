@@ -7,6 +7,8 @@ import com.glumes.openglbasicshape.R;
 import com.glumes.openglbasicshape.data.VertexArray;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
 
+import static android.opengl.GLES20.GL_LINE_LOOP;
+import static android.opengl.GLES20.GL_LINE_STRIP;
 import static android.opengl.GLES20.GL_TRIANGLES;
 import static android.opengl.GLES20.glDrawArrays;
 import static android.opengl.GLES20.glGetAttribLocation;

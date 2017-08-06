@@ -48,7 +48,6 @@ public class RectangleRenderer extends BaseRenderer {
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         super.onSurfaceCreated(gl, config);
-        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 
         mRectangle = new Rectangle(mContext);
@@ -96,8 +95,7 @@ public class RectangleRenderer extends BaseRenderer {
 
     @Override
     public void onDrawFrame(GL10 gl) {
-
-        gl.glClear(GL_COLOR_BUFFER_BIT);
+        super.onDrawFrame(gl);
 
 //        mRectangle.draw(modelMatrix);
 

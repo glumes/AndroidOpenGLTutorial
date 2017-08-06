@@ -46,8 +46,6 @@ public class LineRenderer extends BaseRenderer {
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         super.onSurfaceCreated(gl, config);
 
-        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-
         mLine = new Line(mContext);
 
         mLine.bindData();

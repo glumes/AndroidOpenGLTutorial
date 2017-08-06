@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.glumes.openglbasicshape.renderers.BaseRenderer;
+import com.glumes.openglbasicshape.renderers.CircleRenderer;
 import com.glumes.openglbasicshape.renderers.LineRenderer;
 import com.glumes.openglbasicshape.renderers.PointRenderer;
 import com.glumes.openglbasicshape.renderers.RectangleRenderer;
@@ -41,20 +42,20 @@ public class MainActivity extends AppCompatActivity {
         glSurfaceView.setRenderer(mRendererArray.get(mType));
 
         // 两种绘图模式，第一种连续不断的画，适用于动画；第二种有需要时再画，通过 requestRender 调用
-        glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
-//        glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+//        glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+        glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 
         glSurfaceView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN){
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     glSurfaceView.queueEvent(new Runnable() {
                         @Override
                         public void run() {
                             //
                         }
                     });
-                }else if (event.getAction() ==  MotionEvent.ACTION_MOVE){
+                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     glSurfaceView.queueEvent(new Runnable() {
                         @Override
                         public void run() {
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         mRendererArray.put(1, new LineRenderer(this));
         mRendererArray.put(2, new TriangleRenderer(this));
         mRendererArray.put(3, new RectangleRenderer(this));
+        mRendererArray.put(4, new CircleRenderer(this));
     }
 
     @Override
