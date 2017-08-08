@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.glumes.openglbasicshape.renderers.BaseRenderer;
 import com.glumes.openglbasicshape.renderers.CircleRenderer;
+import com.glumes.openglbasicshape.renderers.CubeRender;
 import com.glumes.openglbasicshape.renderers.LineRenderer;
 import com.glumes.openglbasicshape.renderers.PointRenderer;
 import com.glumes.openglbasicshape.renderers.RectangleRenderer;
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         mRendererArray.put(2, new TriangleRenderer(this));
         mRendererArray.put(3, new RectangleRenderer(this));
         mRendererArray.put(4, new CircleRenderer(this));
+        mRendererArray.put(5, new CubeRender(this));
     }
 
     @Override
