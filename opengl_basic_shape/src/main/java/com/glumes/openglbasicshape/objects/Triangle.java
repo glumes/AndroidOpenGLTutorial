@@ -14,6 +14,7 @@ import static android.opengl.GLES20.glDrawArrays;
 import static android.opengl.GLES20.glGetAttribLocation;
 import static android.opengl.GLES20.glGetUniformLocation;
 import static android.opengl.GLES20.glUniform4f;
+import static android.opengl.GLES20.glUniformMatrix4fv;
 import static android.opengl.GLES20.glUseProgram;
 import static android.opengl.Matrix.rotateM;
 import static android.opengl.Matrix.scaleM;
@@ -29,14 +30,18 @@ public class Triangle extends BaseShape {
 
     private static final String U_COLOR = "u_Color";
     private static final String A_POSITION = "a_Position";
+    private static final String U_MATRIX = "u_Matrix";
+
     private int aColorLocation;
     private int aPositionLocation;
-
+    private int uMatrixLocation;
 
     float[] triangleVertex = {
             -0.5f, 0.5f,
+//            -0.5f, 0f,
             -0.5f, -0.5f,
             0.5f, -0.5f
+//            0f, 0f
     };
 
 
@@ -58,8 +63,12 @@ public class Triangle extends BaseShape {
 
         aColorLocation = glGetUniformLocation(mProgram, U_COLOR);
         aPositionLocation = glGetAttribLocation(mProgram, A_POSITION);
+        uMatrixLocation = glGetUniformLocation(mProgram, U_MATRIX);
 
         vertexArray.setVertexAttribPointer(0, aPositionLocation, POSITION_COMPONENT_COUNT, 0);
+
+        setIdentityM(modelMatrix, 0);
+//        Matrix.translateM(modelMatrix, 0, 0.5f, 0, 0);
     }
 
     @Override
@@ -67,6 +76,16 @@ public class Triangle extends BaseShape {
         super.draw();
 
         glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
+        glUniformMatrix4fv(uMatrixLocation, 1, false, modelMatrix, 0);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+    }
+
+    @Override
+    public void draw(float[] mvpMatrix) {
+        super.draw(mvpMatrix);
+
+        glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
+        glUniformMatrix4fv(uMatrixLocation, 1, false, mvpMatrix, 0);
         glDrawArrays(GL_TRIANGLES, 0, 3);
     }
 }
