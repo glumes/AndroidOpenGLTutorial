@@ -153,7 +153,8 @@ public class CubeRender extends BaseRenderer {
     @Override
     public void onDrawFrame(GL10 gl) {
         // TODO Auto-generated method stub
-        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
+//        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
         long time = SystemClock.uptimeMillis() % 10000L;
         float angleInDegrees = (360.0f / 10000.0f) * ((int) time);
         GLES20.glUseProgram(mProgramHandle);
@@ -204,7 +205,7 @@ public class CubeRender extends BaseRenderer {
         // TODO Auto-generated method stub
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         GLES20.glEnable(GLES20.GL_CULL_FACE);
-        GLES20.glEnable(GLES20.GL_DEPTH_TEST);
+//        GLES20.glEnable(GLES20.GL_DEPTH_TEST);
         // Position the eye behind the origin.
         final float eyeX = 0.0f;
         final float eyeY = 0.0f;
