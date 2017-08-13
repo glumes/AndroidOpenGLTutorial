@@ -61,15 +61,16 @@ public class TriangleRenderer extends BaseRenderer {
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-        super.onSurfaceCreated(gl, config);
+
+        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        GLES20.glEnable(GLES20.GL_CULL_FACE);
+        GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 
         mTriangle = new Triangle(mContext);
         mTriangle.bindData();
         mRotateThread = new RotateThread();
 
         LogUtil.d("radian is " + radian);
-
-//        GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 
         mRotateThread.start();
     }
@@ -105,19 +106,16 @@ public class TriangleRenderer extends BaseRenderer {
 
     @Override
     public void onDrawFrame(GL10 gl) {
-        gl.glClear(GL_COLOR_BUFFER_BIT);
-
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
         setIdentityM(modelMatrix, 0);
 
-        Matrix.rotateM(modelMatrix, 0, angleX, 1, 0, 0);
+        Matrix.rotateM(modelMatrix, 0, angleX, 0, 1, 0);
 
         positionX = (float) (radius * Math.sin(angle));
         positionZ = (float) (radius * Math.cos(angle));
 
-        LogUtil.d("position X is " + positionX);
-        LogUtil.d("position Z is " + positionZ);
-
+        // 摄像机位置旋转
         Matrix.setLookAtM(viewMatrix, 0, positionX, 0, positionZ, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
 
         Matrix.frustumM(projectionMatrix, 0, -ratio, ratio, -1, 1, 2, 5);
@@ -145,9 +143,8 @@ public class TriangleRenderer extends BaseRenderer {
         @Override
         public void run() {
             while (flag) {
-                angle += radian;
-//                angleX++;
-//                angleX = (angleX + 1) % 360;
+//                angle += radian;
+                angleX = (angleX + 1) % 360;
                 try {
                     Thread.sleep(20);
                 } catch (Exception e) {

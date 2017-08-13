@@ -7,10 +7,15 @@ import com.glumes.openglbasicshape.R;
 import com.glumes.openglbasicshape.data.VertexArray;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
 
+import java.nio.ByteBuffer;
+
 import static android.opengl.GLES20.GL_LINE_LOOP;
 import static android.opengl.GLES20.GL_LINE_STRIP;
 import static android.opengl.GLES20.GL_TRIANGLES;
+import static android.opengl.GLES20.GL_TRIANGLE_FAN;
+import static android.opengl.GLES20.GL_UNSIGNED_BYTE;
 import static android.opengl.GLES20.glDrawArrays;
+import static android.opengl.GLES20.glDrawElements;
 import static android.opengl.GLES20.glGetAttribLocation;
 import static android.opengl.GLES20.glGetUniformLocation;
 import static android.opengl.GLES20.glUniform4f;
@@ -40,10 +45,59 @@ public class Triangle extends BaseShape {
             -0.5f, 0.5f,
 //            -0.5f, 0f,
             -0.5f, -0.5f,
-            0.5f, -0.5f
+            0.5f, -0.5f,
+            0.5f, 0.5f
 //            0f, 0f
     };
 
+    float[] cubeVertex = {
+
+            -0.5f, 0.5f, 0.5f,
+            0.5f, 0.5f, 0.5f,
+            -0.5f, -0.5f, 0.5f,
+            0.5f, -0.5f, 0.5f,
+
+            -0.5f, 0.5f, -0.5f,
+            0.5f, 0.5f, -0.5f,
+            -0.5f, -0.5f, -0.5f,
+            0.5f, -0.5f, -0.5f,
+    };
+
+    byte[] position = {
+            // Front
+            1, 3, 0,
+            0, 3, 2,
+
+            // Back
+            4, 6, 5,
+            5, 6, 7,
+
+            // Left
+            0, 2, 4,
+            4, 2, 6,
+
+            // Right
+            5, 7, 1,
+            1, 7, 3,
+
+            // Top
+            5, 1, 4,
+            4, 1, 0,
+
+            // Bottom
+            6, 2, 7,
+            7, 2, 3
+
+    };
+
+
+    byte[] index = {
+            0, 1, 2,
+            3, 0, 2
+    };
+
+
+    private ByteBuffer byteBuffer;
 
     public Triangle(Context context) {
         super(context);
@@ -52,9 +106,13 @@ public class Triangle extends BaseShape {
 
         glUseProgram(mProgram);
 
-        vertexArray = new VertexArray(triangleVertex);
+        vertexArray = new VertexArray(cubeVertex);
 
-        POSITION_COMPONENT_COUNT = 2;
+        byteBuffer = ByteBuffer.allocateDirect(position.length).put(position);
+
+        byteBuffer.position(0);
+
+        POSITION_COMPONENT_COUNT = 3;
     }
 
     @Override
@@ -69,23 +127,32 @@ public class Triangle extends BaseShape {
 
         setIdentityM(modelMatrix, 0);
 //        Matrix.translateM(modelMatrix, 0, 0.5f, 0, 0);
+
     }
 
     @Override
     public void draw() {
         super.draw();
 
-        glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
+        glUniform4f(aColorLocation, 0.0f, 1.0f, 1.0f, 1.0f);
         glUniformMatrix4fv(uMatrixLocation, 1, false, modelMatrix, 0);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+
+        // 使用 glDrawArrays方式绘图
+//        glDrawArrays(GL_TRIANGLES, 0, 3);
+        // 使用 glDrawElements 方式绘图
+        glDrawElements(GL_TRIANGLES, position.length, GL_UNSIGNED_BYTE, byteBuffer);
+
     }
 
     @Override
     public void draw(float[] mvpMatrix) {
         super.draw(mvpMatrix);
 
-        glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
+        glUniform4f(aColorLocation, 0.0f, 1.0f, 1.0f, 1.0f);
         glUniformMatrix4fv(uMatrixLocation, 1, false, mvpMatrix, 0);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+//        glDrawArrays(GL_TRIANGLES, 0, 3);
+
+        glDrawElements(GL_TRIANGLES, position.length, GL_UNSIGNED_BYTE, byteBuffer);
+
     }
 }

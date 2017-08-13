@@ -5,7 +5,7 @@ varying vec4 v_Color;
 
 void main() {
 
-    v_Color = a_Color;
+//    v_Color = a_Color;
 
     gl_Position = u_Matrix * a_Position;
 }

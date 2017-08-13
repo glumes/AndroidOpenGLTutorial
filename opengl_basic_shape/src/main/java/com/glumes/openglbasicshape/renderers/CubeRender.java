@@ -25,6 +25,8 @@ public class CubeRender extends BaseRenderer {
     private static final int BYTES_PER_FLOAT = 4;
     private final FloatBuffer mCubePositions;
     private final FloatBuffer mCubeColors;
+    private final FloatBuffer mVertex;
+
     private float[] mMVPMatrix = new float[16];
     private float[] mViewMatrix = new float[16];
     private float[] mModelMatrix = new float[16];
@@ -91,6 +93,52 @@ public class CubeRender extends BaseRenderer {
                         -1.0f, -1.0f, -1.0f,
                 };
 
+
+
+        final float vertices[] = {
+                -0.5f, -0.5f, -0.5f,
+                0.5f, -0.5f, -0.5f,
+                0.5f, 0.5f, -0.5f,
+                0.5f, 0.5f, -0.5f,
+                -0.5f, 0.5f, -0.5f,
+                -0.5f, -0.5f, -0.5f,
+
+                -0.5f, -0.5f, 0.5f,
+                0.5f, -0.5f, 0.5f,
+                0.5f, 0.5f, 0.5f,
+                0.5f, 0.5f, 0.5f,
+                -0.5f, 0.5f, 0.5f,
+                -0.5f, -0.5f, 0.5f,
+
+                -0.5f, 0.5f, 0.5f,
+                -0.5f, 0.5f, -0.5f,
+                -0.5f, -0.5f, -0.5f,
+                -0.5f, -0.5f, -0.5f,
+                -0.5f, -0.5f, 0.5f,
+                -0.5f, 0.5f, 0.5f,
+
+                0.5f, 0.5f, 0.5f,
+                0.5f, 0.5f, -0.5f,
+                0.5f, -0.5f, -0.5f,
+                0.5f, -0.5f, -0.5f,
+                0.5f, -0.5f, 0.5f,
+                0.5f, 0.5f, 0.5f,
+
+                -0.5f, -0.5f, -0.5f,
+                0.5f, -0.5f, -0.5f,
+                0.5f, -0.5f, 0.5f,
+                0.5f, -0.5f, 0.5f,
+                -0.5f, -0.5f, 0.5f,
+                -0.5f, -0.5f, -0.5f,
+
+                -0.5f, 0.5f, -0.5f,
+                0.5f, 0.5f, -0.5f,
+                0.5f, 0.5f, 0.5f,
+                0.5f, 0.5f, 0.5f,
+                -0.5f, 0.5f, 0.5f,
+                -0.5f, 0.5f, -0.5f
+        };
+
         final float[] cubeColor =
                 {
                         // Front face (red)
@@ -145,19 +193,41 @@ public class CubeRender extends BaseRenderer {
         mCubePositions = ByteBuffer.allocateDirect(cubePosition.length * BYTES_PER_FLOAT)
                 .order(ByteOrder.nativeOrder()).asFloatBuffer();
         mCubePositions.put(cubePosition).position(0);
+
         mCubeColors = ByteBuffer.allocateDirect(cubeColor.length * BYTES_PER_FLOAT)
                 .order(ByteOrder.nativeOrder()).asFloatBuffer();
         mCubeColors.put(cubeColor).position(0);
+
+        mVertex = ByteBuffer.allocateDirect(vertices.length * BYTES_PER_FLOAT)
+                .order(ByteOrder.nativeOrder()).asFloatBuffer();
+        mVertex.put(vertices).position(0);
+
+
     }
+
+
+    float[][] xDistance = {
+            {0.0f, 0.0f, 0.0f},
+            {2.0f, 5.0f, -15.0f},
+            {-1.5f, -2.2f, -2.5f},
+            {-3.8f, -2.0f, -12.3f},
+            {2.4f, -0.4f, -3.5f},
+            {-1.7f, 3.0f, -7.5f},
+            {1.3f, -2.0f, -2.5f},
+            {1.5f, 2.0f, -2.5f},
+            {1.5f, 0.2f, -1.5f},
+            {-1.3f, 1.0f, -1.5f}
+    };
+
 
     @Override
     public void onDrawFrame(GL10 gl) {
         // TODO Auto-generated method stub
-//        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
-        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
         long time = SystemClock.uptimeMillis() % 10000L;
         float angleInDegrees = (360.0f / 10000.0f) * ((int) time);
         GLES20.glUseProgram(mProgramHandle);
+
         mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgramHandle, "u_MVPMatrix");
         mPositionHandle = GLES20.glGetAttribLocation(mProgramHandle, "a_Position");
         mColorHandle = GLES20.glGetAttribLocation(mProgramHandle, "a_Color");
@@ -165,7 +235,19 @@ public class CubeRender extends BaseRenderer {
         Matrix.setIdentityM(mModelMatrix, 0);
         Matrix.translateM(mModelMatrix, 0, 0.0f, 0.0f, -5.0f);
         Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 1.0f, 1.0f, 0.0f);
+
+//        for (int i = 0; i < 10; i++) {
+//            Matrix.translateM(mModelMatrix, 0, xDistance[i][0], xDistance[i][1], xDistance[i][2]);
+////            drawCube(mCubePositions, mCubeColors);
+//            drawCube(mVertex, mCubeColors);
+//        }
+
+//        drawCube(mVertex, mCubeColors);
+
+//        Matrix.translateM(mModelMatrix, 0, 0.0f, 0.0f, -5.0f);
+
         drawCube(mCubePositions, mCubeColors);
+
     }
 
     private void drawCube(final FloatBuffer cubePositionsBuffer, final FloatBuffer cubeColorsBuffer) {
@@ -176,11 +258,15 @@ public class CubeRender extends BaseRenderer {
         cubeColorsBuffer.position(0);
         GLES20.glVertexAttribPointer(mColorHandle, COLOR_DATA_SIZE, GLES20.GL_FLOAT, false, 0, cubeColorsBuffer);
         GLES20.glEnableVertexAttribArray(mColorHandle);
+
         Matrix.multiplyMM(mMVPMatrix, 0, mViewMatrix, 0, mModelMatrix, 0);
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mMVPMatrix, 0);
 
         GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mMVPMatrix, 0);
+
+
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 36);
+
     }
 
 
@@ -198,6 +284,8 @@ public class CubeRender extends BaseRenderer {
         final float far = 10.0f;
 
         Matrix.frustumM(mProjectionMatrix, 0, left, right, bottom, top, near, far);
+
+//        Matrix.perspectiveM(mProjectionMatrix, 0, 45.0f, width / height, 0.1f, 100f);
     }
 
     @Override
@@ -205,7 +293,7 @@ public class CubeRender extends BaseRenderer {
         // TODO Auto-generated method stub
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         GLES20.glEnable(GLES20.GL_CULL_FACE);
-//        GLES20.glEnable(GLES20.GL_DEPTH_TEST);
+        GLES20.glEnable(GLES20.GL_DEPTH_TEST);
         // Position the eye behind the origin.
         final float eyeX = 0.0f;
         final float eyeY = 0.0f;
@@ -225,6 +313,10 @@ public class CubeRender extends BaseRenderer {
         // NOTE: In OpenGL 1, a ModelView matrix is used, which is a combination of a model and
         // view matrix. In OpenGL 2, we can keep track of these matrices separately if we choose.
         Matrix.setLookAtM(mViewMatrix, 0, eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ);
+//
+//        Matrix.setIdentityM(mViewMatrix, 0);
+//
+//        Matrix.translateM(mViewMatrix, 0, 0.0f, 0.0f, -3.0f);
 
         final String vertexShader =
                 "uniform mat4 u_MVPMatrix;      \n"        // A constant representing the combined model/view/projection matrix.

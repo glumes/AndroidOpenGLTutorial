@@ -14,9 +14,11 @@ import static android.opengl.GLES20.GL_LINE_STRIP;
 import static android.opengl.GLES20.GL_TEXTURE0;
 import static android.opengl.GLES20.GL_TEXTURE_2D;
 import static android.opengl.GLES20.GL_TRIANGLE_FAN;
+import static android.opengl.GLES20.GL_UNSIGNED_BYTE;
 import static android.opengl.GLES20.glActiveTexture;
 import static android.opengl.GLES20.glBindTexture;
 import static android.opengl.GLES20.glDrawArrays;
+import static android.opengl.GLES20.glDrawElements;
 import static android.opengl.GLES20.glGetAttribLocation;
 import static android.opengl.GLES20.glGetUniformLocation;
 import static android.opengl.GLES20.glUniform1i;
@@ -54,6 +56,7 @@ public class Rectangle extends BaseShape {
             -0.5f, 0.8f, 0f, 0.1f,
             -0.5f, -0.8f,   0f, 0.9f
     };
+
 
     public Rectangle(Context context) {
         super(context);
@@ -108,6 +111,7 @@ public class Rectangle extends BaseShape {
 
 //        glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
         glUniformMatrix4fv(uMatrixLocation, 1, false, mvpMatrix, 0);
+
         glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
 
     }
