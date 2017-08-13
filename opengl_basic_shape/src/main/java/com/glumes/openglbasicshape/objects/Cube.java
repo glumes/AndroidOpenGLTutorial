@@ -27,31 +27,20 @@ import static android.opengl.Matrix.setIdentityM;
 public class Cube extends BaseShape {
 
 
-    private static final String A_COLOR = "a_Color";
     private static final String U_COLOR = "u_Color";
+    private static final String A_COLOR = "a_Color";
     private static final String A_POSITION = "a_Position";
     private static final String U_MATRIX = "u_Matrix";
-    private int aColorLocation;
+
+    private int uColorLocation;
     private int aPositionLocation;
     private int uMatrixLocation;
-    private int uColorLocation;
-
+    private int aColorLocation;
 
     private ByteBuffer byteBuffer;
 
-//    float[] cubeVertex = {
-//            -1, 1, 1,
-//            1, 1, 1,
-//            -1, -1, 1,
-//            1, -1, 1,
-//
-//            -1, 1, -1,
-//            1, 1, -1,
-//            -1, -1, -1,
-//            1, -1, -1
-//    };
-
     float[] cubeVertex = {
+
             -0.5f, 0.5f, 0.5f,
             0.5f, 0.5f, 0.5f,
             -0.5f, -0.5f, 0.5f,
@@ -60,7 +49,7 @@ public class Cube extends BaseShape {
             -0.5f, 0.5f, -0.5f,
             0.5f, 0.5f, -0.5f,
             -0.5f, -0.5f, -0.5f,
-            0.5f, 0.5f, -0.5f,
+            0.5f, -0.5f, -0.5f,
     };
 
     byte[] position = {
@@ -91,6 +80,73 @@ public class Cube extends BaseShape {
     };
 
 
+    final float[] cubeColor2 = {
+            0f, 1f, 0f, 1f,
+            0f, 1f, 0f, 1f,
+            0f, 1f, 0f, 1f,
+            0f, 1f, 0f, 1f,
+            1f, 0f, 0f, 1f,
+            1f, 0f, 0f, 1f,
+            1f, 0f, 0f, 1f,
+            1f, 0f, 0f, 1f,
+    };
+
+    final float[] cubeColor =
+            {
+
+
+                    // Front face (red)
+//                    1.0f, 0.0f, 0.0f, 1.0f,
+//                    1.0f, 0.0f, 0.0f, 1.0f,
+//                    1.0f, 0.0f, 0.0f, 1.0f,
+//                    1.0f, 0.0f, 0.0f, 1.0f,
+//                    1.0f, 0.0f, 0.0f, 1.0f,
+//                    1.0f, 0.0f, 0.0f, 1.0f,
+
+                    // Right face (green)
+//                    0.0f, 1.0f, 0.0f, 1.0f,
+//                    0.0f, 1.0f, 0.0f, 1.0f,
+//                    0.0f, 1.0f, 0.0f, 1.0f,
+//                    0.0f, 1.0f, 0.0f, 1.0f,
+//                    0.0f, 1.0f, 0.0f, 1.0f,
+//                    0.0f, 1.0f, 0.0f, 1.0f,
+
+                    // Back face (blue)
+//                    0.0f, 0.0f, 1.0f, 1.0f,
+//                    0.0f, 0.0f, 1.0f, 1.0f,
+//                    0.0f, 0.0f, 1.0f, 1.0f,
+//                    0.0f, 0.0f, 1.0f, 1.0f,
+//                    0.0f, 0.0f, 1.0f, 1.0f,
+                    0.0f, 0.0f, 1.0f, 1.0f,
+
+                    // Left face (yellow)
+//                    1.0f, 1.0f, 0.0f, 1.0f,
+//                    1.0f, 1.0f, 0.0f, 1.0f,
+//                    1.0f, 1.0f, 0.0f, 1.0f,
+//                    1.0f, 1.0f, 0.0f, 1.0f,
+//                    1.0f, 1.0f, 0.0f, 1.0f,
+                    1.0f, 1.0f, 0.0f, 1.0f,
+
+                    // Top face (cyan)
+//                    0.0f, 1.0f, 1.0f, 1.0f,
+//                    0.0f, 1.0f, 1.0f, 1.0f,
+//                    0.0f, 1.0f, 1.0f, 1.0f,
+//                    0.0f, 1.0f, 1.0f, 1.0f,
+//                    0.0f, 1.0f, 1.0f, 1.0f,
+                    0.0f, 1.0f, 1.0f, 1.0f,
+
+                    // Bottom face (magenta)
+//                    1.0f, 0.0f, 1.0f, 1.0f,
+//                    1.0f, 0.0f, 1.0f, 1.0f,
+//                    1.0f, 0.0f, 1.0f, 1.0f,
+//                    1.0f, 0.0f, 1.0f, 1.0f,
+//                    1.0f, 0.0f, 1.0f, 1.0f,
+                    1.0f, 0.0f, 1.0f, 1.0f
+            };
+
+
+
+
     public Cube(Context context) {
         super(context);
 
@@ -102,8 +158,11 @@ public class Cube extends BaseShape {
 
         vertexArray = new VertexArray(cubeVertex);
 
+        indexArray = new VertexArray(cubeColor2);
+
         byteBuffer = ByteBuffer.allocateDirect(position.length * Constant.BYTES_PRE_BYTE)
                 .put(position);
+
 
         byteBuffer.position(0);
 
@@ -113,15 +172,18 @@ public class Cube extends BaseShape {
 
     @Override
     public void bindData() {
-//        aColorLocation = glGetUniformLocation(mProgram, A_COLOR);
 
-        uColorLocation = glGetUniformLocation(mProgram, U_COLOR);
+//        uColorLocation = glGetUniformLocation(mProgram, U_COLOR);
+
+        aColorLocation = glGetAttribLocation(mProgram, A_COLOR);
 
         aPositionLocation = glGetAttribLocation(mProgram, A_POSITION);
 
         uMatrixLocation = glGetUniformLocation(mProgram, U_MATRIX);
 
         vertexArray.setVertexAttribPointer(0, aPositionLocation, POSITION_COMPONENT_COUNT, 0);
+
+        indexArray.setVertexAttribPointer(0, aColorLocation, POSITION_COMPONENT_COUNT + 1, 0);
 
         setIdentityM(mvpMatrix, 0);
 
@@ -136,6 +198,15 @@ public class Cube extends BaseShape {
 
         glDrawElements(GL_TRIANGLES, position.length, GL_UNSIGNED_BYTE, byteBuffer);
 
-        LogUtil.d("draw");
+    }
+
+    @Override
+    public void draw(float[] mvpMatrix) {
+
+        glUniform4f(uColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
+
+        glUniformMatrix4fv(uMatrixLocation, 1, false, mvpMatrix, 0);
+
+        glDrawElements(GL_TRIANGLES, position.length, GL_UNSIGNED_BYTE, byteBuffer);
     }
 }

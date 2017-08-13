@@ -19,6 +19,8 @@ public abstract class BaseShape {
 
     protected VertexArray vertexArray;
 
+    protected VertexArray indexArray;
+
     protected int mProgram;
 
     protected float[] modelMatrix = new float[16];
