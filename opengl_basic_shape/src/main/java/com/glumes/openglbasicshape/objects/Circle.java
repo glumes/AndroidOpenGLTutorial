@@ -50,6 +50,7 @@ public class Circle extends BaseShape {
         glUseProgram(mProgram);
 
         initVertexData();
+
         vertexArray = new VertexArray(circleVertex);
 
         POSITION_COMPONENT_COUNT = 2;
