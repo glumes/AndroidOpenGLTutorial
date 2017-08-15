@@ -9,6 +9,7 @@ import com.glumes.openglbasicshape.utils.ShaderHelper;
 import java.util.ArrayList;
 
 import static android.opengl.GLES20.GL_LINES;
+import static android.opengl.GLES20.GL_LINE_STRIP;
 import static android.opengl.GLES20.GL_TRIANGLE_STRIP;
 import static android.opengl.GLES20.glDrawArrays;
 import static android.opengl.GLES20.glGetAttribLocation;
@@ -63,7 +64,7 @@ public class Sphere extends BaseShape {
 
         aPositionLocation = glGetAttribLocation(mProgram, A_POSITION);
         uMatrixLocation = glGetUniformLocation(mProgram, U_MATRIX);
-        uColorLocation = glGetUniformLocation(mProgram, U_COLOR);
+//        uColorLocation = glGetUniformLocation(mProgram, U_COLOR);
 
         vertexArray.setVertexAttribPointer(0, aPositionLocation, POSITION_COMPONENT_COUNT, 0);
 
@@ -76,7 +77,7 @@ public class Sphere extends BaseShape {
     public void draw() {
 
         glUniformMatrix4fv(uMatrixLocation, 1, false, modelMatrix, 0);
-        glUniform4f(uColorLocation, 0.0f, 1.0f, 1.0f, 1.0f);
+//        glUniform4f(uColorLocation, 0.0f, 1.0f, 1.0f, 1.0f);
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, length);
 
@@ -87,9 +88,9 @@ public class Sphere extends BaseShape {
         super.draw(mvpMatrix);
 
         glUniformMatrix4fv(uMatrixLocation, 1, false, mvpMatrix, 0);
-        glUniform4f(uColorLocation, 0.0f, 1.0f, 0.0f, 1.0f);
+//        glUniform4f(uColorLocation, 0.0f, 1.0f, 0.0f, 1.0f);
 
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, length);
+        glDrawArrays(GL_LINE_STRIP, 0, length);
     }
 
     private float[] initSphereVertex() {
