@@ -14,6 +14,7 @@ import com.glumes.openglbasicshape.renderers.CubeRender2;
 import com.glumes.openglbasicshape.renderers.LineRenderer;
 import com.glumes.openglbasicshape.renderers.PointRenderer;
 import com.glumes.openglbasicshape.renderers.RectangleRenderer;
+import com.glumes.openglbasicshape.renderers.SphereRenderer;
 import com.glumes.openglbasicshape.renderers.TriangleRenderer;
 import com.glumes.openglbasicshape.utils.Constant;
 
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         mRendererArray.put(4, new CircleRenderer(this));
         mRendererArray.put(5, new CubeRender(this));
         mRendererArray.put(6, new CubeRender2(this));
+        mRendererArray.put(7, new SphereRenderer(this));
     }
 
     @Override

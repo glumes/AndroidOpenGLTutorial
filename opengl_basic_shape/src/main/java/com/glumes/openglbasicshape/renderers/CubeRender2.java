@@ -62,7 +62,7 @@ public class CubeRender2 extends BaseRenderer {
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-//        GLES20.glEnable(GLES20.GL_CULL_FACE);
+        GLES20.glEnable(GLES20.GL_CULL_FACE);
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
         cube = new Cube(mContext);
 

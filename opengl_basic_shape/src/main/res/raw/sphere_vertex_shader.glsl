@@ -2,7 +2,8 @@ attribute vec4 a_Position ;
 
 uniform mat4 u_Matrix;
 
-varying vec4 v_Color;
+//varying vec4 v_Color;
+
 
 void main(){
 
@@ -19,5 +20,5 @@ void main(){
         color=- a_Position.z;
     }
 
-    v_Color = vec4(color,color,color,1.0);
+//    v_Color = vec4(color,color,color,1.0);
 }

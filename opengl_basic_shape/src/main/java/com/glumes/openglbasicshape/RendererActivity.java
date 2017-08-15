@@ -59,6 +59,7 @@ public class RendererActivity extends AppCompatActivity {
         mRenderList.add("Circle Render");
         mRenderList.add("Cube Render");
         mRenderList.add("Cube Render2");
+        mRenderList.add("Sphere Render");
         return mRenderList;
     }
 }
