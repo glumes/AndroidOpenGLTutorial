@@ -7,6 +7,8 @@ import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.glumes.comlib.LogUtil;
+import com.glumes.openglbasicshape.glviews.BaseGLSurfaceView;
 import com.glumes.openglbasicshape.renderers.BaseRenderer;
 import com.glumes.openglbasicshape.renderers.CircleRenderer;
 import com.glumes.openglbasicshape.renderers.CubeRender;
@@ -24,7 +26,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
 
-    private GLSurfaceView glSurfaceView;
+    private BaseGLSurfaceView glSurfaceView;
 
     private int mType;
 
@@ -36,35 +38,41 @@ public class MainActivity extends AppCompatActivity {
 
         initRendererMap();
 
-        glSurfaceView = new GLSurfaceView(this);
+//        glSurfaceView = new GLSurfaceView(this);
+//
+//        glSurfaceView.setEGLContextClientVersion(2);
 
-        glSurfaceView.setEGLContextClientVersion(2);
 
         mType = getIntent().getIntExtra(Constant.RENDERER_TYPE, 0);
 
-        glSurfaceView.setRenderer(mRendererArray.get(mType));
+        final BaseRenderer renderer = mRendererArray.get(mType);
+
+        glSurfaceView = new BaseGLSurfaceView(this, renderer);
+
+//        glSurfaceView.setRenderer(renderer);
 
         // 两种绘图模式，第一种连续不断的画，适用于动画；第二种有需要时再画，通过 requestRender 调用
-        glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+//        glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+
 //        glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 
         glSurfaceView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    glSurfaceView.queueEvent(new Runnable() {
-                        @Override
-                        public void run() {
-                            //
-                        }
-                    });
-                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                    glSurfaceView.queueEvent(new Runnable() {
-                        @Override
-                        public void run() {
 
-                        }
-                    });
+                float x = 0.0f;
+                float y = 0.0f;
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        x = event.getX();
+                        y = event.getY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        float dx = event.getX() - x;
+                        LogUtil.e("dx = " + dx);
+                        break;
+                    default:
+                        break;
                 }
                 return false;
             }

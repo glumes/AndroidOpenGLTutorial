@@ -2,6 +2,7 @@ package com.glumes.openglbasicshape.objects;
 
 import android.content.Context;
 
+import com.glumes.comlib.LogUtil;
 import com.glumes.openglbasicshape.R;
 import com.glumes.openglbasicshape.data.VertexArray;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
@@ -27,12 +28,12 @@ public class Sphere extends BaseShape {
 
     private static final String U_MATRIX = "u_Matrix";
     private static final String A_POSITION = "a_Position";
-    private static final String U_COLOR = "u_Color";
+//    private static final String U_COLOR = "u_Color";
 
 
     private int uMatrixLocation;
     private int aPositionLocation;
-    private int uColorLocation;
+//    private int uColorLocation;
 
 
     float[] sphereVertex;
@@ -77,7 +78,7 @@ public class Sphere extends BaseShape {
     public void draw() {
 
         glUniformMatrix4fv(uMatrixLocation, 1, false, modelMatrix, 0);
-//        glUniform4f(uColorLocation, 0.0f, 1.0f, 1.0f, 1.0f);
+//        glUniform4f(uColorLocation, 0.0f, 1.0f, 0.0f, 1.0f);
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, length);
 
@@ -90,9 +91,25 @@ public class Sphere extends BaseShape {
         glUniformMatrix4fv(uMatrixLocation, 1, false, mvpMatrix, 0);
 //        glUniform4f(uColorLocation, 0.0f, 1.0f, 0.0f, 1.0f);
 
-        glDrawArrays(GL_LINE_STRIP, 0, length);
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, length);
     }
 
+
+    private float[] initSphereVertex2() {
+
+        ArrayList<Float> data = new ArrayList<>();
+
+        float[] f = new float[data.size()];
+
+        return f;
+    }
+
+
+    /**
+     * 利用 glDrawArrays 绘制球体时的顶点要求
+     *
+     * @return
+     */
     private float[] initSphereVertex() {
 
         float r1;
@@ -113,7 +130,7 @@ public class Sphere extends BaseShape {
 
             for (float j = 0.0f; j <= 360.0f; j += step2) {
                 cos = (float) Math.cos(j * Math.PI / 180.0);
-                sin = (float) Math.sin(j * Math.PI / 180.0);
+                sin = -(float) Math.sin(j * Math.PI / 180.0);
 
                 data.add(r2 * cos);
                 data.add(y2);
@@ -129,6 +146,7 @@ public class Sphere extends BaseShape {
         for (int i = 0; i < f.length; i++) {
             f[i] = data.get(i);
         }
+
         return f;
     }
 

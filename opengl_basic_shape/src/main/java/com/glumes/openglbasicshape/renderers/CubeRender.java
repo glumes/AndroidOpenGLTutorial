@@ -234,7 +234,9 @@ public class CubeRender extends BaseRenderer {
 
         Matrix.setIdentityM(mModelMatrix, 0);
         Matrix.translateM(mModelMatrix, 0, 0.0f, 0.0f, -5.0f);
-        Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 1.0f, 1.0f, 0.0f);
+
+//        Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 1.0f, 1.0f, 0.0f);
+        Matrix.rotateM(mModelMatrix, 0, getAngleX(), 1.0f, 1.0f, 0.0f);
 
 //        for (int i = 0; i < 10; i++) {
 //            Matrix.translateM(mModelMatrix, 0, xDistance[i][0], xDistance[i][1], xDistance[i][2]);
