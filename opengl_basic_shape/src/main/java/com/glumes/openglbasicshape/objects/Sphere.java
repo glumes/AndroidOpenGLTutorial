@@ -5,6 +5,7 @@ import android.content.Context;
 import com.glumes.comlib.LogUtil;
 import com.glumes.openglbasicshape.R;
 import com.glumes.openglbasicshape.data.VertexArray;
+import com.glumes.openglbasicshape.utils.Constant;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
 
 import java.nio.ByteBuffer;
@@ -18,6 +19,7 @@ import static android.opengl.GLES20.GL_LINE_STRIP;
 import static android.opengl.GLES20.GL_TRIANGLE_FAN;
 import static android.opengl.GLES20.GL_TRIANGLE_STRIP;
 import static android.opengl.GLES20.GL_UNSIGNED_BYTE;
+import static android.opengl.GLES20.GL_UNSIGNED_INT;
 import static android.opengl.GLES20.glDrawArrays;
 import static android.opengl.GLES20.glDrawElements;
 import static android.opengl.GLES20.glGetAttribLocation;
@@ -73,7 +75,7 @@ public class Sphere extends BaseShape {
 
         LogUtil.d("buffer length is " + position.length);
 
-        intBuffer = ByteBuffer.allocateDirect(position.length).asIntBuffer().put(position);
+        intBuffer = ByteBuffer.allocateDirect(position.length * Constant.BYTES_PRE_FLOAT).asIntBuffer().put(position);
 
         intBuffer.position(0);
 
@@ -115,7 +117,7 @@ public class Sphere extends BaseShape {
 //        glDrawArrays(GL_TRIANGLE_STRIP, 0, length);
 
         // 通过索引来绘制圆
-        glDrawElements(GL_TRIANGLE_STRIP, position.length, GL_INT, intBuffer);
+        glDrawElements(GL_TRIANGLE_STRIP, position.length, GL_UNSIGNED_INT, intBuffer);
 
     }
 
