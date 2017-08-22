@@ -26,7 +26,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
 
-    private BaseGLSurfaceView glSurfaceView;
+    private GLSurfaceView glSurfaceView;
 
     private int mType;
 
@@ -38,45 +38,46 @@ public class MainActivity extends AppCompatActivity {
 
         initRendererMap();
 
-//        glSurfaceView = new GLSurfaceView(this);
-//
-//        glSurfaceView.setEGLContextClientVersion(2);
+        glSurfaceView = new GLSurfaceView(this);
 
+        glSurfaceView.setEGLContextClientVersion(2);
 
         mType = getIntent().getIntExtra(Constant.RENDERER_TYPE, 0);
 
+        LogUtil.d("type is " + mType);
+
         final BaseRenderer renderer = mRendererArray.get(mType);
 
-        glSurfaceView = new BaseGLSurfaceView(this, renderer);
+//        glSurfaceView = new BaseGLSurfaceView(this, renderer);
 
-//        glSurfaceView.setRenderer(renderer);
+        glSurfaceView.setRenderer(renderer);
 
         // 两种绘图模式，第一种连续不断的画，适用于动画；第二种有需要时再画，通过 requestRender 调用
-//        glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+        glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
 
 //        glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 
-        glSurfaceView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                float x = 0.0f;
-                float y = 0.0f;
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        x = event.getX();
-                        y = event.getY();
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        float dx = event.getX() - x;
-                        LogUtil.e("dx = " + dx);
-                        break;
-                    default:
-                        break;
-                }
-                return false;
-            }
-        });
+//        glSurfaceView.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//
+//                float x = 0.0f;
+//                float y = 0.0f;
+//                switch (event.getAction()) {
+//                    case MotionEvent.ACTION_DOWN:
+//                        x = event.getX();
+//                        y = event.getY();
+//                        break;
+//                    case MotionEvent.ACTION_MOVE:
+//                        float dx = event.getX() - x;
+//                        LogUtil.e("dx = " + dx);
+//                        break;
+//                    default:
+//                        break;
+//                }
+//                return false;
+//            }
+//        });
         setContentView(glSurfaceView);
     }
 

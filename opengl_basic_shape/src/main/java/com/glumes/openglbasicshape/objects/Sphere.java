@@ -7,12 +7,19 @@ import com.glumes.openglbasicshape.R;
 import com.glumes.openglbasicshape.data.VertexArray;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.IntBuffer;
 import java.util.ArrayList;
 
+import static android.opengl.GLES20.GL_INT;
 import static android.opengl.GLES20.GL_LINES;
 import static android.opengl.GLES20.GL_LINE_STRIP;
+import static android.opengl.GLES20.GL_TRIANGLE_FAN;
 import static android.opengl.GLES20.GL_TRIANGLE_STRIP;
+import static android.opengl.GLES20.GL_UNSIGNED_BYTE;
 import static android.opengl.GLES20.glDrawArrays;
+import static android.opengl.GLES20.glDrawElements;
 import static android.opengl.GLES20.glGetAttribLocation;
 import static android.opengl.GLES20.glGetUniformLocation;
 import static android.opengl.GLES20.glUniform4f;
@@ -43,6 +50,10 @@ public class Sphere extends BaseShape {
     private float radius = 1.0f;
     private int length;
 
+    private IntBuffer intBuffer;
+
+    private int[] position;
+
     public Sphere(Context context) {
         super(context);
 
@@ -52,11 +63,21 @@ public class Sphere extends BaseShape {
 
         POSITION_COMPONENT_COUNT = 3;
 
-        sphereVertex = initSphereVertex();
+        initSphereVertex2();
+
+//        sphereVertex = initSphereVertex();
 
         vertexArray = new VertexArray(sphereVertex);
 
         length = sphereVertex.length / 3;
+
+        LogUtil.d("buffer length is " + position.length);
+
+        intBuffer = ByteBuffer.allocateDirect(position.length).asIntBuffer().put(position);
+
+        intBuffer.position(0);
+
+
     }
 
 
@@ -91,22 +112,94 @@ public class Sphere extends BaseShape {
         glUniformMatrix4fv(uMatrixLocation, 1, false, mvpMatrix, 0);
 //        glUniform4f(uColorLocation, 0.0f, 1.0f, 0.0f, 1.0f);
 
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, length);
+//        glDrawArrays(GL_TRIANGLE_STRIP, 0, length);
+
+        // 通过索引来绘制圆
+        glDrawElements(GL_TRIANGLE_STRIP, position.length, GL_INT, intBuffer);
+
     }
 
 
+    /**
+     * 采用 glDrawElement 方式绘制
+     *
+     * @return
+     */
     private float[] initSphereVertex2() {
 
         ArrayList<Float> data = new ArrayList<>();
 
-        float[] f = new float[data.size()];
+        float r;
+        float y;
+        float sin;
+        float cos;
 
-        return f;
+        /**
+         * 只遍历一边顶点就好了
+         */
+        for (float i = -90.0f; i < 90.0f; i += step) {
+
+            r = (float) Math.cos(i * Math.PI / 180.0);
+            y = (float) Math.sin(i * Math.PI / 180.0);
+
+            for (float j = 0.0f; j < 360.0f; j += step2) {
+
+                cos = (float) Math.cos(j * Math.PI / 180.0);
+                sin = (float) Math.sin(j * Math.PI / 180.0);
+                data.add(r * sin);
+                data.add(y);
+                data.add(r * cos);
+            }
+        }
+
+        sphereVertex = new float[data.size()];
+
+        for (int i = 0; i < data.size(); i++) {
+            sphereVertex[0] = data.get(i);
+        }
+
+        ArrayList<Integer> indices = new ArrayList<>();
+
+        int row = 90;
+        int column = 90;
+        int pos;
+        for (int i = 0; i <= row; i++) {
+            for (int j = 0; j <= column; j++) {
+
+                // 当前点
+                pos = (column) * i + j;
+
+                indices.add(pos);
+                indices.add(pos + 1);
+                indices.add(pos + column + 1);
+
+                indices.add(pos);
+                indices.add(pos + column + 1);
+                indices.add(pos + column);
+
+            }
+        }
+
+        position = new int[indices.size()];
+
+        for (int i = 0; i < indices.size(); i++) {
+
+            position[i] = indices.get(i);
+
+        }
+
+
+        return null;
     }
 
 
     /**
      * 利用 glDrawArrays 绘制球体时的顶点要求
+     * 采用 glDrawArrays 的方式绘制
+     * 计算方式:
+     * x = radius * cos * sin
+     * y = radius * sin
+     * z = radius * con * cos
      *
      * @return
      */
@@ -120,8 +213,11 @@ public class Sphere extends BaseShape {
         float sin;
         ArrayList<Float> data = new ArrayList<>();
 
+        int count = 0;
+        int count2 = 0;
         for (float i = -90.0f; i <= 90.0f; i += step) {
 
+            count++;
             r1 = (float) Math.cos(i * Math.PI / 180.0);
             r2 = (float) Math.cos((i + step) * Math.PI / 180.0);
 
@@ -129,18 +225,23 @@ public class Sphere extends BaseShape {
             y2 = (float) Math.sin((i + step) * Math.PI / 180.0);
 
             for (float j = 0.0f; j <= 360.0f; j += step2) {
+
+                count2++;
                 cos = (float) Math.cos(j * Math.PI / 180.0);
-                sin = -(float) Math.sin(j * Math.PI / 180.0);
+                sin = (float) Math.sin(j * Math.PI / 180.0);
 
-                data.add(r2 * cos);
-                data.add(y2);
                 data.add(r2 * sin);
+                data.add(y2);
+                data.add(r2 * cos);
 
-                data.add(r1 * cos);
-                data.add(y1);
                 data.add(r1 * sin);
+                data.add(y1);
+                data.add(r1 * cos);
             }
         }
+
+        LogUtil.d("count is " + count);
+        LogUtil.d("count2 is " + count2);
 
         float[] f = new float[data.size()];
         for (int i = 0; i < f.length; i++) {

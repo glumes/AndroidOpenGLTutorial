@@ -68,7 +68,7 @@ public class SphereRenderer extends BaseRenderer {
 
         setIdentityM(modelMatrix, 0);
 
-        Matrix.rotateM(modelMatrix, 0, angleX, 1f, 0, 0);
+        Matrix.rotateM(modelMatrix, 0, angleX, 0, 1.0f, 0);
 
         Matrix.frustumM(projectionMatrix, 0, -ratio, ratio, -1, 1, 3, 20);
         //设置相机位置
