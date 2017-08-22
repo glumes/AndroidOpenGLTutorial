@@ -15,9 +15,11 @@ import java.util.ArrayList;
 import static android.opengl.GLES20.GL_INT;
 import static android.opengl.GLES20.GL_LINES;
 import static android.opengl.GLES20.GL_LINE_STRIP;
+import static android.opengl.GLES20.GL_TRIANGLES;
 import static android.opengl.GLES20.GL_TRIANGLE_FAN;
 import static android.opengl.GLES20.GL_TRIANGLE_STRIP;
 import static android.opengl.GLES20.GL_UNSIGNED_BYTE;
+import static android.opengl.GLES20.GL_UNSIGNED_INT;
 import static android.opengl.GLES20.glDrawArrays;
 import static android.opengl.GLES20.glDrawElements;
 import static android.opengl.GLES20.glGetAttribLocation;
@@ -73,7 +75,7 @@ public class Sphere extends BaseShape {
 
         LogUtil.d("buffer length is " + position.length);
 
-        intBuffer = ByteBuffer.allocateDirect(position.length).asIntBuffer().put(position);
+        intBuffer = ByteBuffer.allocateDirect(position.length * 4).asIntBuffer().put(position);
 
         intBuffer.position(0);
 
@@ -115,7 +117,7 @@ public class Sphere extends BaseShape {
 //        glDrawArrays(GL_TRIANGLE_STRIP, 0, length);
 
         // 通过索引来绘制圆
-        glDrawElements(GL_TRIANGLE_STRIP, position.length, GL_INT, intBuffer);
+        glDrawElements(GL_TRIANGLES, position.length, GL_UNSIGNED_INT, intBuffer);
 
     }
 
@@ -171,11 +173,11 @@ public class Sphere extends BaseShape {
 
                 indices.add(pos);
                 indices.add(pos + 1);
-                indices.add(pos + column + 1);
+                indices.add(pos + column + 2);
 
                 indices.add(pos);
-                indices.add(pos + column + 1);
-                indices.add(pos + column);
+                indices.add(pos + column + 2);
+                indices.add(pos + column+1);
 
             }
         }
@@ -183,11 +185,8 @@ public class Sphere extends BaseShape {
         position = new int[indices.size()];
 
         for (int i = 0; i < indices.size(); i++) {
-
             position[i] = indices.get(i);
-
         }
-
 
         return null;
     }
