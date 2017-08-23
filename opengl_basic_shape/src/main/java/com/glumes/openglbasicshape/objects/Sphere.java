@@ -11,15 +11,18 @@ import com.glumes.openglbasicshape.utils.ShaderHelper;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
+import java.nio.ShortBuffer;
 import java.util.ArrayList;
 
 import static android.opengl.GLES20.GL_INT;
 import static android.opengl.GLES20.GL_LINES;
 import static android.opengl.GLES20.GL_LINE_STRIP;
+import static android.opengl.GLES20.GL_TRIANGLES;
 import static android.opengl.GLES20.GL_TRIANGLE_FAN;
 import static android.opengl.GLES20.GL_TRIANGLE_STRIP;
 import static android.opengl.GLES20.GL_UNSIGNED_BYTE;
 import static android.opengl.GLES20.GL_UNSIGNED_INT;
+import static android.opengl.GLES20.GL_UNSIGNED_SHORT;
 import static android.opengl.GLES20.glDrawArrays;
 import static android.opengl.GLES20.glDrawElements;
 import static android.opengl.GLES20.glGetAttribLocation;
@@ -54,7 +57,11 @@ public class Sphere extends BaseShape {
 
     private IntBuffer intBuffer;
 
+    private ShortBuffer indexBuffer;
+
     private int[] position;
+
+    private short[] indices;
 
     public Sphere(Context context) {
         super(context);
@@ -73,12 +80,18 @@ public class Sphere extends BaseShape {
 
         length = sphereVertex.length / 3;
 
-        LogUtil.d("buffer length is " + position.length);
+//        LogUtil.d("buffer length is " + position.length);
+//
+//
+//        intBuffer = ByteBuffer.allocateDirect(position.length * 4).asIntBuffer().put(position);
+//
+//        intBuffer.position(0);
 
-        intBuffer = ByteBuffer.allocateDirect(position.length * Constant.BYTES_PRE_FLOAT).asIntBuffer().put(position);
 
-        intBuffer.position(0);
+        indexBuffer = ByteBuffer.allocateDirect(indices.length * 2).order(ByteOrder.nativeOrder())
+                .asShortBuffer().put(indices);
 
+        indexBuffer.position(0);
 
     }
 
@@ -117,28 +130,83 @@ public class Sphere extends BaseShape {
 //        glDrawArrays(GL_TRIANGLE_STRIP, 0, length);
 
         // 通过索引来绘制圆
-        glDrawElements(GL_TRIANGLE_STRIP, position.length, GL_UNSIGNED_INT, intBuffer);
+        glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_SHORT, indexBuffer);
 
     }
 
+
+    /**
+     *
+     */
+    private void initSphereVertex3() {
+
+        int rings = 90;
+        int sectors = 90;
+
+        float PI = 3.1415926535f;
+        float PI_2 = 1.57079632679f;
+
+
+        float R = 1f / (float) (rings - 1);
+        float S = 1f / (float) (sectors - 1);
+        short r, s;
+        float x, y, z;
+
+        sphereVertex = new float[rings * sectors * 3];
+
+        // 相当于 rings = 90
+        // 相当于 sectors = 90
+        int t = 0, v = 0, n = 0;
+        for (r = 0; r < rings; r++) {
+            for (s = 0; s < sectors; s++) {
+                y = (float) Math.sin(-PI_2 + PI * r * R);
+                x = (float) (Math.cos(2 * PI * s * S) * Math.sin(PI * r * R));
+                z = (float) (Math.sin(2 * PI * s * S) * Math.sin(PI * r * R));
+
+                sphereVertex[v++] = radius * x;
+                sphereVertex[v++] = radius * y;
+                sphereVertex[v++] = radius * z;
+            }
+        }
+
+
+        int counter = 0;
+        indices = new short[rings * sectors * 6];
+        for (r = 0; r < rings - 1; r++) {
+            for (s = 0; s < sectors - 1; s++) {
+                indices[counter++] = (short) (r * sectors + s);       //(a)
+                indices[counter++] = (short) (r * sectors + (s + 1));    //(b)
+                indices[counter++] = (short) ((r + 1) * sectors + (s + 1));  // (c)
+                indices[counter++] = (short) ((r + 1) * sectors + (s + 1));  // (c)
+                indices[counter++] = (short) (r * sectors + (s + 1));    //(b)
+                indices[counter++] = (short) ((r + 1) * sectors + s);     //(d)
+            }
+        }
+
+
+    }
 
     /**
      * 采用 glDrawElement 方式绘制
      *
      * @return
      */
-    private float[] initSphereVertex2() {
+    private void initSphereVertex2() {
 
-        ArrayList<Float> data = new ArrayList<>();
+        int rings = 90;
+        int sectors = 90;
 
         float r;
         float y;
         float sin;
         float cos;
 
+        sphereVertex = new float[rings * sectors * 3];
+
         /**
          * 只遍历一边顶点就好了
          */
+        int count = 0;
         for (float i = -90.0f; i < 90.0f; i += step) {
 
             r = (float) Math.cos(i * Math.PI / 180.0);
@@ -148,50 +216,27 @@ public class Sphere extends BaseShape {
 
                 cos = (float) Math.cos(j * Math.PI / 180.0);
                 sin = (float) Math.sin(j * Math.PI / 180.0);
-                data.add(r * sin);
-                data.add(y);
-                data.add(r * cos);
+
+                sphereVertex[count++] = r * sin;
+                sphereVertex[count++] = y;
+                sphereVertex[count++] = r * cos;
             }
         }
 
-        sphereVertex = new float[data.size()];
-
-        for (int i = 0; i < data.size(); i++) {
-            sphereVertex[0] = data.get(i);
-        }
-
-        ArrayList<Integer> indices = new ArrayList<>();
-
-        int row = 90;
-        int column = 90;
-        int pos;
-        for (int i = 0; i <= row; i++) {
-            for (int j = 0; j <= column; j++) {
-
-                // 当前点
-                pos = (column) * i + j;
-
-                indices.add(pos);
-                indices.add(pos + 1);
-                indices.add(pos + column + 1);
-
-                indices.add(pos);
-                indices.add(pos + column + 1);
-                indices.add(pos + column);
+        int counter = 0;
+        indices = new short[rings * sectors * 6];
+        for (int i = 0; i < rings ; i++) {
+            for (int j = 0; j < sectors  ; j++) {
+                indices[counter++] = (short) (i * sectors + j);       //(a)
+                indices[counter++] = (short) (i * sectors + (j + 1));    //(b)
+                indices[counter++] = (short) ((i + 1) * sectors + j);  // (c)
+                indices[counter++] = (short) ((i + 1) * sectors + j);  // (c)
+                indices[counter++] = (short) (i * sectors + (j + 1));    //(b)
+                indices[counter++] = (short) ((i + 1) * sectors + (j + 1));     //(d)
 
             }
         }
 
-        position = new int[indices.size()];
-
-        for (int i = 0; i < indices.size(); i++) {
-
-            position[i] = indices.get(i);
-
-        }
-
-
-        return null;
     }
 
 
