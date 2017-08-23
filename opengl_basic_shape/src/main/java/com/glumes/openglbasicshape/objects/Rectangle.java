@@ -48,13 +48,15 @@ public class Rectangle extends BaseShape {
     private int aTextureCoordinatesLocation;
     private int uTextureUnitLocation;
 
+
+    // 包含顶点坐标和纹理坐标
     float[] rectangleVertex = {
             0f, 0f, 0.5f, 0.5f,
             -0.5f, -0.8f, 0f, 0.9f,
             0.5f, -0.8f, 1f, 0.9f,
             0.5f, 0.8f, 1f, 0.1f,
             -0.5f, 0.8f, 0f, 0.1f,
-            -0.5f, -0.8f,   0f, 0.9f
+            -0.5f, -0.8f, 0f, 0.9f
     };
 
 
@@ -98,11 +100,17 @@ public class Rectangle extends BaseShape {
 
         int texture = TextureHelper.loadTexture(mContext, R.drawable.image);
 
+        // OpenGL 在使用纹理进行绘制时，不需要直接给着色器传递纹理。
+        // 相反，我们使用纹理单元保存那个纹理，因为，一个 GPU 只能同时绘制数量有限的纹理
+        // 它使用那些纹理单元表示当前正在被绘制的活动的纹理
+
+        // 通过调用 glActiveTexture 把活动的纹理单元设置为纹理单元 0
         glActiveTexture(GL_TEXTURE0);
-
+        // 然后通过调用 glBindTexture 把纹理绑定到这个单元
         glBindTexture(GL_TEXTURE_2D, texture);
-
+        // 接着通过调用 glUniform1i 把被选定的纹理单元传递给片段着色器中的 u_TextureUnit
         glUniform1i(uTextureUnitLocation, 0);
+
     }
 
     @Override

@@ -77,6 +77,13 @@ public class Cube extends BaseShape {
             6, 2, 7,
             7, 2, 3
 
+            // not position just test
+//            12,34,54,
+//
+//            34,45,56,
+//
+//            23,45,44
+
     };
 
 

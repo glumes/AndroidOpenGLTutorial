@@ -223,17 +223,23 @@ public class Sphere extends BaseShape {
             }
         }
 
+
+        LogUtil.d("count num is " + sphereVertex.length);
+
+        // 对于不存在的顶点索引 也可以绘制 嘛？
         int counter = 0;
-        indices = new short[rings * sectors * 6];
-        for (int i = 0; i < rings ; i++) {
-            for (int j = 0; j < sectors  ; j++) {
+        indices = new short[rings * sectors * 6 * 2];
+        for (int i = 0; i < rings * 2; i++) {
+            for (int j = 0; j < sectors; j++) {
                 indices[counter++] = (short) (i * sectors + j);       //(a)
                 indices[counter++] = (short) (i * sectors + (j + 1));    //(b)
                 indices[counter++] = (short) ((i + 1) * sectors + j);  // (c)
                 indices[counter++] = (short) ((i + 1) * sectors + j);  // (c)
                 indices[counter++] = (short) (i * sectors + (j + 1));    //(b)
                 indices[counter++] = (short) ((i + 1) * sectors + (j + 1));     //(d)
-
+                if (i == rings * 2 - 1) {
+                    LogUtil.d("count is " + ((i + 1) * sectors + (j + 1)));
+                }
             }
         }
 

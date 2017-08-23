@@ -56,13 +56,16 @@ public class TextureHelper {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
         // 加载纹理到 OpenGL，读入 Bitmap 定义的位图数据，并把它复制到当前绑定的纹理对象
+        // 当前绑定的纹理对象就会被附加上纹理图像。
         texImage2D(GL_TEXTURE_2D, 0, bitmap, 0);
 
         bitmap.recycle();
 
+        // 为当前绑定的纹理自动生成所有需要的多级渐远纹理
+        // 生成 MIP 贴图
         glGenerateMipmap(GL_TEXTURE_2D);
 
-        // 接触与纹理的绑定，避免用其他的纹理方法意外地改变这个纹理
+        // 解除与纹理的绑定，避免用其他的纹理方法意外地改变这个纹理
         glBindTexture(GL_TEXTURE_2D, 0);
 
         return textureObjectIds[0];
