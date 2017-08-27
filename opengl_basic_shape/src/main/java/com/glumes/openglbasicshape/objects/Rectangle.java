@@ -9,12 +9,18 @@ import com.glumes.openglbasicshape.utils.Constant;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
 import com.glumes.openglbasicshape.utils.TextureHelper;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.ShortBuffer;
+
 import static android.opengl.GLES20.GL_LINE_LOOP;
 import static android.opengl.GLES20.GL_LINE_STRIP;
 import static android.opengl.GLES20.GL_TEXTURE0;
 import static android.opengl.GLES20.GL_TEXTURE_2D;
+import static android.opengl.GLES20.GL_TRIANGLES;
 import static android.opengl.GLES20.GL_TRIANGLE_FAN;
 import static android.opengl.GLES20.GL_UNSIGNED_BYTE;
+import static android.opengl.GLES20.GL_UNSIGNED_SHORT;
 import static android.opengl.GLES20.glActiveTexture;
 import static android.opengl.GLES20.glBindTexture;
 import static android.opengl.GLES20.glDrawArrays;
@@ -59,6 +65,32 @@ public class Rectangle extends BaseShape {
             -0.5f, -0.8f, 0f, 0.9f
     };
 
+    float[] reactangleElementVertex = {
+            0f, 0f,
+            -0.5f, -0.8f,
+            0.5f, -0.8f,
+            0.5f, 0.8f,
+            -0.5f, 0.8f
+    };
+
+    private ShortBuffer indexBuffer;
+
+    private short[] indices = {
+            0, 1, 2,
+            0, 2, 3,
+            0, 3, 4,
+            0, 4, 1
+    };
+
+    float[] textureElementVertex = {
+            0.5f, 0.5f,
+            0f, 0.9f,
+            1f, 0.9f,
+            1f, 0.1f,
+            0f, 0.1f
+    };
+
+    VertexArray textureVertexArray;
 
     public Rectangle(Context context) {
         super(context);
@@ -67,13 +99,34 @@ public class Rectangle extends BaseShape {
 
         glUseProgram(mProgram);
 
-        vertexArray = new VertexArray(rectangleVertex);
+
+        initRectangleVertex();
+
+        vertexArray = new VertexArray(reactangleElementVertex);
+
+        textureVertexArray = new VertexArray(textureElementVertex);
 
         POSITION_COMPONENT_COUNT = 2;
 
         TEXTURE_COORDINATES_COMPONENT_COUNT = 2;
 
-        STRIDE = (POSITION_COMPONENT_COUNT + TEXTURE_COORDINATES_COMPONENT_COUNT) * Constant.BYTES_PRE_FLOAT;
+//        STRIDE = (POSITION_COMPONENT_COUNT + TEXTURE_COORDINATES_COMPONENT_COUNT) * Constant.BYTES_PRE_FLOAT;
+
+        STRIDE = 0;
+
+        indexBuffer = ByteBuffer.allocateDirect(indices.length * 2).order(ByteOrder.nativeOrder())
+                .asShortBuffer().put(indices);
+
+        indexBuffer.position(0);
+
+
+    }
+
+    /**
+     * 采用 glDrawElement 方式来定义顶点数组、索引位置、还有纹理位置
+     */
+    private void initRectangleVertex() {
+
     }
 
     @Override
@@ -93,8 +146,11 @@ public class Rectangle extends BaseShape {
 
         vertexArray.setVertexAttribPointer(0, aPositionLocation, POSITION_COMPONENT_COUNT, STRIDE);
 
-        vertexArray.setVertexAttribPointer(POSITION_COMPONENT_COUNT, aTextureCoordinatesLocation,
-                TEXTURE_COORDINATES_COMPONENT_COUNT, STRIDE);
+        // 使能 纹理的数据
+//        vertexArray.setVertexAttribPointer(POSITION_COMPONENT_COUNT, aTextureCoordinatesLocation,
+//                TEXTURE_COORDINATES_COMPONENT_COUNT, STRIDE);
+
+        textureVertexArray.setVertexAttribPointer(0, aTextureCoordinatesLocation, TEXTURE_COORDINATES_COMPONENT_COUNT, STRIDE);
 
         setIdentityM(mvpMatrix, 0);
 
@@ -130,7 +186,10 @@ public class Rectangle extends BaseShape {
 
 //        glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
         glUniformMatrix4fv(uMatrixLocation, 1, false, mvpMatrix, 0);
-        glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
+//        glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
+
+        glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_SHORT, indexBuffer);
+
     }
 
 

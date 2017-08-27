@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         mRendererArray.put(5, new CubeRender(this));
         mRendererArray.put(6, new CubeRender2(this));
         mRendererArray.put(7, new SphereRenderer(this));
+//        mRendererArray.put(7,new S);
     }
 
     @Override

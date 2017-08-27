@@ -6,6 +6,7 @@ import android.opengl.Matrix;
 
 import com.glumes.comlib.LogUtil;
 import com.glumes.openglbasicshape.objects.Sphere;
+import com.glumes.openglbasicshape.objects.SphereTexture;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -21,6 +22,8 @@ public class SphereRenderer extends BaseRenderer {
 
 
     Sphere sphere;
+
+    SphereTexture sphereTexture ;
 
     float radius = 15f;
 
@@ -46,11 +49,12 @@ public class SphereRenderer extends BaseRenderer {
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 
         sphere = new Sphere(mContext);
+        sphereTexture = new SphereTexture(mContext);
 
         sphere.bindData();
+        sphereTexture.bindData();
 
         mRotateThread = new RotateThread();
-
         mRotateThread.start();
 
     }
@@ -68,7 +72,7 @@ public class SphereRenderer extends BaseRenderer {
 
         setIdentityM(modelMatrix, 0);
 
-        Matrix.rotateM(modelMatrix, 0, angleX, 0, 1.0f, 0);
+        Matrix.rotateM(modelMatrix, 0, angleX, 1, 1, 0);
 
         Matrix.frustumM(projectionMatrix, 0, -ratio, ratio, -1, 1, 3, 20);
         //设置相机位置
@@ -81,8 +85,8 @@ public class SphereRenderer extends BaseRenderer {
         //计算变换矩阵
         Matrix.multiplyMM(mvpMatrix, 0, projectionMatrix, 0, temp, 0);
 
-        sphere.draw(mvpMatrix);
-//        sphere.draw();
+//        sphere.draw(mvpMatrix);
+        sphereTexture.draw(mvpMatrix);
     }
 
     /**
