@@ -116,7 +116,7 @@ public class SphereTexture extends BaseShape {
 
         setIdentityM(modelMatrix, 0);
 
-        int texture = TextureHelper.loadTexture(mContext, R.drawable.earth);
+        int texture = TextureHelper.loadTexture(mContext, R.drawable.sphere);
 
         // OpenGL 在使用纹理进行绘制时，不需要直接给着色器传递纹理。
         // 相反，我们使用纹理单元保存那个纹理，因为，一个 GPU 只能同时绘制数量有限的纹理
