@@ -573,6 +573,8 @@ public class MagicCubeRender implements GLSurfaceView.Renderer {
     }
 
     public String CalcCommand(float[] From, float[] To, int faceindex) {
+
+        LogUtil.d("start move");
         float[] from = new float[2];
         float[] to = new float[2];
 

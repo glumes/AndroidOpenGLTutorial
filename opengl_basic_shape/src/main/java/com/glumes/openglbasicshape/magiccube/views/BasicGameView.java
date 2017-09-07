@@ -463,6 +463,7 @@ public class BasicGameView extends GLSurfaceView implements MessageSender, OnSte
             Point[1] = event.getY();
 
             if (RotateOrMove1 == MagicCubeRender.MOVE && render.IsMoveValid(Point1, Point) && this.CanMove) {
+                LogUtil.d("Let`s move");
                 String cmdstr = render.CalcCommand(Point1, Point, FaceIndex1);
             }
         } else if (opcode == MotionEvent.ACTION_POINTER_UP) {
