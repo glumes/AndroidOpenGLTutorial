@@ -4,7 +4,7 @@ import android.util.Log;
 
 
 public class LogUtil {
-    private static String DEFAULT_TAG = "OpenGL";
+    private static String DEFAULT_TAG = "OpenGLTutorial";
     private static String DEBUG = "mydebug";
     private static boolean mLogAll = true;
     private static final boolean LOGD_DEBUG = true;

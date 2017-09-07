@@ -16,6 +16,7 @@ public class MagicCubeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_magic_cube);
         glView = (ViewAutoMode) findViewById(R.id.viewAutoMode);
     }
 }
