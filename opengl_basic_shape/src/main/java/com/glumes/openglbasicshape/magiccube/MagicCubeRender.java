@@ -23,6 +23,7 @@ import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 import android.opengl.GLUtils;
 import android.opengl.Matrix;
+import android.util.Log;
 
 import com.glumes.comlib.LogUtil;
 import com.glumes.openglbasicshape.R;
@@ -379,6 +380,12 @@ public class MagicCubeRender implements GLSurfaceView.Renderer {
         return ROTATE;
     }
 
+    /**
+     * 通过设置 Command，在魔方不停地连续绘制时，根据是否有 Command 来更新状态以及旋转的角度
+     *
+     * @param command
+     * @return
+     */
     public String SetCommand(Command command) {
         HasCommand = true;
         this.commands.add(command);
@@ -482,6 +489,9 @@ public class MagicCubeRender implements GLSurfaceView.Renderer {
         int[] HitedFaceIndice = new int[6];
         int HitNumber = 0;
 
+        /**
+         * 与六个面的点进行计算，判断是否位于 3D 的位置中。
+         */
         for (int i = 0; i < 6; i++) {
             if (IsInQuad3D(magiccube.faces[i], Win)) {
                 HitedFaceIndice[HitNumber] = i;
@@ -523,6 +533,7 @@ public class MagicCubeRender implements GLSurfaceView.Renderer {
         return (float) Math.sqrt(dx * dx + dy * dy);
     }
 
+
     private boolean IsInQuad3D(Face f, float[] Win) {
 
         return IsInQuad3D(f.P1, f.P2, f.P3, f.P4, Win);
@@ -534,29 +545,55 @@ public class MagicCubeRender implements GLSurfaceView.Renderer {
         float[] Win3 = new float[2];
         float[] Win4 = new float[2];
 
+        LogUtil.d("touch x is " + Win[0] + " touch y is" + Win[1]);
+
+        // 3d 的点 到 2d 的点的转换
         Project(Point1, Win1);
         Project(Point2, Win2);
         Project(Point3, Win3);
         Project(Point4, Win4);
 
-/*		Log.e("P1", Win1[0] + " " + Win1[1]);
-        Log.e("P2", Win2[0] + " " + Win2[1]);
-		Log.e("P3", Win3[0] + " " + Win3[1]);
-		Log.e("P4", Win4[0] + " " + Win4[1]);*/
+        LogUtil.d("P1" + Win1[0] + " " + Win1[1]);
+        LogUtil.d("P2" + Win2[0] + " " + Win2[1]);
+        LogUtil.d("P3" + Win3[0] + " " + Win3[1]);
+        LogUtil.d("P4" + Win4[0] + " " + Win4[1]);
 
         float[] WinXY = new float[2];
         WinXY[0] = Win[0];
         WinXY[1] = this.view_matrix[3] - Win[1];
 
-        //Log.e("WinXY", WinXY[0] + " " + WinXY[1]);
+        LogUtil.d("WinXY" + WinXY[0] + " " + WinXY[1]);
 
         return IsInQuad2D(Win1, Win2, Win3, Win4, WinXY);
     }
 
+    /**
+     * 转换到 2D 屏幕进行判断
+     * <p>
+     * 前四个参数都是 面的顶点转换到平面后的坐标位置，最后一个参数是触摸的坐标位置
+     *
+     * @param Point1
+     * @param Point2
+     * @param Point3
+     * @param Point4
+     * @param Win
+     * @return
+     */
     private boolean IsInQuad2D(float[] Point1, float[] Point2, float[] Point3, float Point4[], float[] Win) {
         float angle = 0.f;
         final float ZERO = 0.0001f;
 
+
+        LogUtil.d(" face coordinate is " + "\n" +
+                Point1[0] + " " + Point1[1] + "\n" +
+                Point2[0] + " " + Point2[1] + "\n" +
+                Point3[0] + " " + Point3[1] + "\n" +
+                Point4[0] + " " + Point4[1] + "\n" +
+                Win[0] + " " + Win[1]
+        );
+
+
+        //轮流计算夹角
         angle += GetAngle(Win, Point1, Point2);
         //Log.e("angle" , angle + " ");
         angle += GetAngle(Win, Point2, Point3);
@@ -566,12 +603,28 @@ public class MagicCubeRender implements GLSurfaceView.Renderer {
         angle += GetAngle(Win, Point4, Point1);
         //Log.e("angle" , angle + " ");
 
+
+        LogUtil.d("angle - Math.PI * 2.f is " + (angle - Math.PI * 2.f));
+
         if (Math.abs(angle - Math.PI * 2.f) <= ZERO) {
+
+            LogUtil.d("return true");
             return true;
         }
+
+        LogUtil.d("return false");
         return false;
     }
 
+    /**
+     * from action down
+     * to action up
+     *
+     * @param From
+     * @param To
+     * @param faceindex
+     * @return
+     */
     public String CalcCommand(float[] From, float[] To, int faceindex) {
 
         LogUtil.d("start move");
@@ -585,8 +638,13 @@ public class MagicCubeRender implements GLSurfaceView.Renderer {
         to[0] = To[0];
         to[1] = this.view_matrix[3] - To[1];
 
-        angle = GetAngle(from, to);//(float)Math.atan((to[1]-from[1])/(to[0]-from[0]))/(float)Math.PI*180.f;
+        angle = GetAngle(from, to);
 
+        //(float)Math.atan((to[1]-from[1])/(to[0]-from[0]))/(float)Math.PI*180.f;
+
+        /**
+         * 确定了是触摸到了哪个面，然后用面的四个点来做计算，计算不同方向的角度
+         */
         //calc horizon angle
         float ObjFrom[] = new float[3];
         float ObjTo[] = new float[3];
@@ -602,7 +660,8 @@ public class MagicCubeRender implements GLSurfaceView.Renderer {
         this.Project(ObjFrom, WinFrom);
         this.Project(ObjTo, WinTo);
 
-        angleHorizon = GetAngle(WinFrom, WinTo);//(float)Math.atan((WinTo[1]-WinFrom[1])/(WinTo[0]-WinFrom[0]))/(float)Math.PI*180.f;
+        angleHorizon = GetAngle(WinFrom, WinTo);
+        //(float)Math.atan((WinTo[1]-WinFrom[1])/(WinTo[0]-WinFrom[0]))/(float)Math.PI*180.f;
 
         //calc vertical angle
         for (int i = 0; i < 3; i++) {
@@ -613,7 +672,8 @@ public class MagicCubeRender implements GLSurfaceView.Renderer {
         this.Project(ObjFrom, WinFrom);
         this.Project(ObjTo, WinTo);
 
-        angleVertical = GetAngle(WinFrom, WinTo);//(float)Math.atan((WinTo[1]-WinFrom[1])/(WinTo[0]-WinFrom[0]))/(float)Math.PI*180.f;
+        angleVertical = GetAngle(WinFrom, WinTo);
+        //(float)Math.atan((WinTo[1]-WinFrom[1])/(WinTo[0]-WinFrom[0]))/(float)Math.PI*180.f;
 
         //Log.e("angle", angle +" " + angleHorizon + " " + angleVertical);
 
@@ -621,6 +681,9 @@ public class MagicCubeRender implements GLSurfaceView.Renderer {
         float threshold = Math.min(dangle / 2.f, 90.f - dangle / 2.f) * 0.75f;    //this...........
 
 
+        /**
+         * 一大堆的角度计算之后，开始根据角度来确定旋转了。
+         */
         if (DeltaAngle(angle, angleHorizon) < threshold || DeltaAngle(angle, (angleHorizon + 180.f) % 360.f) < threshold)        //the direction
         {
             if (this.IsInQuad3D(magiccube.faces[faceindex].GetHorizonSubFace(0), From)) {
@@ -858,6 +921,11 @@ public class MagicCubeRender implements GLSurfaceView.Renderer {
         return null;
     }
 
+    /**
+     * @param From
+     * @param To
+     * @return
+     */
     private float GetAngle(float[] From, float[] To) {
         float angle = (float) Math.atan((To[1] - From[1]) / (To[0] - From[0])) / (float) Math.PI * 180.f;
         float dy = To[1] - From[1];
@@ -949,14 +1017,42 @@ public class MagicCubeRender implements GLSurfaceView.Renderer {
         return zvalue / 4.f;
     }
 
+
+    /**
+     * 与面的两个角的坐标进行计算，角的坐标投影到平面上的值与触摸点的计算。
+     * 点积 求夹角法来计算 一个点 是否位于多边形 内
+     * @param Point0 是
+     * @param Point1
+     * @param Point2
+     * @return
+     */
     private float GetAngle(float[] Point0, float[] Point1, float[] Point2) {
         float cos_value = (Point2[0] - Point0[0]) * (Point1[0] - Point0[0]) + (Point1[1] - Point0[1]) * (Point2[1] - Point0[1]);
-        cos_value /= Math.sqrt((Point2[0] - Point0[0]) * (Point2[0] - Point0[0]) + (Point2[1] - Point0[1]) * (Point2[1] - Point0[1]))
-                * Math.sqrt((Point1[0] - Point0[0]) * (Point1[0] - Point0[0]) + (Point1[1] - Point0[1]) * (Point1[1] - Point0[1]));
+
+        LogUtil.d("cos_value is " + cos_value);
+
+
+        cos_value /=
+                Math.sqrt((Point2[0] - Point0[0]) * (Point2[0] - Point0[0]) + (Point2[1] - Point0[1]) * (Point2[1] - Point0[1]))
+
+                        * Math.sqrt((Point1[0] - Point0[0]) * (Point1[0] - Point0[0]) + (Point1[1] - Point0[1]) * (Point1[1] - Point0[1]));
+
+
+        LogUtil.d("cos_value is " + cos_value);
+
+        LogUtil.d("cos_value result is " + Math.acos(cos_value));
 
         return (float) Math.acos(cos_value);
     }
 
+
+    /**
+     * 使用 gluProject 实现 3D 坐标到平面坐标的转换
+     * 将面的四个顶点的坐标转换到平面的坐标，方便进行判断
+     *
+     * @param ObjXYZ 面的顶点 3d
+     * @param WinXY  2d 的点
+     */
     private void Project(float[] ObjXYZ, float[] WinXY) {
         float[] matrix1 = new float[16];
         float[] matrix2 = new float[16];
@@ -976,13 +1072,19 @@ public class MagicCubeRender implements GLSurfaceView.Renderer {
         xyz[2] = ObjXYZ[2];
 
         Transform(matrix, xyz);
-        //Log.e("xyz", xyz[0] + " " + xyz[1] + " " + xyz[2]);
+        LogUtil.d("xyz" + xyz[0] + " " + xyz[1] + " " + xyz[2]);
         float[] Win = new float[3];
         GLU.gluProject(xyz[0], xyz[1], xyz[2], mod_matrix, 0, pro_matrix, 0, view_matrix, 0, Win, 0);
         WinXY[0] = Win[0];
         WinXY[1] = Win[1];
     }
 
+    /**
+     * matrix 两个投影矩阵相乘后的结果
+     *
+     * @param matrix
+     * @param Point
+     */
     private void Transform(float[] matrix, float[] Point) {
         float w = 1.f;
 

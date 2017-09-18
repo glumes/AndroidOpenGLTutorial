@@ -58,6 +58,13 @@ public class Magiccube {
         }
     }
 
+    /**
+     * 面是固定不变的，但是每个面的内容却是可以改变的。
+     * @param RowId
+     * @param Direction
+     * @param angle
+     * @param IfSetMap
+     */
     public void RotateRow(int RowId, int Direction, float angle, boolean IfSetMap) {
 
         if (Direction == Cube.ClockWise) {

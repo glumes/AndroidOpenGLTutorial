@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 import com.glumes.comlib.LogUtil;
+import com.glumes.openglbasicshape.magiccube.Face;
 import com.glumes.openglbasicshape.magiccube.MagicCubeRender;
 import com.glumes.openglbasicshape.magiccube.MagiccubePreference;
 import com.glumes.openglbasicshape.magiccube.interfaces.MessageSender;
@@ -339,7 +340,10 @@ public class BasicGameView extends GLSurfaceView implements MessageSender, OnSte
             LastPos1[0] = Point1[0];
             LastPos1[1] = Point1[1];
 
+
             FaceIndex1 = render.IsInCubeArea(Point1);
+            LogUtil.d("faceIndex is " + FaceIndex1);
+
             //Log.e("down","down"+FaceIndex1);
             if (FaceIndex1 >= 0 && CanMove) {
                 RotateOrMove1 = MagicCubeRender.MOVE;
@@ -465,6 +469,7 @@ public class BasicGameView extends GLSurfaceView implements MessageSender, OnSte
             if (RotateOrMove1 == MagicCubeRender.MOVE && render.IsMoveValid(Point1, Point) && this.CanMove) {
                 LogUtil.d("Let`s move");
                 String cmdstr = render.CalcCommand(Point1, Point, FaceIndex1);
+                LogUtil.d("cmd str is " + cmdstr);
             }
         } else if (opcode == MotionEvent.ACTION_POINTER_UP) {
             LogUtil.d("action pointer up");
