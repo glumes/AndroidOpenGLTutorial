@@ -3,18 +3,19 @@
     package="com.glumes.openglbasicshape">
 
     <application
-        android:name="com.glumes.comlib.BaseApplication"
+        android:name=".OpenGLApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".RendererActivity">
+        <activity android:name=".MainActivity" />
+        <activity android:name=".RendererActivity"></activity>
+        <activity android:name=".MagicCubeActivity">
 
         </activity>
-        <activity android:name=".MagicCubeActivity">
+        <activity android:name=".TouchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

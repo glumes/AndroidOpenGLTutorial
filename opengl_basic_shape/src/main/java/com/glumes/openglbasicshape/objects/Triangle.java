@@ -42,7 +42,7 @@ public class Triangle extends BaseShape {
     private int uMatrixLocation;
 
     float[] triangleVertex = {
-            -0.5f, 0.5f,
+            -1f, 1f,
 //            -0.5f, 0f,
             -0.5f, -0.5f,
             0.5f, -0.5f,
@@ -106,13 +106,13 @@ public class Triangle extends BaseShape {
 
         glUseProgram(mProgram);
 
-        vertexArray = new VertexArray(cubeVertex);
+        vertexArray = new VertexArray(triangleVertex);
 
         byteBuffer = ByteBuffer.allocateDirect(position.length).put(position);
 
         byteBuffer.position(0);
 
-        POSITION_COMPONENT_COUNT = 3;
+        POSITION_COMPONENT_COUNT = 2;
     }
 
     @Override
@@ -138,9 +138,9 @@ public class Triangle extends BaseShape {
         glUniformMatrix4fv(uMatrixLocation, 1, false, modelMatrix, 0);
 
         // 使用 glDrawArrays方式绘图
-//        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
         // 使用 glDrawElements 方式绘图
-        glDrawElements(GL_TRIANGLES, position.length, GL_UNSIGNED_BYTE, byteBuffer);
+//        glDrawElements(GL_TRIANGLES, position.length, GL_UNSIGNED_BYTE, byteBuffer);
 
     }
 
@@ -150,9 +150,9 @@ public class Triangle extends BaseShape {
 
         glUniform4f(aColorLocation, 0.0f, 1.0f, 1.0f, 1.0f);
         glUniformMatrix4fv(uMatrixLocation, 1, false, mvpMatrix, 0);
-//        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
 
-        glDrawElements(GL_TRIANGLES, position.length, GL_UNSIGNED_BYTE, byteBuffer);
+//        glDrawElements(GL_TRIANGLES, position.length, GL_UNSIGNED_BYTE, byteBuffer);
 
     }
 }
