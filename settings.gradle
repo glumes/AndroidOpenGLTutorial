@@ -1,4 +1,6 @@
 include ':app',
         ':opengl_basic_shape',
         ':opengl_by_cplusplus',
-        ':comlib', ':official_opengl_sample'
+        ':comlib',
+        ':official_opengl_sample',
+        ':magic_cube'
