@@ -27,21 +27,21 @@ public class Cube extends GLShape {
 
 		sphereRadius = 0.6f;
 		
-		/* 
+		/*
 		 *   2 3
 		 *  6 7
 		 *   0 1
 		 *  4 5
 		 * */
-       	GLVertex leftBottomBack = addVertex(left, bottom, back);
+        GLVertex leftBottomBack = addVertex(left, bottom, back);
         GLVertex rightBottomBack = addVertex(right, bottom, back);
-       	
+
         GLVertex leftTopBack = addVertex(left, top, back);
         GLVertex rightTopBack = addVertex(right, top, back);
-       	
+
         GLVertex leftBottomFront = addVertex(left, bottom, front);
         GLVertex rightBottomFront = addVertex(right, bottom, front);
-       	
+
         GLVertex leftTopFront = addVertex(left, top, front);
         GLVertex rightTopFront = addVertex(right, top, front);
 

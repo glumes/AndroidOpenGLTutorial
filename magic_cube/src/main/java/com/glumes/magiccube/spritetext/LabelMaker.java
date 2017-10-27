@@ -351,7 +351,7 @@ public class LabelMaker {
         
         ((GL11)gl).glTexParameteriv(GL10.GL_TEXTURE_2D, GL11Ext.GL_TEXTURE_CROP_RECT_OES, label.mCrop, 0);
         
-        //½«ÎÆÀíÖ±½Ó»­µ½ÆÁÄ»ÖĞÄ³Î»ÖÃ
+        //å°†çº¹ç†ç›´æ¥ç”»åˆ°å±å¹•ä¸­æŸä½ç½®
         ((GL11Ext)gl).glDrawTexiOES((int) x, (int) y, 0,(int) label.width, (int) label.height);
     }
 

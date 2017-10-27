@@ -17,6 +17,7 @@
 package com.glumes.magiccube.rubik;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -47,7 +48,7 @@ public class GLShape {
 		mWorld = world;
 		
 		synchronized (GLShape.class) {
-			//缺中心一个点
+			//缂轰腑蹇冧竴涓偣
 			if (COUNT==13) {
 				COUNT++;
 			}
@@ -108,10 +109,11 @@ public class GLShape {
 	}
 	
 	public void startAnimation() {
+		Log.d("GLWORLD","startAnimation empty");
 	}
 
 	public void endAnimation() {
-		//旋转角度累计
+		//鏃嬭浆瑙掑害绱
 		if (mTransform == null) {
 			mTransform = new M4(mAnimateTransform);
 		} else {
@@ -137,10 +139,10 @@ public class GLShape {
 
 	public void generate() {
 		// TODO Auto-generated method stub
-		//顶点颜色
+		//椤剁偣棰滆壊
 	    ByteBuffer bb = ByteBuffer.allocateDirect(mVertexList.size()*4*4);
 
-		//顶点坐标
+		//椤剁偣鍧愭爣
 	    bb = ByteBuffer.allocateDirect(mVertexList.size()*3*4);
 	    bb.order(ByteOrder.nativeOrder());
 	    mVertexBuffer = bb.asFloatBuffer();

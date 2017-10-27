@@ -21,7 +21,7 @@ public class KubeSurfaceView extends GLSurfaceView {
         this.mRenderer = renderer;
         this.setRenderer(this.mRenderer);
 
-        //ÉèÖÃäÖÈ¾Ä£Ê½ÎªÖ÷¶¯äÖÈ¾
+        //è®¾ç½®æ¸²æŸ“æ¨¡å¼ä¸ºä¸»åŠ¨æ¸²æŸ“
         setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
     }
 
@@ -42,11 +42,11 @@ public class KubeSurfaceView extends GLSurfaceView {
                 mDownY = y;
                 break;
             case MotionEvent.ACTION_MOVE:
-                // ÊÖÊÆ¾àÀë
+                // æ‰‹åŠ¿è·ç¦»
                 //float d = (float) (Math.sqrt(dx * dx + dy * dy));
-                //ÈÆXÖáĞı×ª
+                //ç»•Xè½´æ—‹è½¬
                 float dx = y - mPreviousY;
-                //ÈÆyÖáĞı×ª
+                //ç»•yè½´æ—‹è½¬
                 float dy = x - mPreviousX;
 
                 mRenderer.offsetX = dx;
@@ -56,17 +56,18 @@ public class KubeSurfaceView extends GLSurfaceView {
             case MotionEvent.ACTION_UP:
                 boolean direction = false;
 
+                // x æ–¹å‘ä¸Šçš„ç§»åŠ¨è·ç¦» å¤§äº y æ–¹å‘ä¸Šçš„ç§»åŠ¨è·ç¦»
                 if (Math.abs(x - mDownX) > Math.abs(y - mDownY)) {
-                    if (x - mDownX > 0) {
+                    if (x - mDownX > 0) { // å‘å³æ»‘åŠ¨äº†
                         direction = false;
                     } else {
-                        direction = true;
+                        direction = true; // å‘å·¦æ»‘åŠ¨äº†
                     }
                 } else {
                     if (y - mDownY > 0) {
-                        direction = true;
+                        direction = true; // å‘ä¸‹æ»‘åŠ¨äº†
                     } else {
-                        direction = false;
+                        direction = false; // å‘ä¸Šæ»‘åŠ¨äº†
                     }
                 }
 
@@ -75,8 +76,8 @@ public class KubeSurfaceView extends GLSurfaceView {
 
                 final boolean direct = direction;
 
-                //ÏÈÑ¡ÖĞµÄ·½¿é£¬ÅĞ¶ÏÄ§·½×ªÏò
-                //¸ù¾İµ±Ç°ÆÁÄ»½Ó´¥µã×öÉäÏßÀ´ÅĞ¶Ï½Ó´¥Ãæ
+                //å…ˆé€‰ä¸­çš„æ–¹å—ï¼Œåˆ¤æ–­é­”æ–¹è½¬å‘
+                //æ ¹æ®å½“å‰å±å¹•æ¥è§¦ç‚¹åšå°„çº¿æ¥åˆ¤æ–­æ¥è§¦é¢
                 mRenderer.decideTurning(direct);
 
                 mDownX = 0;

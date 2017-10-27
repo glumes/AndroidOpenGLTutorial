@@ -72,7 +72,7 @@ public class KubeActivity extends Activity implements KubeRenderer.AnimationCall
         mCubes[11] = new Cube(world, c4, c2, c0, c5, c3, c1);
         // middle middle, left to right
         mCubes[12] = new Cube(world, c0, c2, c2, c1, c3, c3);
-        //ÖĞ¼ä¿ÉÒÔ²»ÓÃäÖÈ¾,²»»á±äµãµ½
+        //ä¸­é—´å¯ä»¥ä¸ç”¨æ¸²æŸ“,ä¸ä¼šå˜ç‚¹åˆ°
         //mCubes[13] = new Cube(world, c2, c2, c2, c3, c3, c3);
         mCubes[13] = null;
         mCubes[14] = new Cube(world, c4, c2, c2, c5, c3, c3);
@@ -141,7 +141,7 @@ public class KubeActivity extends Activity implements KubeRenderer.AnimationCall
             if (mCubes[i] != null) {
                 world.addShape(mCubes[i]);
             } else {
-                //i=13Îª¿Õ
+                //i=13ä¸ºç©º
                 Log.i("KubeActivity", String.valueOf(i));
             }
         }
@@ -174,7 +174,7 @@ public class KubeActivity extends Activity implements KubeRenderer.AnimationCall
     }
 
     /**
-     * ¸üĞÂ¸÷²ãÖĞ·½¿é
+     * æ›´æ–°å„å±‚ä¸­æ–¹å—
      */
     private void updateLayers() {
         Layer layer;
@@ -263,7 +263,7 @@ public class KubeActivity extends Activity implements KubeRenderer.AnimationCall
             }
         }
 
-        Log.i("GLWorld", "front²ã°üº¬£º" + sb.toString());
+        Log.i("GLWorld", "frontå±‚åŒ…å«ï¼š" + sb.toString());
     }
 
     @Override
@@ -299,13 +299,14 @@ public class KubeActivity extends Activity implements KubeRenderer.AnimationCall
         if (mCurrentLayer == null) {
             mCurrentLayer = mLayers[layerID];
 
-            //mLayerPermutations±íÊ¾Ğı×ªÎ»ÖÃ£¬¾ßÌåÎ»ÖÃµÄ·½¿éÔÚÃ¿´ÎĞı×ªºó¸Ä±ä
+            //mLayerPermutationsè¡¨ç¤ºæ—‹è½¬ä½ç½®ï¼Œå…·ä½“ä½ç½®çš„æ–¹å—åœ¨æ¯æ¬¡æ—‹è½¬åæ”¹å˜
             if (turningDirection) {
                 mCurrentLayerPermutation = mLayerCCWPermutations[layerID];
             } else {
                 mCurrentLayerPermutation = mLayerCWPermutations[layerID];
             }
 
+            // æ­¤å¤„ä¸ºç©ºå®ç°ï¼Œf**k
             mCurrentLayer.startAnimation();
 
             int count = 1;
@@ -325,7 +326,7 @@ public class KubeActivity extends Activity implements KubeRenderer.AnimationCall
 
         if ((mAngleIncrement > 0f && mCurrentAngle >= mEndAngle) ||
                 (mAngleIncrement < 0f && mCurrentAngle <= mEndAngle)) {
-            //Ğı×ªµ½Î»
+            //æ—‹è½¬åˆ°ä½
             mCurrentLayer.setAngle(mEndAngle);
             mCurrentLayer.endAnimation();
             mCurrentLayer = null;
@@ -336,74 +337,79 @@ public class KubeActivity extends Activity implements KubeRenderer.AnimationCall
             for (int i = 0; i < 27; i++) {
                 newPermutation[i] = mPermutation[mCurrentLayerPermutation[i]];
             }
+
+            // æ¯æ¬¡æ—‹è½¬ä¹‹åï¼Œæ¯ä¸€å±‚ Layer çš„å†…å®¹éƒ½å‘ç”Ÿæ”¹å˜äº†ï¼Œè¿›è¡Œæ›´æ–°ã€‚
+
             mPermutation = newPermutation;
             updateLayers();
             AppConfig.Turning = false;
 
-            Log.d("GLWorld", "µ±Ç°ÉÏ²ãÏÖÓĞ·½¿é£º" + mLayers[0].toString());
-            Log.d("GLWorld", "µ±Ç°ÖĞ²ãÏÖÓĞ·½¿é£º" + mLayers[7].toString());
-            Log.d("GLWorld", "µ±Ç°ÏÂ²ãÏÖÓĞ·½¿é£º" + mLayers[1].toString());
+            Log.d("GLWorld", "å½“å‰ä¸Šå±‚ç°æœ‰æ–¹å—ï¼š" + mLayers[0].toString());
+            Log.d("GLWorld", "å½“å‰ä¸­å±‚ç°æœ‰æ–¹å—ï¼š" + mLayers[7].toString());
+            Log.d("GLWorld", "å½“å‰ä¸‹å±‚ç°æœ‰æ–¹å—ï¼š" + mLayers[1].toString());
 
             mRenderer.clearPickedCubes();
         } else {
-            //Ğı×ªÖĞ
+            //æ—‹è½¬ä¸­
             mCurrentLayer.setAngle(mCurrentAngle);
         }
     }
 
 
+
+    //å“åº”ä¹‹å‰çš„ç»˜åˆ¶æ–¹å¼ï¼Œåœ¨ ontouchevent æ—¶é—´é‡Œé¢ true or false åˆ™ä»£è¡¨äº†é¡ºæ—¶é’ˆè¿˜æ˜¯é€†æ—¶é’ˆï¼Œé‡‡ç”¨å›ºå®šå†™æ­»çš„æ–¹å¼
     /*
-     * ¸úÃ¿Ò»²ã·½¿éÎ»ÖÃ½øĞĞ±àºÅ(ÓÉÉÏÖÁÏÂ),Ğı×ªºó×ø±êÒ»¶¨ÒªĞ´¶Ô£¬·ñÔò×ø±ê±£´æµÄÓë¿´µ½µÄ²»Í¬
+     * è·Ÿæ¯ä¸€å±‚æ–¹å—ä½ç½®è¿›è¡Œç¼–å·(ç”±ä¸Šè‡³ä¸‹),æ—‹è½¬ååæ ‡ä¸€å®šè¦å†™å¯¹ï¼Œå¦åˆ™åæ ‡ä¿å­˜çš„ä¸çœ‹åˆ°çš„ä¸åŒ
      * 0 1 2 					2 5 8
-     * 3 4 5 ->Ë³Ê±ÕëÑ¡Ôñ90¶È->	1 4 7
+     * 3 4 5 ->é¡ºæ—¶é’ˆé€‰æ‹©90åº¦->	1 4 7
      * 6 7 8					0 3 6
      * */
     static int[][] mLayerCWPermutations = {
-            // permutation for UP layer ×îÉÏ²ãË³Ê±ÕëĞı×ª90¶Èºó²¼¾Ö
+            // permutation for UP layer æœ€ä¸Šå±‚é¡ºæ—¶é’ˆæ—‹è½¬90åº¦åå¸ƒå±€
             {2, 5, 8, 1, 4, 7, 0, 3, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26},
-            // permutation for DOWN layer ×îÏÂ²ãË³Ê±ÕëĞı×ª90¶Èºó²¼¾Ö
+            // permutation for DOWN layer æœ€ä¸‹å±‚é¡ºæ—¶é’ˆæ—‹è½¬90åº¦åå¸ƒå±€
             {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 20, 23, 26, 19, 22, 25, 18, 21, 24},
-            // permutation for LEFT layer ×ó²àĞı×ª90¶È
+            // permutation for LEFT layer å·¦ä¾§æ—‹è½¬90åº¦
             {6, 1, 2, 15, 4, 5, 24, 7, 8, 3, 10, 11, 12, 13, 14, 21, 16, 17, 0, 19, 20, 9, 22, 23, 18, 25, 26},
-            // permutation for RIGHT layer ÓÒ²àĞı×ª90¶È
+            // permutation for RIGHT layer å³ä¾§æ—‹è½¬90åº¦
             {0, 1, 8, 3, 4, 17, 6, 7, 26, 9, 10, 5, 12, 13, 14, 15, 16, 23, 18, 19, 2, 21, 22, 11, 24, 25, 20},
-            // permutation for FRONT layer Ç°ÃæĞı×ª90¶È
+            // permutation for FRONT layer å‰é¢æ—‹è½¬90åº¦
             {0, 1, 2, 3, 4, 5, 24, 15, 6, 9, 10, 11, 12, 13, 14, 25, 16, 7, 18, 19, 20, 21, 22, 23, 26, 17, 8},
-            // permutation for BACK layer ºóÃæĞı×ª90¶È
+            // permutation for BACK layer åé¢æ—‹è½¬90åº¦
             {18, 9, 0, 3, 4, 5, 6, 7, 8, 19, 10, 1, 12, 13, 14, 15, 16, 17, 20, 11, 2, 21, 22, 23, 24, 25, 26},
-            // permutation for MIDDLE layer £¨ÖĞ¼äÃæÈÆXÖáĞı×ª90¶È£©
+            // permutation for MIDDLE layer ï¼ˆä¸­é—´é¢ç»•Xè½´æ—‹è½¬90åº¦ï¼‰
             {0, 7, 2, 3, 16, 5, 6, 25, 8, 9, 4, 11, 12, 13, 14, 15, 22, 17, 18, 1, 20, 21, 10, 23, 24, 19, 26},
-            // permutation for EQUATOR layer (ÖĞ¼äÈÆYÖáĞı×ª90¶È)
+            // permutation for EQUATOR layer (ä¸­é—´ç»•Yè½´æ—‹è½¬90åº¦)
             {0, 1, 2, 3, 4, 5, 6, 7, 8, 11, 14, 17, 10, 13, 16, 9, 12, 15, 18, 19, 20, 21, 22, 23, 24, 25, 26},
-            // permutation for SIDE layer (ÖĞ¼äÈÆZÖáĞı×ª90¶È)
+            // permutation for SIDE layer (ä¸­é—´ç»•Zè½´æ—‹è½¬90åº¦)
             {0, 1, 2, 21, 12, 3, 6, 7, 8, 9, 10, 11, 22, 13, 4, 15, 16, 17, 18, 19, 20, 23, 14, 5, 24, 25, 26}
     };
 
     /*
-     * ¸úÃ¿Ò»²ã·½¿éÎ»ÖÃ½øĞĞ±àºÅ(ÓÉÉÏÖÁÏÂ)Ğı×ªºó×ø±êÒ»¶¨ÒªĞ´¶Ô£¬
-     * ·ñÔò×ø±ê±£´æµÄÓë¿´µ½µÄ²»Í¬(Ôò´¥Ãşºó·½¿éĞı×ª¾ÍÓĞÎÊÌâÁË£¬²»¸ÃĞı×ªµÄ»áĞı×ª)
+     * è·Ÿæ¯ä¸€å±‚æ–¹å—ä½ç½®è¿›è¡Œç¼–å·(ç”±ä¸Šè‡³ä¸‹)æ—‹è½¬ååæ ‡ä¸€å®šè¦å†™å¯¹ï¼Œ
+     * å¦åˆ™åæ ‡ä¿å­˜çš„ä¸çœ‹åˆ°çš„ä¸åŒ(åˆ™è§¦æ‘¸åæ–¹å—æ—‹è½¬å°±æœ‰é—®é¢˜äº†ï¼Œä¸è¯¥æ—‹è½¬çš„ä¼šæ—‹è½¬)
      * 0 1 2 					6 3 0
-     * 3 4 5 ->ÄæÊ±ÕëÑ¡Ôñ90¶È->	7 4 1
+     * 3 4 5 ->é€†æ—¶é’ˆé€‰æ‹©90åº¦->	7 4 1
      * 6 7 8					8 5 2
      * */
     static int[][] mLayerCCWPermutations = {
-            // permutation for UP layer ×îÉÏ²ãÄæÊ±ÕëĞı×ª90¶Èºó²¼¾Ö
+            // permutation for UP layer æœ€ä¸Šå±‚é€†æ—¶é’ˆæ—‹è½¬90åº¦åå¸ƒå±€
             {6, 3, 0, 7, 4, 1, 8, 5, 2, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26},
-            // permutation for DOWN layer ×îÏÂ²ãÄæÊ±ÕëĞı×ª90¶Èºó²¼¾Ö
+            // permutation for DOWN layer æœ€ä¸‹å±‚é€†æ—¶é’ˆæ—‹è½¬90åº¦åå¸ƒå±€
             {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 24, 21, 18, 25, 22, 19, 26, 23, 20},
-            // permutation for LEFT layer ×ó²à
+            // permutation for LEFT layer å·¦ä¾§
             {18, 1, 2, 9, 4, 5, 0, 7, 8, 21, 10, 11, 12, 13, 14, 3, 16, 17, 24, 19, 20, 15, 22, 23, 6, 25, 26},
-            // permutation for RIGHT layer ÓÒ²à
+            // permutation for RIGHT layer å³ä¾§
             {0, 1, 20, 3, 4, 11, 6, 7, 2, 9, 10, 23, 12, 13, 14, 15, 16, 5, 18, 19, 26, 21, 22, 17, 24, 25, 8},
-            // permutation for FRONT layer Ç°Ãæ
+            // permutation for FRONT layer å‰é¢
             {0, 1, 2, 3, 4, 5, 8, 17, 26, 9, 10, 11, 12, 13, 14, 7, 16, 25, 18, 19, 20, 21, 22, 23, 6, 15, 24},
-            // permutation for BACK layer ºóÃæ
+            // permutation for BACK layer åé¢
             {2, 11, 20, 3, 4, 5, 6, 7, 8, 1, 10, 19, 12, 13, 14, 15, 16, 17, 0, 9, 18, 21, 22, 23, 24, 25, 26},
-            // permutation for MIDDLE layer £¨ÖĞ¼äÃæÈÆXÖáÄæÊ±ÕëĞı×ª£©
+            // permutation for MIDDLE layer ï¼ˆä¸­é—´é¢ç»•Xè½´é€†æ—¶é’ˆæ—‹è½¬ï¼‰
             {0, 19, 2, 3, 10, 5, 6, 1, 8, 9, 22, 11, 12, 13, 14, 15, 4, 17, 18, 25, 20, 21, 16, 23, 24, 7, 26},
-            // permutation for EQUATOR layer (ÖĞ¼äÈÆYÖáÄæÊ±ÕëĞı×ª)
+            // permutation for EQUATOR layer (ä¸­é—´ç»•Yè½´é€†æ—¶é’ˆæ—‹è½¬)
             {0, 1, 2, 3, 4, 5, 6, 7, 8, 15, 12, 9, 16, 13, 10, 17, 14, 11, 18, 19, 20, 21, 22, 23, 24, 25, 26},
-            // permutation for SIDE layer	(ÖĞ¼äÈÆZÖáÄæÊ±ÕëĞı×ª)
+            // permutation for SIDE layer	(ä¸­é—´ç»•Zè½´é€†æ—¶é’ˆæ—‹è½¬)
             {0, 1, 2, 5, 14, 23, 6, 7, 8, 9, 10, 11, 4, 13, 22, 15, 16, 17, 18, 19, 20, 3, 12, 21, 24, 25, 26}
     };
 

@@ -6,22 +6,22 @@ import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 
 /**
- * Buffer¹¤³§¡£
- * Ìá¹©´´½¨BufferµÄ·½·¨¡£ 
- * ×¢ÒâOPhoneÖĞÒª´«Èëgl*Pointer()º¯ÊıµÄBuffer¶ÔÏó±ØĞëÒªÎªdirectÄ£Ê½ÉêÇëµÄ£¬
- * ÕâÑù¿ÉÒÔÈ·±£»º´æ¶ÔÏó·ÅÖÃÔÚNativeµÄ¶ÑÖĞ£¬ÒÔÃâÊÜµ½Java¶ËµÄÀ¬»ø»ØÊÕ»úÖÆµÄÓ°Ïì¡£
- * ¶ÔÓÚFloatBuffer,ShortBuffer,IntBufferµÈ¶à×Ö½ÚµÄ»º´æ¶ÔÏó£¬ 
- * ËüÃÇµÄ×Ö½ÚË³Ğò ±ØĞëÉèÖÃÎªnativeOrder¡£
+ * Bufferå·¥å‚ã€‚
+ * æä¾›åˆ›å»ºBufferçš„æ–¹æ³•ã€‚ 
+ * æ³¨æ„OPhoneä¸­è¦ä¼ å…¥gl*Pointer()å‡½æ•°çš„Bufferå¯¹è±¡å¿…é¡»è¦ä¸ºdirectæ¨¡å¼ç”³è¯·çš„ï¼Œ
+ * è¿™æ ·å¯ä»¥ç¡®ä¿ç¼“å­˜å¯¹è±¡æ”¾ç½®åœ¨Nativeçš„å †ä¸­ï¼Œä»¥å…å—åˆ°Javaç«¯çš„åƒåœ¾å›æ”¶æœºåˆ¶çš„å½±å“ã€‚
+ * å¯¹äºFloatBuffer,ShortBuffer,IntBufferç­‰å¤šå­—èŠ‚çš„ç¼“å­˜å¯¹è±¡ï¼Œ 
+ * å®ƒä»¬çš„å­—èŠ‚é¡ºåº å¿…é¡»è®¾ç½®ä¸ºnativeOrderã€‚
  * 
  * @author Yong
  */
 public class IBufferFactory {
 	
 	/**
-	 * ´´½¨ĞÂµÄFloatBuffer¶ÔÏó
+	 * åˆ›å»ºæ–°çš„FloatBufferå¯¹è±¡
 	 * 
 	 * @param numElements
-	 *            - floatÔªËØµÄ¸öÊı
+	 *            - floatå…ƒç´ çš„ä¸ªæ•°
 	 * @return
 	 */
 	public static FloatBuffer newFloatBuffer(int numElements) {

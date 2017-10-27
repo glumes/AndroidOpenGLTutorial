@@ -13,35 +13,35 @@ public class PickFactory {
 	private static float[] gpObjPosArray = new float[4];
 
 	/**
-	 * ¸üĞÂÊ°È¡ÉäÏß
-	 * @param screenX - ÆÁÄ»×ø±êX
-	 * @param screenY - ÆÁÄ»×ø±êY
+	 * æ›´æ–°æ‹¾å–å°„çº¿
+	 * @param screenX - å±å¹•åæ ‡X
+	 * @param screenY - å±å¹•åæ ‡Y
 	 */
 	public static void update(float screenX, float screenY) {
 		AppConfig.gMatView.fillFloatArray(AppConfig.gpMatrixViewArray);
 
-		// ÓÉÓÚOpenGLÆÁÄ»×ø±êÏµÔ­µãÎª×óÏÂ½Ç£¬¶ø´°¿Ú×ø±êÏµÔ­µãÎª×óÉÏ½Ç
-		// Òò´Ë£¬ÔÚOpenGlÖĞµÄYÓ¦¸ÃĞèÒªÓÃµ±Ç°ÊÓ¿Ú¸ß¶È£¬¼õÈ¥´°¿Ú×ø±êY
+		// ç”±äºOpenGLå±å¹•åæ ‡ç³»åŸç‚¹ä¸ºå·¦ä¸‹è§’ï¼Œè€Œçª—å£åæ ‡ç³»åŸç‚¹ä¸ºå·¦ä¸Šè§’
+		// å› æ­¤ï¼Œåœ¨OpenGlä¸­çš„Yåº”è¯¥éœ€è¦ç”¨å½“å‰è§†å£é«˜åº¦ï¼Œå‡å»çª—å£åæ ‡Y
 		float openglY = AppConfig.gpViewport[3] - screenY;
 		
-		// z = 0 , µÃµ½P0
+		// z = 0 , å¾—åˆ°P0
 		gProjector.gluUnProject(screenX, openglY, 0.0f,
 				AppConfig.gpMatrixViewArray, 0, AppConfig.gpMatrixProjectArray,
 				0, AppConfig.gpViewport, 0, gpObjPosArray, 0);
 		
-		// Ìî³äÉäÏßÔ­µãP0
+		// å¡«å……å°„çº¿åŸç‚¹P0
 		gPickRay.mvOrigin.set(gpObjPosArray[0], gpObjPosArray[1],gpObjPosArray[2]);
 
-		// z = 1 £¬µÃµ½P1
+		// z = 1 ï¼Œå¾—åˆ°P1
 		gProjector.gluUnProject(screenX, openglY, 1.0f,
 				AppConfig.gpMatrixViewArray, 0, AppConfig.gpMatrixProjectArray,
 				0, AppConfig.gpViewport, 0, gpObjPosArray, 0);
 		
-		// ¼ÆËãÉäÏßµÄ·½Ïò£¬P1 - P0
+		// è®¡ç®—å°„çº¿çš„æ–¹å‘ï¼ŒP1 - P0
 		gPickRay.mvDirection.set(gpObjPosArray[0], gpObjPosArray[1],gpObjPosArray[2]);
 		gPickRay.mvDirection.sub(gPickRay.mvOrigin);
 		
-		// ÏòÁ¿¹éÒ»»¯
+		// å‘é‡å½’ä¸€åŒ–
 		gPickRay.mvDirection.normalize();
 	}
 

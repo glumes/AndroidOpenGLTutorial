@@ -51,7 +51,7 @@ public class GLVertex {
     }
 
     static public int toFixed(float x) {
-    	//Èç¹û²ÉÓÃGL10.GL_FIXEDÔòĞèÒªĞŞÕı£¬Ä¬ÈÏÎªGL_FLOATÔò²»ĞèÒª
+    	//å¦‚æœé‡‡ç”¨GL10.GL_FIXEDåˆ™éœ€è¦ä¿®æ­£ï¼Œé»˜è®¤ä¸ºGL_FLOATåˆ™ä¸éœ€è¦
         return (int)(x * 65536.0f);
     }
 

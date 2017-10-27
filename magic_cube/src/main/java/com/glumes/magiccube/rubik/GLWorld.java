@@ -57,14 +57,14 @@ public class GLWorld {
 	    	canvas.drawColor(Color.WHITE);
 	    	Paint p = new Paint();
 	
-	    	//ÉèÖÃ×ÖÌå¡¢×ÖÌå´óĞ¡ºÍ×ÖÌåÑÕÉ«
+	    	//è®¾ç½®å­—ä½“ã€å­—ä½“å¤§å°å’Œå­—ä½“é¢œè‰²
 	    	String familyName = "Times New Roman";
 	    	Typeface font = Typeface.create(familyName, Typeface.NORMAL);
 	    	p.setColor(Color.BLACK);
 	    	p.setTypeface(font);
 	    	p.setTextSize(fontSize);
 	    	
-	    	//ÔÚBitmapÉÏ»æÖÆÎÄ×Ö
+	    	//åœ¨Bitmapä¸Šç»˜åˆ¶æ–‡å­—
 	    	String text = cube.id;
 	    	float textWidth = p.measureText(text);
 	    	canvas.drawText(cube.id,(imgSize - textWidth)/2,imgSize - fontSize, p); 
@@ -89,7 +89,7 @@ public class GLWorld {
 	}
 	
 	public void clearPickedCubes(){
-		Log.d("GLWorld", "Çå¿ÕÑ¡È¡ÁĞ±í");
+		Log.d("GLWorld", "æ¸…ç©ºé€‰å–åˆ—è¡¨");
 		pickedList.clear();
 		
 		for (int i = 0; i < mpTriangle.length; i++) {
@@ -115,15 +115,15 @@ public class GLWorld {
     	gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
 
 	    /*
-	     * GL_SMOOTH£º OpenGL½«¸ù¾İ¶¥µãµÄÑÕÉ«£¬²åÖµÉú³ÉÆäËûµãµÄÑÕÉ«£¬ĞÎ³ÉÑÕÉ«±ä¡¢¹ı¶ÉµÄĞ§¹û¡£
- 		   GL_FLAT£º Ã»ÓĞÑÕÉ«½¥±äºÍ¹ı¶ÉµÄĞ§¹û¡£ÀıÈç£º¶ÔÈı½ÇĞÎµ¥µ÷×ÅÉ«£¬È¡×îºóÒ»¸ö¶¥µãµÄÑÕÉ«Ìî³äÈı½ÇĞÎ¡£
+	     * GL_SMOOTHï¼š OpenGLå°†æ ¹æ®é¡¶ç‚¹çš„é¢œè‰²ï¼Œæ’å€¼ç”Ÿæˆå…¶ä»–ç‚¹çš„é¢œè‰²ï¼Œå½¢æˆé¢œè‰²å˜ã€è¿‡æ¸¡çš„æ•ˆæœã€‚
+ 		   GL_FLATï¼š æ²¡æœ‰é¢œè‰²æ¸å˜å’Œè¿‡æ¸¡çš„æ•ˆæœã€‚ä¾‹å¦‚ï¼šå¯¹ä¸‰è§’å½¢å•è°ƒç€è‰²ï¼Œå–æœ€åä¸€ä¸ªé¡¶ç‚¹çš„é¢œè‰²å¡«å……ä¸‰è§’å½¢ã€‚
 	     * */
 //	    gl.glShadeModel(GL10.GL_FLAT);
 //	    gl.glShadeModel(GL10.GL_SMOOTH);
 	    gl.glEnable(GL10.GL_CULL_FACE);
 		gl.glFrontFace(GL10.GL_CCW);
 	    gl.glCullFace(GL10.GL_BACK);
-		gl.glEnable(GL10.GL_DEPTH_TEST); //²»»á»­±»µ²×¡µÄÍ¼ĞÎ²¿·Ö
+		gl.glEnable(GL10.GL_DEPTH_TEST); //ä¸ä¼šç”»è¢«æŒ¡ä½çš„å›¾å½¢éƒ¨åˆ†
 	    
         for(int i=0;i<mShapeList.size();i++) {
         	GLShape shape = mShapeList.get(i);
@@ -136,40 +136,40 @@ public class GLWorld {
     }
     
     /**
-	 * äÖÈ¾Ñ¡ÖĞµÄÈı½ÇĞÎ
+	 * æ¸²æŸ“é€‰ä¸­çš„ä¸‰è§’å½¢
 	 */
 	public void drawPickedTriangle(GL10 gl) {
 		if (!AppConfig.gbTrianglePicked) {
 			return;
 		}
 		
-		// ÓÉÓÚ·µ»ØµÄÊ°È¡Èı½ÇĞÎÊı¾İÊÇ³öÓÚÄ£ĞÍ×ø±êÏµÖĞ
-		// Òò´ËĞèÒª¾­¹ıÄ£ĞÍ±ä»»£¬½«ËüÃÇ±ä»»µ½ÊÀ½ç×ø±êÏµÖĞ½øĞĞäÖÈ¾
-		// ÉèÖÃÄ£ĞÍ±ä»»¾ØÕó
+		// ç”±äºè¿”å›çš„æ‹¾å–ä¸‰è§’å½¢æ•°æ®æ˜¯å‡ºäºæ¨¡å‹åæ ‡ç³»ä¸­
+		// å› æ­¤éœ€è¦ç»è¿‡æ¨¡å‹å˜æ¢ï¼Œå°†å®ƒä»¬å˜æ¢åˆ°ä¸–ç•Œåæ ‡ç³»ä¸­è¿›è¡Œæ¸²æŸ“
+		// è®¾ç½®æ¨¡å‹å˜æ¢çŸ©é˜µ
 		gl.glMultMatrixf(AppConfig.gMatModel.asFloatBuffer());
 		
-		// ÉèÖÃÈı½ÇĞÎÑÕÉ«£¬alphaÎª0.7
+		// è®¾ç½®ä¸‰è§’å½¢é¢œè‰²ï¼Œalphaä¸º0.7
 		gl.glColor4f(1.0f, 0.0f, 0.0f, 0.7f);
-		// ¿ªÆôBlend»ìºÏÄ£Ê½
+		// å¼€å¯Blendæ··åˆæ¨¡å¼
 		gl.glEnable(GL10.GL_BLEND);
 		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
-		// ½ûÓÃÎŞ¹ØÊôĞÔ£¬½ö½öÊ¹ÓÃ´¿É«Ìî³ä
+		// ç¦ç”¨æ— å…³å±æ€§ï¼Œä»…ä»…ä½¿ç”¨çº¯è‰²å¡«å……
 		gl.glDisable(GL10.GL_DEPTH_TEST);
 		gl.glDisable(GL10.GL_TEXTURE_2D);
 		
 	    gl.glEnable(GL10.GL_CULL_FACE);
-	    //×¢ÒâÕâÀïÓëÏò½»¼ì²âµÄµãË³Ğò·½ÏòÓĞ¹Ø£¡·ñÔò»­µ½±³ÃæÎŞ·¨¿´¼û!
+	    //æ³¨æ„è¿™é‡Œä¸å‘äº¤æ£€æµ‹çš„ç‚¹é¡ºåºæ–¹å‘æœ‰å…³ï¼å¦åˆ™ç”»åˆ°èƒŒé¢æ— æ³•çœ‹è§!
 		gl.glFrontFace(GL10.GL_CW);
 	    gl.glCullFace(GL10.GL_BACK);
 		
-		// ¿ªÊ¼°ó¶¨äÖÈ¾¶¥µãÊı¾İ
+		// å¼€å§‹ç»‘å®šæ¸²æŸ“é¡¶ç‚¹æ•°æ®
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
 	
 		mBufPickedTriangle.position();
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, mBufPickedTriangle);
-		// Ìá½»äÖÈ¾
+		// æäº¤æ¸²æŸ“
 		gl.glDrawArrays(GL10.GL_TRIANGLES, 0, 3);
-		// ÖØÖÃÏà¹ØÊôĞÔ
+		// é‡ç½®ç›¸å…³å±æ€§
 		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
 		gl.glEnable(GL10.GL_DEPTH_TEST);
 		gl.glDisable(GL10.GL_BLEND);
@@ -187,10 +187,10 @@ public class GLWorld {
 	public final float worldRadius = 1.7f;
 	
 	/**
-	 * ÉäÏßÓëÄ£ĞÍµÄ¾«È·Åö×²¼ì²â
-	 * @param ray - ×ª»»µ½Ä£ĞÍ¿Õ¼äÖĞµÄÉäÏß
-	 * @param trianglePosOut - ·µ»ØµÄÊ°È¡ºóµÄÈı½ÇĞÎ¶¥µãÎ»ÖÃ
-	 * @return Èç¹ûÏà½»£¬·µ»Øtrue
+	 * å°„çº¿ä¸æ¨¡å‹çš„ç²¾ç¡®ç¢°æ’æ£€æµ‹
+	 * @param ray - è½¬æ¢åˆ°æ¨¡å‹ç©ºé—´ä¸­çš„å°„çº¿
+	 * @param trianglePosOut - è¿”å›çš„æ‹¾å–åçš„ä¸‰è§’å½¢é¡¶ç‚¹ä½ç½®
+	 * @return å¦‚æœç›¸äº¤ï¼Œè¿”å›true
 	 */
 	public boolean intersectDetect() {
 		if (!AppConfig.gbNeedPick || AppConfig.Turning) {
@@ -198,14 +198,14 @@ public class GLWorld {
 		}
 		
 		AppConfig.gbNeedPick = false;
-		// ¸üĞÂ×îĞÂµÄÊ°È¡ÉäÏß
+		// æ›´æ–°æœ€æ–°çš„æ‹¾å–å°„çº¿
 		PickFactory.update(AppConfig.gScreenX, AppConfig.gScreenY);
-		// »ñµÃ×îĞÂµÄÊ°È¡ÉäÏß
+		// è·å¾—æœ€æ–°çš„æ‹¾å–å°„çº¿
 		Ray ray = PickFactory.getPickRay();
 		
 		boolean bFound = false;
-		// ´æ´¢×ÅÉäÏßÔ­µãÓëÈı½ÇĞÎÏà½»µãµÄ¾àÀë
-		// ÎÒÃÇ×îºó½ö½ö±£Áô¾àÀë×î½üµÄÄÇÒ»¸ö
+		// å­˜å‚¨ç€å°„çº¿åŸç‚¹ä¸ä¸‰è§’å½¢ç›¸äº¤ç‚¹çš„è·ç¦»
+		// æˆ‘ä»¬æœ€åä»…ä»…ä¿ç•™è·ç¦»æœ€è¿‘çš„é‚£ä¸€ä¸ª
 		float closeDis = 0.0f;
 
 		Vector3f v0, v1, v2;
@@ -213,26 +213,26 @@ public class GLWorld {
 		Ray transformedRay = new Ray();
 		Cube mpCube = null;
 
-		// Èç¹ûÉäÏßÓë°ó¶¨Çò·¢ÉúÏà½»£¬ÄÇÃ´¾ÍĞèÒª½øĞĞ¾«È·µÄÈı½ÇÃæ¼¶±ğµÄÏà½»¼ì²â
-		// ÓÉÓÚÎÒÃÇµÄÄ£ĞÍäÖÈ¾Êı¾İ£¬¾ùÊÇÔÚÄ£ĞÍ¾Ö²¿×ø±êÏµÖĞ
-		// ¶øÊ°È¡ÉäÏßÊÇÔÚÊÀ½ç×ø±êÏµÖĞ
-		// Òò´ËĞèÒª°ÑÉäÏß×ª»»µ½Ä£ĞÍ×ø±êÏµÖĞ
-		// ÕâÀïÊ×ÏÈ¼ÆËãÄ£ĞÍ¾ØÕóµÄÄæ¾ØÕó
+		// å¦‚æœå°„çº¿ä¸ç»‘å®šçƒå‘ç”Ÿç›¸äº¤ï¼Œé‚£ä¹ˆå°±éœ€è¦è¿›è¡Œç²¾ç¡®çš„ä¸‰è§’é¢çº§åˆ«çš„ç›¸äº¤æ£€æµ‹
+		// ç”±äºæˆ‘ä»¬çš„æ¨¡å‹æ¸²æŸ“æ•°æ®ï¼Œå‡æ˜¯åœ¨æ¨¡å‹å±€éƒ¨åæ ‡ç³»ä¸­
+		// è€Œæ‹¾å–å°„çº¿æ˜¯åœ¨ä¸–ç•Œåæ ‡ç³»ä¸­
+		// å› æ­¤éœ€è¦æŠŠå°„çº¿è½¬æ¢åˆ°æ¨¡å‹åæ ‡ç³»ä¸­
+		// è¿™é‡Œé¦–å…ˆè®¡ç®—æ¨¡å‹çŸ©é˜µçš„é€†çŸ©é˜µ
 		Matrix4f matInvertModel = new Matrix4f();
 		matInvertModel.set(AppConfig.gMatModel);
 		matInvertModel.invert();
 		
-		// °ÑÉäÏß±ä»»µ½Ä£ĞÍ×ø±êÏµÖĞ£¬°Ñ½á¹û´æ´¢µ½transformedRayÖĞ
+		// æŠŠå°„çº¿å˜æ¢åˆ°æ¨¡å‹åæ ‡ç³»ä¸­ï¼ŒæŠŠç»“æœå­˜å‚¨åˆ°transformedRayä¸­
 		ray.transform(matInvertModel, transformedRay);
 		
-		// Ê×ÏÈ°ÑÄ£ĞÍµÄ°ó¶¨ÇòÍ¨¹ıÄ£ĞÍ¾ØÕó£¬ÓÉÄ£ĞÍ¾Ö²¿¿Õ¼ä±ä»»µ½ÊÀ½ç¿Õ¼ä
+		// é¦–å…ˆæŠŠæ¨¡å‹çš„ç»‘å®šçƒé€šè¿‡æ¨¡å‹çŸ©é˜µï¼Œç”±æ¨¡å‹å±€éƒ¨ç©ºé—´å˜æ¢åˆ°ä¸–ç•Œç©ºé—´
 //		Vector3f transformedSphereCenter = new Vector3f();
 //	    AppConfig.gMatModel.transform(new Vector3f(0, 0, 0),transformedSphereCenter);
 	    
 	    long begin = System.currentTimeMillis();
 	    
 		if (transformedRay.intersectSphere(worldCenter,worldRadius)) {
-			//26¸ö·½¿é£¬ÕıÖĞ¼ä²»ÏÔÊ¾
+			//26ä¸ªæ–¹å—ï¼Œæ­£ä¸­é—´ä¸æ˜¾ç¤º
 			int cubeCount = mShapeList.size();
 //			Vector3f _transformedSphereCenter = new Vector3f();
 			
@@ -240,21 +240,21 @@ public class GLWorld {
 				Cube cube = (Cube)mShapeList.get(c);
 //			    AppConfig.gMatModel.transform(cube.getSphereCenter(),_transformedSphereCenter);
 			    if (transformedRay.intersectSphere(cube.getSphereCenter(),cube.getSphereRadius())) {
-					// Á¢·½Ìå6¸öÃæ
+					// ç«‹æ–¹ä½“6ä¸ªé¢
 					for (int i = 0; i < cube.mFaceList.size(); i++) {
 						GLFace face = cube.mFaceList.get(i);
 						
-						//ºÚÉ«ÃæÎª²»¿É¼û£¬²»ĞèÒªÅĞ¶Ï
+						//é»‘è‰²é¢ä¸ºä¸å¯è§ï¼Œä¸éœ€è¦åˆ¤æ–­
 						if (face.getColor().equals(GLColor.BLACK)) {
 							continue;
 						}
 						
-						// Ã¿¸öÃæÁ½¸öÈı½ÇĞÎ
+						// æ¯ä¸ªé¢ä¸¤ä¸ªä¸‰è§’å½¢
 						for (int j = 0; j < 2; j++) {
 							if(j==0){
 								//1 2
 						        //0 3
-								//Ë³Ê±Õë·½ÏòÎª 0 1 3->ÄæÊ±Õë·½ÏòÎª0,3,1
+								//é¡ºæ—¶é’ˆæ–¹å‘ä¸º 0 1 3->é€†æ—¶é’ˆæ–¹å‘ä¸º0,3,1
 								v0 = getVector3f(face.getVertex(0));
 								v1 = getVector3f(face.getVertex(1));
 								v2 = getVector3f(face.getVertex(3));
@@ -265,12 +265,12 @@ public class GLWorld {
 								v2 = getVector3f(face.getVertex(3));			
 							}
 							
-							// ½øĞĞ×ª»»ºóµÄÉäÏßºÍÈı½ÇĞĞµÄÅö×²¼ì²â
+							// è¿›è¡Œè½¬æ¢åçš„å°„çº¿å’Œä¸‰è§’è¡Œçš„ç¢°æ’æ£€æµ‹
 							if (transformedRay.intersectTriangle(v0, v1, v2, location)) {
 							    
-								// Èç¹û·¢ÉúÁËÏà½»
+								// å¦‚æœå‘ç”Ÿäº†ç›¸äº¤
 								if (!bFound) {
-									// Èç¹ûÊÇ³õ´Î¼ì²âµ½£¬ĞèÒª´æ´¢ÉäÏßÔ­µãÓëÈı½ÇĞÎ½»µãµÄ¾àÀëÖµ
+									// å¦‚æœæ˜¯åˆæ¬¡æ£€æµ‹åˆ°ï¼Œéœ€è¦å­˜å‚¨å°„çº¿åŸç‚¹ä¸ä¸‰è§’å½¢äº¤ç‚¹çš„è·ç¦»å€¼
 									bFound = true;
 									closeDis = location.w;
 									mpTriangle[0]=v0;
@@ -279,8 +279,8 @@ public class GLWorld {
 
 									mpCube = cube;
 								} else {
-									// Èç¹ûÖ®Ç°ÒÑ¾­¼ì²âµ½Ïà½»ÊÂ¼ş£¬ÔòĞèÒª°ÑĞÂÏà½»µãÓëÖ®Ç°µÄÏà½»Êı¾İÏà±È½Ï
-									// ×îÖÕ±£ÁôÀëÉäÏßÔ­µã¸ü½üµÄ
+									// å¦‚æœä¹‹å‰å·²ç»æ£€æµ‹åˆ°ç›¸äº¤äº‹ä»¶ï¼Œåˆ™éœ€è¦æŠŠæ–°ç›¸äº¤ç‚¹ä¸ä¹‹å‰çš„ç›¸äº¤æ•°æ®ç›¸æ¯”è¾ƒ
+									// æœ€ç»ˆä¿ç•™ç¦»å°„çº¿åŸç‚¹æ›´è¿‘çš„
 									if (closeDis > location.w) {
 										closeDis = location.w;
 										mpTriangle[0]=v0;
@@ -299,10 +299,10 @@ public class GLWorld {
 		}
 
 		if(bFound){
-			// Èç¹ûÕÒµ½ÁËÏà½»µÄ×î½üµÄÈı½ÇĞÎ
+			// å¦‚æœæ‰¾åˆ°äº†ç›¸äº¤çš„æœ€è¿‘çš„ä¸‰è§’å½¢
 			AppConfig.gbTrianglePicked = true;
 			
-			// Ìî³äÊı¾İµ½±»Ñ¡È¡Èı½ÇĞÎµÄäÖÈ¾»º´æÖĞ
+			// å¡«å……æ•°æ®åˆ°è¢«é€‰å–ä¸‰è§’å½¢çš„æ¸²æŸ“ç¼“å­˜ä¸­
 			mBufPickedTriangle.clear();
 			for (int i = 0; i < 3; i++) {
 				IBufferFactory.fillBuffer(mBufPickedTriangle, mpTriangle[i]);
@@ -310,10 +310,10 @@ public class GLWorld {
 			
 			mBufPickedTriangle.position(0);
 			
-			//Ñ¡Ôñinfo¼¶Ôò¿ÉÒÔ²»¿´debug¼¶ÏûÏ¢,¼¶±ğ¸ß¿ÉÒÔ¿´¼¶±ğµÍµÄÏûÏ¢
-			Log.d("GLWorld", "µ±Ç°ÒÑÑ¡Ôñ·½¿éÊı£º" + pickedList.size() + ",µ±Ç°Ñ¡Ôñ·½¿é£º" + mpCube.id);
-//			Log.d("GLWorld", "µ±Ç°µã»÷µãÖĞĞÄµã×ø±ê(×ª»»Ç°)£º" + mpCube.getSphereCenter().toString());
-//			Log.d("GLWorld", "µ±Ç°µã»÷µãÖĞĞÄµã×ø±ê(×ª»»ºó)£º" + _transformedSphereCenter.toString());
+			//é€‰æ‹©infoçº§åˆ™å¯ä»¥ä¸çœ‹debugçº§æ¶ˆæ¯,çº§åˆ«é«˜å¯ä»¥çœ‹çº§åˆ«ä½çš„æ¶ˆæ¯
+			Log.d("GLWorld", "å½“å‰å·²é€‰æ‹©æ–¹å—æ•°ï¼š" + pickedList.size() + ",å½“å‰é€‰æ‹©æ–¹å—ï¼š" + mpCube.id);
+//			Log.d("GLWorld", "å½“å‰ç‚¹å‡»ç‚¹ä¸­å¿ƒç‚¹åæ ‡(è½¬æ¢å‰)ï¼š" + mpCube.getSphereCenter().toString());
+//			Log.d("GLWorld", "å½“å‰ç‚¹å‡»ç‚¹ä¸­å¿ƒç‚¹åæ ‡(è½¬æ¢å)ï¼š" + _transformedSphereCenter.toString());
 			
 			if(!AppConfig.Turning){
 				addPickedList(mpCube);
@@ -323,7 +323,7 @@ public class GLWorld {
 			AppConfig.gbTrianglePicked = false;
 		}
 		
-//		Log.i("GLWorld","ºÄÊ±£º" + (System.currentTimeMillis() - begin) + "millis");
+//		Log.i("GLWorld","è€—æ—¶ï¼š" + (System.currentTimeMillis() - begin) + "millis");
 
 		return bFound;
 	}
@@ -333,13 +333,18 @@ public class GLWorld {
 		return new Vector3f(vertex.tempX,vertex.tempY,vertex.tempZ);
 	}
 
+
+	/**
+	 * è‹¥æ˜¯èƒ½å¤Ÿæ—‹è½¬ï¼Œåˆ™åœ¨ move äº‹ä»¶ä¸­å°±åº”è¯¥åˆ¤æ–­å¥½äº†ï¼Œé‚£äº›å°ç«‹æ–¹ä½“è¢«è§¦æ‘¸åˆ°äº†
+	 * @param kubeAct
+	 */
 	public void decideTurning(KubeActivity kubeAct) {
 		// TODO Auto-generated method stub
 		if(pickedList.size()<2){
 			return;
 		}
 		
-		Log.i("GLWorld", "Ñ¡Ôñ·½¿é£º" + pickedList.size());
+		Log.i("GLWorld", "é€‰æ‹©æ–¹å—ï¼š" + pickedList.size());
 		
 		Layer[] mLayers = kubeAct.mLayers;
 		int layerID = -1;
@@ -353,7 +358,7 @@ public class GLWorld {
 			Layer layer = mLayers[i];
 			indexList.clear();
 			
-//			Log.d("GLWorld","µ±Ç°²ã" + i + "ÏÖÓĞ·½¿é£º" +  layer.toString());
+//			Log.d("GLWorld","å½“å‰å±‚" + i + "ç°æœ‰æ–¹å—ï¼š" +  layer.toString());
 					
 			for (int j=0;j < pickedList.size();j++) {
 				Cube cube = pickedList.get(j);
@@ -365,10 +370,10 @@ public class GLWorld {
 				}
 			}
 		
-			//µ±Ç°µã»÷·½¿é¶¼ÔÚ¸Ã²ã
+			//å½“å‰ç‚¹å‡»æ–¹å—éƒ½åœ¨è¯¥å±‚
 			if (indexList.size()==pickedList.size()) {				
 				layerID = i;
-				Log.d("GLWorld", "ËùÔÚ" + layerID + "²ã");
+				Log.d("GLWorld", "æ‰€åœ¨" + layerID + "å±‚");
 				
 				StringBuilder sb = new StringBuilder();
 				for (int j = 0; j < layer.mShapes.length; j++) {
@@ -378,21 +383,21 @@ public class GLWorld {
 				}
 				
 				layerList.add(layer);
-				Log.d("GLWorld", "¸Ã²ã°üº¬£º" + sb.toString());
+				Log.d("GLWorld", "è¯¥å±‚åŒ…å«ï¼š" + sb.toString());
 			}
 		}
 		
-		Log.d("GLWorld", "²ãÊı£º" + layerList.size());
+		Log.d("GLWorld", "å±‚æ•°ï¼š" + layerList.size());
 		
 		AppConfig.gbNeedPick = false;
 
-		// »ñµÃ×îĞÂµÄÊ°È¡ÉäÏß
+		// è·å¾—æœ€æ–°çš„æ‹¾å–å°„çº¿
 		Ray ray = PickFactory.getPickRay();
 		
 		boolean bFound = false;
 		
-		// ´æ´¢×ÅÉäÏßÔ­µãÓëÈı½ÇĞÎÏà½»µãµÄ¾àÀë
-		// ÎÒÃÇ×îºó½ö½ö±£Áô¾àÀë×î½üµÄÄÇÒ»¸ö
+		// å­˜å‚¨ç€å°„çº¿åŸç‚¹ä¸ä¸‰è§’å½¢ç›¸äº¤ç‚¹çš„è·ç¦»
+		// æˆ‘ä»¬æœ€åä»…ä»…ä¿ç•™è·ç¦»æœ€è¿‘çš„é‚£ä¸€ä¸ª
 		float closeDis = 0.0f;
 
 		Vector3f v0, v1, v2;
@@ -402,19 +407,19 @@ public class GLWorld {
 		
 		Ray transformedRay = new Ray();
 
-		// Èç¹ûÉäÏßÓë°ó¶¨Çò·¢ÉúÏà½»£¬ÄÇÃ´¾ÍĞèÒª½øĞĞ¾«È·µÄÈı½ÇÃæ¼¶±ğµÄÏà½»¼ì²â
-		// ÓÉÓÚÎÒÃÇµÄÄ£ĞÍäÖÈ¾Êı¾İ£¬¾ùÊÇÔÚÄ£ĞÍ¾Ö²¿×ø±êÏµÖĞ
-		// ¶øÊ°È¡ÉäÏßÊÇÔÚÊÀ½ç×ø±êÏµÖĞ
-		// Òò´ËĞèÒª°ÑÉäÏß×ª»»µ½Ä£ĞÍ×ø±êÏµÖĞ
-		// ÕâÀïÊ×ÏÈ¼ÆËãÄ£ĞÍ¾ØÕóµÄÄæ¾ØÕó
+		// å¦‚æœå°„çº¿ä¸ç»‘å®šçƒå‘ç”Ÿç›¸äº¤ï¼Œé‚£ä¹ˆå°±éœ€è¦è¿›è¡Œç²¾ç¡®çš„ä¸‰è§’é¢çº§åˆ«çš„ç›¸äº¤æ£€æµ‹
+		// ç”±äºæˆ‘ä»¬çš„æ¨¡å‹æ¸²æŸ“æ•°æ®ï¼Œå‡æ˜¯åœ¨æ¨¡å‹å±€éƒ¨åæ ‡ç³»ä¸­
+		// è€Œæ‹¾å–å°„çº¿æ˜¯åœ¨ä¸–ç•Œåæ ‡ç³»ä¸­
+		// å› æ­¤éœ€è¦æŠŠå°„çº¿è½¬æ¢åˆ°æ¨¡å‹åæ ‡ç³»ä¸­
+		// è¿™é‡Œé¦–å…ˆè®¡ç®—æ¨¡å‹çŸ©é˜µçš„é€†çŸ©é˜µ
 		Matrix4f matInvertModel = new Matrix4f();
 		matInvertModel.set(AppConfig.gMatModel);
 		matInvertModel.invert();
 		
-		// °ÑÉäÏß±ä»»µ½Ä£ĞÍ×ø±êÏµÖĞ£¬°Ñ½á¹û´æ´¢µ½transformedRayÖĞ
+		// æŠŠå°„çº¿å˜æ¢åˆ°æ¨¡å‹åæ ‡ç³»ä¸­ï¼ŒæŠŠç»“æœå­˜å‚¨åˆ°transformedRayä¸­
 		ray.transform(matInvertModel, transformedRay);
 		
-		//ÅĞ¶Ïµ±Ç°½çÃæÖĞĞÄµãµ½ÄÇ¸ö²ã¸ü½ü£¨Èç¹ûµã»÷µÄÊÇÁ½¸öµãÔòÓ¦¸ÃÊÇÓĞÁ½²ã¶¼°üº¬¸ÃÕâÁ½¸öµã»÷µã£©
+		//åˆ¤æ–­å½“å‰ç•Œé¢ä¸­å¿ƒç‚¹åˆ°é‚£ä¸ªå±‚æ›´è¿‘ï¼ˆå¦‚æœç‚¹å‡»çš„æ˜¯ä¸¤ä¸ªç‚¹åˆ™åº”è¯¥æ˜¯æœ‰ä¸¤å±‚éƒ½åŒ…å«è¯¥è¿™ä¸¤ä¸ªç‚¹å‡»ç‚¹ï¼‰
 		for (Layer layer : layerList) {
 			float[] ixArr = layer.getMinMax();
 			
@@ -425,7 +430,7 @@ public class GLWorld {
 			float minZ = ixArr[4];
 			float maxZ = ixArr[5];
 			
-			//Ò»¸öÁ¢·½ÌåÓĞ12¸öÈı½ÇĞÎ×é³É
+			//ä¸€ä¸ªç«‹æ–¹ä½“æœ‰12ä¸ªä¸‰è§’å½¢ç»„æˆ
 			float[][] faces ={
 					{minX,maxY,minZ , maxX,maxY,maxZ , minX,maxY,maxZ}, //top0
 					{minX,maxY,minZ , maxX,maxY,minZ , maxX,maxY,maxZ}, //top1
@@ -441,18 +446,18 @@ public class GLWorld {
 					{minX,maxY,minZ , maxX,maxY,minZ , maxX,minY,minZ}, //back1
 			};
 			
-			//8¸öµã×é³ÉµÄ6¸öÃæ(12¸öÈı½ÇĞÎ)ÊÇ·ñÓëµ±Ç°µãµÄÉäÏßÏà½»
+			//8ä¸ªç‚¹ç»„æˆçš„6ä¸ªé¢(12ä¸ªä¸‰è§’å½¢)æ˜¯å¦ä¸å½“å‰ç‚¹çš„å°„çº¿ç›¸äº¤
 			for (int j = 0; j < faces.length; j++) {
 				v0 = new Vector3f(faces[j][0], faces[j][1], faces[j][2]);
 				v1 = new Vector3f(faces[j][3], faces[j][4], faces[j][5]);
 				v2 = new Vector3f(faces[j][6], faces[j][7], faces[j][8]);
 
-				// Èç¹û·¢ÉúÁËÏà½»
+				// å¦‚æœå‘ç”Ÿäº†ç›¸äº¤
 				if (transformedRay.intersectTriangle(v0, v1, v2, location)) {
-					Log.d("GLWorld", "²ã" + layer.index + "ÓëÉäÏßÏà½»,¾àÀëÆÁÄ»:" + location.w);
+					Log.d("GLWorld", "å±‚" + layer.index + "ä¸å°„çº¿ç›¸äº¤,è·ç¦»å±å¹•:" + location.w);
 					
 					if (!bFound) {
-						// Èç¹ûÊÇ³õ´Î¼ì²âµ½£¬ĞèÒª´æ´¢ÉäÏßÔ­µãÓëÈı½ÇĞÎ½»µãµÄ¾àÀëÖµ
+						// å¦‚æœæ˜¯åˆæ¬¡æ£€æµ‹åˆ°ï¼Œéœ€è¦å­˜å‚¨å°„çº¿åŸç‚¹ä¸ä¸‰è§’å½¢äº¤ç‚¹çš„è·ç¦»å€¼
 						bFound = true;
 						closeDis = location.w;
 						nearstLayer = layer;
@@ -461,11 +466,11 @@ public class GLWorld {
 						nearest[1] = v1;
 						nearest[2] = v2;
 					} else {
-						// Èç¹ûÖ®Ç°ÒÑ¾­¼ì²âµ½Ïà½»ÊÂ¼ş£¬ÔòĞèÒª°ÑĞÂÏà½»µãÓëÖ®Ç°µÄÏà½»Êı¾İÏà±È½Ï
-						// ×îÖÕ±£ÁôÀëÉäÏßÔ­µã¸ü½üµÄ(ÈçÎó²îÔòÒ»¶¨·¶Î§ÄÚ¾ÍÅĞ¶ÏÏà½»Æ½ÃæµÄÃæ»ı)
+						// å¦‚æœä¹‹å‰å·²ç»æ£€æµ‹åˆ°ç›¸äº¤äº‹ä»¶ï¼Œåˆ™éœ€è¦æŠŠæ–°ç›¸äº¤ç‚¹ä¸ä¹‹å‰çš„ç›¸äº¤æ•°æ®ç›¸æ¯”è¾ƒ
+						// æœ€ç»ˆä¿ç•™ç¦»å°„çº¿åŸç‚¹æ›´è¿‘çš„(å¦‚è¯¯å·®åˆ™ä¸€å®šèŒƒå›´å†…å°±åˆ¤æ–­ç›¸äº¤å¹³é¢çš„é¢ç§¯)
 						if(Math.abs(closeDis-location.w)<0.0001){
-							//ÓëÆ½Ãæ¾àÀë½üËÆÏàµÈÔòÅĞ¶ÏÈı½ÇĞÎÃæ»ı
-							//±Èµ±Ç°µÄ´óÔòËµÃ÷Ãæ¿¿Ç°
+							//ä¸å¹³é¢è·ç¦»è¿‘ä¼¼ç›¸ç­‰åˆ™åˆ¤æ–­ä¸‰è§’å½¢é¢ç§¯
+							//æ¯”å½“å‰çš„å¤§åˆ™è¯´æ˜é¢é å‰
 							double area1 = calculateArea(nearest[0],nearest[1],nearest[2]);
 							double area2 = calculateArea(v0,v1,v2);
 							
@@ -492,20 +497,20 @@ public class GLWorld {
 			}
 			
 			if (bFound) {
-				Log.d("GLWorld","¾àÀëÆÁÄ»×î½üµÄÈı½ÇĞÎ:" + nearest[0].toString() + "," + nearest[1].toString() + "," + nearest[2].toString());
+				Log.d("GLWorld","è·ç¦»å±å¹•æœ€è¿‘çš„ä¸‰è§’å½¢:" + nearest[0].toString() + "," + nearest[1].toString() + "," + nearest[2].toString());
 			}
 		}
 		
-		Log.d("GLWorld", "Óëµ±Ç°½Ó´¥µã¾àÀë×î½üÈı½ÇĞÎÎª:" + nearest[0].toString() + "," + nearest[1].toString() + "," + nearest[2].toString());
+		Log.d("GLWorld", "ä¸å½“å‰æ¥è§¦ç‚¹è·ç¦»æœ€è¿‘ä¸‰è§’å½¢ä¸º:" + nearest[0].toString() + "," + nearest[1].toString() + "," + nearest[2].toString());
 
 		if (nearstLayer==null) {
-			Log.d("GLWorld", "Î´Ïà½»");
+			Log.d("GLWorld", "æœªç›¸äº¤");
 		}
 		else{
-			Log.d("GLWorld", "Óëµ±Ç°½Ó´¥µã¾àÀë×î½ü²ãÎª:" + nearstLayer.index);
+			Log.d("GLWorld", "ä¸å½“å‰æ¥è§¦ç‚¹è·ç¦»æœ€è¿‘å±‚ä¸º:" + nearstLayer.index);
 		}
 		
-		//×î½üµÄ²»Ğı×ª£¨×î½üµÄÓ¦ÎªÕıÃæ¶ÔÆÁÄ»µÄÃæ£©
+		//æœ€è¿‘çš„ä¸æ—‹è½¬ï¼ˆæœ€è¿‘çš„åº”ä¸ºæ­£é¢å¯¹å±å¹•çš„é¢ï¼‰
 		for (Layer layer : layerList) {
 			if (nearstLayer !=null && nearstLayer.index!= layer.index) {
 				layerID = layer.index;
@@ -520,7 +525,7 @@ public class GLWorld {
 	}
 
 	/**
-	 * ¼ÆËã¿Õ¼äÖĞÖ±½ÇÈı½ÇĞÎµÄÃæ»ı
+	 * è®¡ç®—ç©ºé—´ä¸­ç›´è§’ä¸‰è§’å½¢çš„é¢ç§¯
 	 * @param vector3f
 	 * @param vector3f2
 	 * @param vector3f3
@@ -534,7 +539,7 @@ public class GLWorld {
 		arr[1] = Math.pow(v0.x - v2.x,2) + Math.pow(v0.y - v2.y,2) + Math.pow(v0.z - v2.z,2);
 		arr[2] = Math.pow(v2.x - v1.x,2) + Math.pow(v2.y - v1.y,2) + Math.pow(v2.z - v1.z,2);
 		
-		//ÉıĞò
+		//å‡åº
 		Arrays.sort(arr);
 		
 		return Math.sqrt(arr[0])* Math.sqrt(arr[1])/2;

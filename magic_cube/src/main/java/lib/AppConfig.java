@@ -3,35 +3,35 @@ package lib;
 public class AppConfig {
 	public static boolean Turning = false;
 	/**
-	 * Í¶Ó°¾ØÕó
+	 * æŠ•å½±çŸ©é˜µ
 	 */
 	public static Matrix4f gMatProject = new Matrix4f();
 	/**
-	 * ÊÓÍ¼¾ØÕó
+	 * è§†å›¾çŸ©é˜µ
 	 */
 	public static Matrix4f gMatView = new Matrix4f();
 	/**
-	 * Ä£ĞÍ¾ØÕó
+	 * æ¨¡å‹çŸ©é˜µ
 	 */
 	public static Matrix4f gMatModel = new Matrix4f();
 	/**
-	 * ÊÓ¿Ú²ÎÊı
+	 * è§†å£å‚æ•°
 	 */
 	public static int[] gpViewport = new int[4];
 	/**
-	 * µ±Ç°ÏµÍ³µÄÍ¶Ó°¾ØÕó£¬ÁĞĞòÌî³ä
+	 * å½“å‰ç³»ç»Ÿçš„æŠ•å½±çŸ©é˜µï¼Œåˆ—åºå¡«å……
 	 */
 	public static float[] gpMatrixProjectArray = new float[16];
 	/**
-	 * µ±Ç°ÏµÍ³µÄÊÓÍ¼¾ØÕó£¬ÁĞĞòÌî³ä
+	 * å½“å‰ç³»ç»Ÿçš„è§†å›¾çŸ©é˜µï¼Œåˆ—åºå¡«å……
 	 */
 	public static float[] gpMatrixViewArray = new float[16];
 	/**
-	 * ÊÇ·ñĞèÒª½øĞĞÊ°È¡¼ì²â£¨µ±´¥ÃşÊÂ¼ş·¢ÉúÊ±£©
+	 * æ˜¯å¦éœ€è¦è¿›è¡Œæ‹¾å–æ£€æµ‹ï¼ˆå½“è§¦æ‘¸äº‹ä»¶å‘ç”Ÿæ—¶ï¼‰
 	 */
 	public static boolean gbNeedPick = false;
 	/**
-	 * ÊÇ·ñÓĞÈı½ÇĞÎ±»Ñ¡ÖĞ
+	 * æ˜¯å¦æœ‰ä¸‰è§’å½¢è¢«é€‰ä¸­
 	 */
 	public static boolean gbTrianglePicked = false;
 

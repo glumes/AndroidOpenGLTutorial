@@ -23,7 +23,7 @@ public class Layer {
 	
 	public Layer(int axis,int index) {
 		// start with identity matrix for transformation
-		//���캯���п��Զ�final�ֶθ�ֵ
+		//构造函数中可以对final字段赋值
 		mAxis = axis;
 		this.index = index;
 		mTransform.setIdentity();
@@ -46,7 +46,8 @@ public class Layer {
 			}	
 		}
 	}
-	
+
+	// 得到了角度之后，当前层 Layer 的每个小立方体进行旋转。
 	public void setAngle(float angle) {
 		// normalize the angle
 		float twopi = (float) Math.PI *2f;
