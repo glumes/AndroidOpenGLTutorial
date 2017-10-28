@@ -466,6 +466,7 @@ public class BasicGameView extends GLSurfaceView implements MessageSender, OnSte
             Point[0] = event.getX();
             Point[1] = event.getY();
 
+            // point1 是 手指落下时的点 point 是 手指抬起时的点，faceIndex1 是 触摸的那个面
             if (RotateOrMove1 == MagicCubeRender.MOVE && render.IsMoveValid(Point1, Point) && this.CanMove) {
                 LogUtil.d("Let`s move");
                 String cmdstr = render.CalcCommand(Point1, Point, FaceIndex1);
