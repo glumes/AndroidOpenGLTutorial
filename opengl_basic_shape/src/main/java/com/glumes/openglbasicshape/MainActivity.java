@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         LogUtil.d("type is " + mType);
 
+
         final BaseRenderer renderer = mRendererArray.get(mType);
 
 //        glSurfaceView = new BaseGLSurfaceView(this, renderer);
