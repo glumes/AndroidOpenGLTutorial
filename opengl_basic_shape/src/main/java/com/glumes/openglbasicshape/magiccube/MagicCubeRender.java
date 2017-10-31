@@ -23,7 +23,6 @@ import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 import android.opengl.GLUtils;
 import android.opengl.Matrix;
-import android.util.Log;
 
 import com.glumes.comlib.LogUtil;
 import com.glumes.openglbasicshape.R;

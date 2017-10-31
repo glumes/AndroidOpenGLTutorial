@@ -1,11 +1,7 @@
 package com.glumes.openglbasicshape.renderers;
 
 import android.content.Context;
-
-import javax.microedition.khronos.egl.EGLConfig;
-
 import android.opengl.GLES20;
-import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 
@@ -13,6 +9,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
+import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 /**
@@ -236,7 +233,7 @@ public class CubeRender extends BaseRenderer {
         Matrix.translateM(mModelMatrix, 0, 0.0f, 0.0f, -5.0f);
 
 //        Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 1.0f, 1.0f, 0.0f);
-        Matrix.rotateM(mModelMatrix, 0, getAngleX(), 1.0f, 1.0f, 0.0f);
+//        Matrix.rotateM(mModelMatrix, 0, getAngleX(), 1.0f, 1.0f, 0.0f);
 
 //        for (int i = 0; i < 10; i++) {
 //            Matrix.translateM(mModelMatrix, 0, xDistance[i][0], xDistance[i][1], xDistance[i][2]);

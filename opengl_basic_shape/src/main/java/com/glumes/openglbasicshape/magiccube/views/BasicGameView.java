@@ -18,13 +18,11 @@ package com.glumes.openglbasicshape.magiccube.views;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
-import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 
 import com.glumes.comlib.LogUtil;
-import com.glumes.openglbasicshape.magiccube.Face;
 import com.glumes.openglbasicshape.magiccube.MagicCubeRender;
 import com.glumes.openglbasicshape.magiccube.MagiccubePreference;
 import com.glumes.openglbasicshape.magiccube.interfaces.MessageSender;

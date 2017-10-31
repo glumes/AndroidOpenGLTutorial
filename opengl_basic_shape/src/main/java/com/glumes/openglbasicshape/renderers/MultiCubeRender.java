@@ -17,7 +17,7 @@ import static android.opengl.Matrix.setIdentityM;
  * Created by glumes on 2017/8/13.
  */
 
-public class CubeRender2 extends BaseRenderer {
+public class MultiCubeRender extends BaseRenderer {
 
     private Cube cube;
 
@@ -54,7 +54,7 @@ public class CubeRender2 extends BaseRenderer {
     };
 
 
-    public CubeRender2(Context mContext) {
+    public MultiCubeRender(Context mContext) {
         super(mContext);
     }
 

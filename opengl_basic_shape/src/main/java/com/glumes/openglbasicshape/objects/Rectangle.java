@@ -1,11 +1,9 @@
 package com.glumes.openglbasicshape.objects;
 
 import android.content.Context;
-import android.graphics.Shader;
 
 import com.glumes.openglbasicshape.R;
 import com.glumes.openglbasicshape.data.VertexArray;
-import com.glumes.openglbasicshape.utils.Constant;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
 import com.glumes.openglbasicshape.utils.TextureHelper;
 
@@ -13,13 +11,10 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.ShortBuffer;
 
-import static android.opengl.GLES20.GL_LINE_LOOP;
-import static android.opengl.GLES20.GL_LINE_STRIP;
 import static android.opengl.GLES20.GL_TEXTURE0;
 import static android.opengl.GLES20.GL_TEXTURE_2D;
 import static android.opengl.GLES20.GL_TRIANGLES;
 import static android.opengl.GLES20.GL_TRIANGLE_FAN;
-import static android.opengl.GLES20.GL_UNSIGNED_BYTE;
 import static android.opengl.GLES20.GL_UNSIGNED_SHORT;
 import static android.opengl.GLES20.glActiveTexture;
 import static android.opengl.GLES20.glBindTexture;
@@ -28,7 +23,6 @@ import static android.opengl.GLES20.glDrawElements;
 import static android.opengl.GLES20.glGetAttribLocation;
 import static android.opengl.GLES20.glGetUniformLocation;
 import static android.opengl.GLES20.glUniform1i;
-import static android.opengl.GLES20.glUniform4f;
 import static android.opengl.GLES20.glUniformMatrix4fv;
 import static android.opengl.GLES20.glUseProgram;
 import static android.opengl.Matrix.setIdentityM;

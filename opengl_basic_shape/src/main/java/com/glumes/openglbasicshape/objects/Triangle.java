@@ -1,7 +1,6 @@
 package com.glumes.openglbasicshape.objects;
 
 import android.content.Context;
-import android.opengl.Matrix;
 
 import com.glumes.openglbasicshape.R;
 import com.glumes.openglbasicshape.data.VertexArray;
@@ -9,22 +8,14 @@ import com.glumes.openglbasicshape.utils.ShaderHelper;
 
 import java.nio.ByteBuffer;
 
-import static android.opengl.GLES20.GL_LINE_LOOP;
-import static android.opengl.GLES20.GL_LINE_STRIP;
 import static android.opengl.GLES20.GL_TRIANGLES;
-import static android.opengl.GLES20.GL_TRIANGLE_FAN;
-import static android.opengl.GLES20.GL_UNSIGNED_BYTE;
 import static android.opengl.GLES20.glDrawArrays;
-import static android.opengl.GLES20.glDrawElements;
 import static android.opengl.GLES20.glGetAttribLocation;
 import static android.opengl.GLES20.glGetUniformLocation;
 import static android.opengl.GLES20.glUniform4f;
 import static android.opengl.GLES20.glUniformMatrix4fv;
 import static android.opengl.GLES20.glUseProgram;
-import static android.opengl.Matrix.rotateM;
-import static android.opengl.Matrix.scaleM;
 import static android.opengl.Matrix.setIdentityM;
-import static android.opengl.Matrix.translateM;
 
 /**
  * Created by glumes on 2017/7/30.

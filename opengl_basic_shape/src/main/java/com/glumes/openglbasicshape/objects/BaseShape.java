@@ -3,9 +3,6 @@ package com.glumes.openglbasicshape.objects;
 import android.content.Context;
 
 import com.glumes.openglbasicshape.data.VertexArray;
-import com.glumes.openglbasicshape.utils.ShaderHelper;
-
-import java.nio.FloatBuffer;
 
 /**
  * Created by glumes on 2017/7/29.

@@ -6,31 +6,13 @@ import android.opengl.GLU;
 import android.opengl.Matrix;
 
 import com.glumes.comlib.LogUtil;
-import com.glumes.openglbasicshape.R;
 import com.glumes.openglbasicshape.objects.Triangle;
 import com.glumes.openglbasicshape.utils.DisplayManager;
-import com.glumes.openglbasicshape.utils.TextResourceReader;
-
-import org.w3c.dom.Text;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import static android.opengl.GLES20.GL_COLOR_BUFFER_BIT;
-import static android.opengl.GLES20.GL_FLOAT;
-import static android.opengl.GLES20.GL_TRIANGLES;
-import static android.opengl.GLES20.glDrawArrays;
-import static android.opengl.GLES20.glEnableVertexAttribArray;
-import static android.opengl.GLES20.glGetAttribLocation;
-import static android.opengl.GLES20.glGetUniformLocation;
-import static android.opengl.GLES20.glUniform4f;
-import static android.opengl.GLES20.glVertexAttribPointer;
 import static android.opengl.GLES20.glViewport;
-import static android.opengl.Matrix.rotateM;
 import static android.opengl.Matrix.setIdentityM;
 
 /**

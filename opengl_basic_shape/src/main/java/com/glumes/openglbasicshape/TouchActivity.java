@@ -1,21 +1,21 @@
 package com.glumes.openglbasicshape;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
-import com.glumes.openglbasicshape.glviews.TouchSurfaceView;
+import com.glumes.openglbasicshape.glviews.TouchView;
 
 public class TouchActivity extends AppCompatActivity {
 
 
-    TouchSurfaceView touchSurfaceView;
+    TouchView touchSurfaceView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_touch);
 
-        touchSurfaceView = (TouchSurfaceView) findViewById(R.id.touchSurface);
+        touchSurfaceView = (TouchView) findViewById(R.id.touchSurface);
 
     }
 

@@ -12,7 +12,7 @@ import com.glumes.openglbasicshape.renderers.TriangleRenderer;
  * Created by zhaoying on 2017/9/18.
  */
 
-public class TouchSurfaceView extends GLSurfaceView {
+public class TouchView extends GLSurfaceView {
 
 
     TriangleRenderer mRender;
@@ -20,7 +20,7 @@ public class TouchSurfaceView extends GLSurfaceView {
 
     private float[] Point1;
 
-    public TouchSurfaceView(Context context) {
+    public TouchView(Context context) {
         super(context);
 
         mContext = context;
@@ -33,7 +33,7 @@ public class TouchSurfaceView extends GLSurfaceView {
 
     }
 
-    public TouchSurfaceView(Context context, AttributeSet attrs) {
+    public TouchView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         mContext = context;
