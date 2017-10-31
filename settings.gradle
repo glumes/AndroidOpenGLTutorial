@@ -4,4 +4,5 @@ include ':app',
         ':comlib',
         ':official_opengl_sample',
         ':magic_cube',
-        ':opengl_kotlin_native'
+        ':opengl_kotlin_native',
+        ':MagicCube'
