@@ -234,12 +234,15 @@ public class Cube {
                 0.0f, 0.0f, // C. left-top
                 1.0f, 0.0f // D. right-top
         };
+
         ByteBuffer tbb = ByteBuffer.allocateDirect(texCoords.length * 4 * 6);
         tbb.order(ByteOrder.nativeOrder());
         texBuffer = tbb.asFloatBuffer();
+
         for (int face = 0; face < 6; face++) {
             texBuffer.put(texCoords);
         }
+
         texBuffer.position(0); // Rewind
     }
 

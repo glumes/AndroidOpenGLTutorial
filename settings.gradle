@@ -1,8 +1,7 @@
 include ':app',
         ':opengl_basic_shape',
-        ':opengl_by_cplusplus',
         ':comlib',
         ':official_opengl_sample',
         ':magic_cube',
         ':opengl_kotlin_native',
-        ':MagicCube'
+        ':MagicCube', ':opengl_practice'

@@ -48,8 +48,8 @@ public class BaseShapeActivity extends AppCompatActivity {
         mRendererArray.put(RenderType.RENDER_TYPE_TRIANGLE, new TriangleRenderer(this));
         mRendererArray.put(RenderType.RENDER_TYPE_RECTANGLE, new RectangleRenderer(this));
         mRendererArray.put(RenderType.RENDER_TYPE_CIRCLE, new CircleRenderer(this));
-        mRendererArray.put(RenderType.RENDER_TYPE_CUBE, new MultiCubeRender(this));
-        mRendererArray.put(RenderType.RENDER_TYPE_MULTI_CUBE, new CubeRender(this));
+        mRendererArray.put(RenderType.RENDER_TYPE_CUBE, new CubeRender(this));
+        mRendererArray.put(RenderType.RENDER_TYPE_MULTI_CUBE, new MultiCubeRender(this));
         mRendererArray.put(RenderType.RENDER_TYPE_SPHERE, new SphereRenderer(this));
     }
 
