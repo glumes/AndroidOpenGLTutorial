@@ -12,7 +12,7 @@ class Face(var id: Int = 0) {
     var P3: FloatArray = kotlin.FloatArray(3)
     var P4: FloatArray = kotlin.FloatArray(3)
 
-    val halfsize: Float = CubeSise / 1.5f
+    val halfsize: Float = CubeSize / 1.5f
 
     var Subfaces: IntArray = kotlin.IntArray(9)
 
