@@ -60,6 +60,7 @@ public class Magiccube {
 
     /**
      * 面是固定不变的，但是每个面的内容却是可以改变的。
+     *
      * @param RowId
      * @param Direction
      * @param angle
@@ -68,10 +69,12 @@ public class Magiccube {
     public void RotateRow(int RowId, int Direction, float angle, boolean IfSetMap) {
 
         if (Direction == Cube.ClockWise) {
+            // 改变 一行的 9 个矩形
             for (int i = RowId * 9; i < RowId * 9 + 9; i++) {
                 cubes[cubei[i]].Rotate(Cube.YAxis, angle);
             }
             if (IfSetMap) {
+                // temp 对应这次更改的 9 个小矩形的索引 id
                 int[] temp = new int[9];
                 for (int i = 0; i < 9; i++)
                     temp[i] = cubei[RowId * 9 + i];
@@ -87,6 +90,7 @@ public class Magiccube {
 
                 //solve the changing color of each subfaces
                 if (RowId == 0) {
+                    // 此时的 temp 代表的是：TOP 面上的九个小矩形面的颜色，subfaces[i]的值是 上下左右前后索引值 。
                     for (int i = 0; i < 9; i++) {
                         temp[i] = faces[Face.TOP].Subfaces[i];
                     }
@@ -121,6 +125,9 @@ public class Magiccube {
                     faces[Face.RIGHT].Subfaces[Face.S2] = temp[1];
                     faces[Face.RIGHT].Subfaces[Face.S3] = temp[2];
                 } else if (RowId == 1) {
+
+                    // 中间层的旋转，就不用涉及到顶层和底层面的旋转了
+
                     temp[0] = faces[Face.FRONT].Subfaces[Face.E1];
                     temp[1] = faces[Face.FRONT].Subfaces[Face.E2];
                     temp[2] = faces[Face.FRONT].Subfaces[Face.E3];
@@ -144,6 +151,8 @@ public class Magiccube {
                     for (int i = 0; i < 9; i++) {
                         temp[i] = faces[Face.BOTTOM].Subfaces[i];
                     }
+
+                    // 底层面的旋转和之前的类似
 
                     faces[Face.BOTTOM].Subfaces[Face.Y1] = temp[Face.Y3];
                     faces[Face.BOTTOM].Subfaces[Face.Y2] = temp[Face.E3];
@@ -178,7 +187,7 @@ public class Magiccube {
 
 
             }
-        } else {
+        } else { // 逆时针的旋转，同样的道理，更改旋转了的小矩形的索引 cubei 和对应的面的颜色。
             for (int i = RowId * 9; i < RowId * 9 + 9; i++) {
                 cubes[cubei[i]].Rotate(Cube.YAxis, -angle);
             }
@@ -291,6 +300,7 @@ public class Magiccube {
         }
     }
 
+    // 旋转列和行类似
     public void RotateCol(int RowId, int Direction, float angle, boolean IfSetMap) {
         if (Direction == Cube.CounterClockWise) {
             for (int i = 0; i <= 18; i += 9) {
@@ -530,8 +540,14 @@ public class Magiccube {
         }
     }
 
+    //  rowid 在 0 ~ 2 之间
     public void RotateFace(int RowId, int Direction, float angle, boolean IfSetMap)    //near middle far
     {
+        // 算出来的值正好对应一个面的小矩形 ID 索引
+        // 6、7、8、15、16、17、24、25、26
+        // 0、1、2、9、10、11、18、19、20
+        // 旋转面相当于旋转了行
+
         if (Direction == Cube.CounterClockWise) {
             for (int i = 0; i <= 18; i += 9) {
                 cubes[cubei[RowId * 3 + 0 + i]].Rotate(Cube.ZAxis, -angle);
@@ -784,7 +800,7 @@ public class Magiccube {
         gl.glPopMatrix();
 
 /*	    for(int i=0; i<27; i++)
-	    {
+        {
 	    	this.cubes[i].Draw(gl);
 	    }*/
     }
@@ -908,8 +924,7 @@ public class Magiccube {
                         + Face.FaceToChar(faces[Face.U].Subfaces[Face.E2])
                         + " "
 
-                        + Face.FaceToChar(faces[Face.D].Subfaces[Face.E2])
-        ;
+                        + Face.FaceToChar(faces[Face.D].Subfaces[Face.E2]);
 
 
         return state;
@@ -940,6 +955,7 @@ public class Magiccube {
             int RowID, Direction = 0;
 
             int r = Math.abs(random.nextInt()) % 2 * 2;
+            // rowId 范围在 0 ~ 2 之间
             RowID = r;
             //Log.e("rowID", RowID+"");
 
@@ -947,11 +963,16 @@ public class Magiccube {
             switch (r) {
                 case 0:
                     Direction = Cube.ClockWise;
+                    break;
                 case 1:
                     Direction = Cube.CounterClockWise;
+                    break;
+                default:
+                    break;
             }
 
             r = Math.abs(random.nextInt()) % 3;
+            // rowid 只会在 0 ~ 2 之间了
             switch (r) {
                 case 0:
                     RotateRow(RowID, Direction, 90.f, true);

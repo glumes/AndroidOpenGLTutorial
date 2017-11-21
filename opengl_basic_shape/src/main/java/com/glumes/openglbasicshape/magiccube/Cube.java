@@ -94,6 +94,7 @@ public class Cube {
         Matrix.setIdentityM(modelM, 0);
     }
 
+
     public void Rotate(int axis, float angle) {
         float[] m = new float[16];
         float[] m2 = new float[16];
