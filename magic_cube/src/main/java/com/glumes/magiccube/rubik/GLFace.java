@@ -18,6 +18,7 @@ package com.glumes.magiccube.rubik;
 
 import android.graphics.Bitmap;
 import android.opengl.GLUtils;
+import android.os.Build;
 
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
@@ -132,7 +133,8 @@ public class GLFace {
 		}
 		
 		GLColor color = getColor();
-		
+
+
 		gl.glColor4f(color.red, color.green, color.blue, color.alpha);
 		
 		if (!color.equals(GLColor.BLACK)) { 

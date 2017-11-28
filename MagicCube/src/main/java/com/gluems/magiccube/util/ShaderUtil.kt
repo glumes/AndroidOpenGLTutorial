@@ -2,6 +2,7 @@ package com.gluems.magiccube.util
 
 import android.content.Context
 import android.opengl.GLES30
+import com.gluems.magiccube.CubeApplication
 import com.orhanobut.logger.Logger
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -74,10 +75,10 @@ class ShaderUtil {
         }
 
 
-        fun readTextFileFromResource(context: Context, resourceId: Int): String {
+        fun readTextFileFromResource(resourceId: Int): String {
 
             val sb = StringBuilder()
-            val inputStream = context.resources.openRawResource(resourceId)
+            val inputStream = CubeApplication.getContext().resources.openRawResource(resourceId)
             val inputStreamReader = InputStreamReader(inputStream)
             val bufferReader = BufferedReader(inputStreamReader)
             var nextLine: String? = null
