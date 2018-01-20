@@ -10,9 +10,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".BaseShapeActivity" />
-
         <activity android:name=".RendererActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,12 +17,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MagicCubeActivity" />
+        <activity android:name=".TouchActivity" />
+
+        <activity
+            android:name=".BasicGraphActivity"
+            android:theme="@style/NoActionBarTheme"/>
 
 
-        <activity android:name=".MagicCubeActivity">
-
-        </activity>
-        <activity android:name=".TouchActivity"></activity>
+        <activity android:name=".BasicShapeActivity"
+            android:theme="@style/NoActionBarTheme"/>
     </application>
 
 </manifest>

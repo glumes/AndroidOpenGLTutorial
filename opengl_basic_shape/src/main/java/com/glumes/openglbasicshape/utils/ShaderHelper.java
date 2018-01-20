@@ -82,7 +82,7 @@ public class ShaderHelper {
         final int[] linkStatus = new int[1];
         glGetProgramiv(programObjectId, GL_LINK_STATUS, linkStatus, 0);
 
-        Timber.d("Result of linking program:\n" + glGetProgramInfoLog(programObjectId));
+//        Timber.d("Result of linking program:\n" + glGetProgramInfoLog(programObjectId));
 
         if (linkStatus[0] == 0) {
             glDeleteProgram(programObjectId);

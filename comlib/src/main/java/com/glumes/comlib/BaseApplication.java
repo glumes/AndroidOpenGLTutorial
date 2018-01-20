@@ -2,6 +2,10 @@ package com.glumes.comlib;
 
 import android.app.Application;
 
+
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
+
 import timber.log.Timber;
 
 /**
@@ -15,6 +19,7 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         initTimeber();
+        Logger.addLogAdapter(new AndroidLogAdapter());
     }
 
     void initTimeber() {

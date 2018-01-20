@@ -27,7 +27,6 @@ public class PointRenderer extends BaseRenderer {
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         super.onSurfaceCreated(gl, config);
 
-
         // 在 onSurfaceCreated 里面初始化，否则会报线程错误
         mPoint = new Point(mContext);
         mPoint.bindData();
@@ -41,10 +40,13 @@ public class PointRenderer extends BaseRenderer {
 
     @Override
     public void onDrawFrame(GL10 gl) {
-        // 清屏
-        glClear(GL_COLOR_BUFFER_BIT);
         // 绘制
         mPoint.draw();
     }
 
+    @Override
+    public void onSurfaceDestroyed() {
+        super.onSurfaceDestroyed();
+        mPoint.destroy();
+    }
 }

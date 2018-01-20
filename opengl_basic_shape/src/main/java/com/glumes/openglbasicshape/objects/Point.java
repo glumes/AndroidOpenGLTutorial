@@ -1,6 +1,7 @@
 package com.glumes.openglbasicshape.objects;
 
 import android.content.Context;
+import android.opengl.GLES20;
 
 import com.glumes.openglbasicshape.R;
 import com.glumes.openglbasicshape.data.VertexArray;
@@ -61,5 +62,11 @@ public class Point extends BaseShape {
     @Override
     public void draw(float[] mvpMatrix) {
         super.draw(mvpMatrix);
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        GLES20.glDeleteProgram(mProgram);
     }
 }

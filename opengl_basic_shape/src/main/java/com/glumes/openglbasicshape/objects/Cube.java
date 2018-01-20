@@ -5,7 +5,7 @@ import android.content.Context;
 import com.glumes.comlib.LogUtil;
 import com.glumes.openglbasicshape.R;
 import com.glumes.openglbasicshape.data.VertexArray;
-import com.glumes.openglbasicshape.utils.Constant;
+import com.glumes.openglbasicshape.utils.Constants;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
 
 import java.nio.ByteBuffer;
@@ -167,7 +167,7 @@ public class Cube extends BaseShape {
 
         indexArray = new VertexArray(cubeColor2);
 
-        byteBuffer = ByteBuffer.allocateDirect(position.length * Constant.BYTES_PRE_BYTE)
+        byteBuffer = ByteBuffer.allocateDirect(position.length * Constants.BYTES_PRE_BYTE)
                 .put(position);
 
 

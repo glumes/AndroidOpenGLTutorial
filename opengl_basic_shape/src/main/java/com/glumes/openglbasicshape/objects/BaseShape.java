@@ -49,4 +49,8 @@ public abstract class BaseShape {
 
     }
 
+    public void destroy(){
+
+    }
+
 }

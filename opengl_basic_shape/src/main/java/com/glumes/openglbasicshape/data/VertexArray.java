@@ -1,6 +1,6 @@
 package com.glumes.openglbasicshape.data;
 
-import com.glumes.openglbasicshape.utils.Constant;
+import com.glumes.openglbasicshape.utils.Constants;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -23,7 +23,7 @@ public class VertexArray {
      */
     public VertexArray(float[] vertexData) {
         floatBuffer = ByteBuffer
-                .allocateDirect(vertexData.length * Constant.BYTES_PRE_FLOAT)
+                .allocateDirect(vertexData.length * Constants.BYTES_PRE_FLOAT)
                 .order(ByteOrder.nativeOrder())
                 .asFloatBuffer()
                 .put(vertexData);

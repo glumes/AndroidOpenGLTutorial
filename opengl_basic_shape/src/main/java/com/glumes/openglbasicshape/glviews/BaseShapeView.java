@@ -2,8 +2,10 @@ package com.glumes.openglbasicshape.glviews;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
+import android.view.SurfaceHolder;
 
 import com.glumes.openglbasicshape.renderers.BaseRenderer;
+import com.orhanobut.logger.Logger;
 
 /**
  * Created by glumes on 2017/8/16.
@@ -20,7 +22,23 @@ public class BaseShapeView extends GLSurfaceView {
         baseRenderer = renderer;
         setRenderer(baseRenderer);
 
-        setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+        setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
     }
 
+
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        super.surfaceCreated(holder);
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
+        super.surfaceChanged(holder, format, w, h);
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        super.surfaceDestroyed(holder);
+        baseRenderer.onSurfaceDestroyed();
+    }
 }
