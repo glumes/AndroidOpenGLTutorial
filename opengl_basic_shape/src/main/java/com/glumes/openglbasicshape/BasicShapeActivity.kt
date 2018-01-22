@@ -6,8 +6,7 @@ import android.support.v7.widget.Toolbar
 import com.glumes.openglbasicshape.base.BaseToolbarActivity
 import com.glumes.openglbasicshape.glviews.BaseShapeView
 import com.glumes.openglbasicshape.objects.BaseShape
-import com.glumes.openglbasicshape.objects.Cube
-import com.glumes.openglbasicshape.objects.Point
+import com.glumes.openglbasicshape.objects.shape.Cube
 import com.glumes.openglbasicshape.renderers.BasicShapeRender
 import com.glumes.openglbasicshape.utils.ACTIVITY_TITLE
 
@@ -32,13 +31,6 @@ class BasicShapeActivity : BaseToolbarActivity() {
 
         setContentView(mBaseShapeView)
     }
-
-
-
-
-
-
-
 
 
     override fun updateToolbar() {

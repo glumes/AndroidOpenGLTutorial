@@ -6,7 +6,7 @@ import android.opengl.GLU;
 import android.opengl.Matrix;
 
 import com.glumes.comlib.LogUtil;
-import com.glumes.openglbasicshape.objects.Triangle;
+import com.glumes.openglbasicshape.objects.graph.Triangle;
 import com.glumes.openglbasicshape.utils.DisplayManager;
 
 import javax.microedition.khronos.egl.EGLConfig;

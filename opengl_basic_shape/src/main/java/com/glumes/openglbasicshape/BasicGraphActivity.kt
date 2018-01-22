@@ -6,6 +6,7 @@ import android.util.SparseArray
 import com.glumes.openglbasicshape.base.BaseToolbarActivity
 import com.glumes.openglbasicshape.glviews.BaseShapeView
 import com.glumes.openglbasicshape.objects.*
+import com.glumes.openglbasicshape.objects.graph.*
 import com.glumes.openglbasicshape.renderers.BasicShapeRender
 import com.glumes.openglbasicshape.utils.ACTIVITY_TITLE
 
@@ -35,13 +36,11 @@ class BasicGraphActivity : BaseToolbarActivity() {
             mRenderer.setShape(Point::class.java)
         }
 
-        shapeClazzArray.put(R.id.point,Point::class.java)
-        shapeClazzArray.put(R.id.line,Line::class.java)
-        shapeClazzArray.put(R.id.rectangle,Rectangle::class.java)
-        shapeClazzArray.put(R.id.polygon,Polygon::class.java)
-        shapeClazzArray.put(R.id.circle,Circle::class.java)
-        shapeClazzArray.put(R.id.cube,Cube::class.java)
-        shapeClazzArray.put(R.id.sphere,Sphere::class.java)
+        shapeClazzArray.put(R.id.point, Point::class.java)
+        shapeClazzArray.put(R.id.line, Line::class.java)
+        shapeClazzArray.put(R.id.rectangle, Rectangle::class.java)
+        shapeClazzArray.put(R.id.polygon, Polygon::class.java)
+        shapeClazzArray.put(R.id.circle, Circle::class.java)
 
         setContentView(mBaseShapeView)
     }

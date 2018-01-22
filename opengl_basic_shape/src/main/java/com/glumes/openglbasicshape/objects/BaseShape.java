@@ -13,7 +13,6 @@ public abstract class BaseShape {
 
     protected Context mContext;
 
-
     protected VertexArray vertexArray;
 
     protected VertexArray indexArray;

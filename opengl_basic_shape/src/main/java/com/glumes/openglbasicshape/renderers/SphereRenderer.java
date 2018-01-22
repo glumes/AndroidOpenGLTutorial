@@ -4,8 +4,8 @@ import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 
-import com.glumes.openglbasicshape.objects.Sphere;
-import com.glumes.openglbasicshape.objects.SphereTexture;
+import com.glumes.openglbasicshape.objects.shape.Sphere;
+import com.glumes.openglbasicshape.objects.texture.SphereTexture;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;

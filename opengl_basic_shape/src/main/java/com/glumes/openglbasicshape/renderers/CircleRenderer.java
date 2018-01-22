@@ -2,7 +2,7 @@ package com.glumes.openglbasicshape.renderers;
 
 import android.content.Context;
 
-import com.glumes.openglbasicshape.objects.Circle;
+import com.glumes.openglbasicshape.objects.graph.Circle;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;

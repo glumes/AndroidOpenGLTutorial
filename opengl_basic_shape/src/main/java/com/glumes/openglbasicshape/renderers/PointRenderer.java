@@ -2,13 +2,11 @@ package com.glumes.openglbasicshape.renderers;
 
 import android.content.Context;
 
-import com.glumes.openglbasicshape.objects.Point;
+import com.glumes.openglbasicshape.objects.graph.Point;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import static android.opengl.GLES20.GL_COLOR_BUFFER_BIT;
-import static android.opengl.GLES20.glClear;
 import static android.opengl.GLES20.glViewport;
 
 /**

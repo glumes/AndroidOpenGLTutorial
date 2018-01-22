@@ -3,7 +3,7 @@ package com.glumes.openglbasicshape.renderers;
 import android.content.Context;
 import android.opengl.Matrix;
 
-import com.glumes.openglbasicshape.objects.Rectangle;
+import com.glumes.openglbasicshape.objects.graph.Rectangle;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;

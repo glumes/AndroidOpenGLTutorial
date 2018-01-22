@@ -1,9 +1,10 @@
-package com.glumes.openglbasicshape.objects;
+package com.glumes.openglbasicshape.objects.graph;
 
 import android.content.Context;
 
 import com.glumes.openglbasicshape.R;
 import com.glumes.openglbasicshape.data.VertexArray;
+import com.glumes.openglbasicshape.objects.BaseShape;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
 
 import static android.opengl.GLES20.GL_LINE_LOOP;
@@ -29,7 +30,7 @@ public class Circle extends BaseShape {
 
     // 圆形分割的数量，可由 360 个直线组成空心圆，也可以由 360 个三角形组成实心圆
     // 把 数量改变就可以绘制对应的正多边形了，毕竟圆形也是由正多边形趋近的
-    public static final int VERTEX_DATA_NUM = 7;
+    public static final int VERTEX_DATA_NUM = 360;
 
     // 360 个顶点的位置，因为有 x 和 y 坐标，所以 double 一下，再加上中心点 和 闭合的点
     float[] circleVertex = new float[VERTEX_DATA_NUM * 2 + 4];

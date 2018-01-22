@@ -1,9 +1,10 @@
-package com.glumes.openglbasicshape.objects;
+package com.glumes.openglbasicshape.objects.graph;
 
 import android.content.Context;
 
 import com.glumes.openglbasicshape.R;
 import com.glumes.openglbasicshape.data.VertexArray;
+import com.glumes.openglbasicshape.objects.BaseShape;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
 import com.glumes.openglbasicshape.utils.TextureHelper;
 
@@ -23,6 +24,7 @@ import static android.opengl.GLES20.glDrawElements;
 import static android.opengl.GLES20.glGetAttribLocation;
 import static android.opengl.GLES20.glGetUniformLocation;
 import static android.opengl.GLES20.glUniform1i;
+import static android.opengl.GLES20.glUniform4f;
 import static android.opengl.GLES20.glUniformMatrix4fv;
 import static android.opengl.GLES20.glUseProgram;
 import static android.opengl.Matrix.setIdentityM;
@@ -64,7 +66,8 @@ public class Rectangle extends BaseShape {
             -0.5f, -0.8f,
             0.5f, -0.8f,
             0.5f, 0.8f,
-            -0.5f, 0.8f
+            -0.5f, 0.8f,
+            -0.5f, -0.8f
     };
 
     private ShortBuffer indexBuffer;
@@ -89,7 +92,10 @@ public class Rectangle extends BaseShape {
     public Rectangle(Context context) {
         super(context);
 
-        mProgram = ShaderHelper.buildProgram(context, R.raw.texture_vertex_shader, R.raw.texture_fragment_shader);
+        // 不适用纹理的着色器脚本
+        mProgram = ShaderHelper.buildProgram(context,R.raw.rectangle_vertex_shaper,R.raw.rectangle_fragment_shaper);
+        // 使用纹理的着色器脚本
+//        mProgram = ShaderHelper.buildProgram(context, R.raw.texture_vertex_shader, R.raw.texture_fragment_shader);
 
         glUseProgram(mProgram);
 
@@ -113,7 +119,6 @@ public class Rectangle extends BaseShape {
 
         indexBuffer.position(0);
 
-
     }
 
     /**
@@ -125,18 +130,17 @@ public class Rectangle extends BaseShape {
 
     @Override
     public void bindData() {
-        super.bindData();
 
-
-//        aColorLocation = glGetUniformLocation(mProgram, U_COLOR);
+        // 不使用纹理的单一颜色
+        aColorLocation = glGetUniformLocation(mProgram, U_COLOR);
 
         aPositionLocation = glGetAttribLocation(mProgram, A_POSITION);
-
         uMatrixLocation = glGetUniformLocation(mProgram, U_MATRIX);
 
-        aTextureCoordinatesLocation = glGetAttribLocation(mProgram, A_TEXTURE_COORDINATES);
+        // 对应纹理的设置
+//        aTextureCoordinatesLocation = glGetAttribLocation(mProgram, A_TEXTURE_COORDINATES);
+//        uTextureUnitLocation = glGetUniformLocation(mProgram, U_TEXTURE_UNIT);
 
-        uTextureUnitLocation = glGetUniformLocation(mProgram, U_TEXTURE_UNIT);
 
         vertexArray.setVertexAttribPointer(0, aPositionLocation, POSITION_COMPONENT_COUNT, STRIDE);
 
@@ -144,22 +148,22 @@ public class Rectangle extends BaseShape {
 //        vertexArray.setVertexAttribPointer(POSITION_COMPONENT_COUNT, aTextureCoordinatesLocation,
 //                TEXTURE_COORDINATES_COMPONENT_COUNT, STRIDE);
 
-        textureVertexArray.setVertexAttribPointer(0, aTextureCoordinatesLocation, TEXTURE_COORDINATES_COMPONENT_COUNT, STRIDE);
+//        textureVertexArray.setVertexAttribPointer(0, aTextureCoordinatesLocation, TEXTURE_COORDINATES_COMPONENT_COUNT, STRIDE);
 
         setIdentityM(mvpMatrix, 0);
 
-        int texture = TextureHelper.loadTexture(mContext, R.drawable.texture);
+//        int texture = TextureHelper.loadTexture(mContext, R.drawable.texture);
 
         // OpenGL 在使用纹理进行绘制时，不需要直接给着色器传递纹理。
         // 相反，我们使用纹理单元保存那个纹理，因为，一个 GPU 只能同时绘制数量有限的纹理
         // 它使用那些纹理单元表示当前正在被绘制的活动的纹理
 
         // 通过调用 glActiveTexture 把活动的纹理单元设置为纹理单元 0
-        glActiveTexture(GL_TEXTURE0);
+//        glActiveTexture(GL_TEXTURE0);
         // 然后通过调用 glBindTexture 把纹理绑定到这个单元
-        glBindTexture(GL_TEXTURE_2D, texture);
+//        glBindTexture(GL_TEXTURE_2D, texture);
         // 接着通过调用 glUniform1i 把被选定的纹理单元传递给片段着色器中的 u_TextureUnit
-        glUniform1i(uTextureUnitLocation, 0);
+//        glUniform1i(uTextureUnitLocation, 0);
 
     }
 
@@ -167,7 +171,8 @@ public class Rectangle extends BaseShape {
     public void draw(float[] mvpMatrix) {
         super.draw(mvpMatrix);
 
-//        glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
+        glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
+
         glUniformMatrix4fv(uMatrixLocation, 1, false, mvpMatrix, 0);
 
         glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
@@ -178,11 +183,11 @@ public class Rectangle extends BaseShape {
     public void draw() {
         super.draw();
 
-//        glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
+        glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
         glUniformMatrix4fv(uMatrixLocation, 1, false, mvpMatrix, 0);
-//        glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
+        glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
 
-        glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_SHORT, indexBuffer);
+//        glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_SHORT, indexBuffer);
 
     }
 

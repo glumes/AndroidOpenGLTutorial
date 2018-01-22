@@ -1,10 +1,11 @@
-package com.glumes.openglbasicshape.objects;
+package com.glumes.openglbasicshape.objects.graph;
 
 import android.content.Context;
 import android.opengl.Matrix;
 
 import com.glumes.openglbasicshape.R;
 import com.glumes.openglbasicshape.data.VertexArray;
+import com.glumes.openglbasicshape.objects.BaseShape;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
 
 import static android.opengl.GLES20.GL_LINES;
