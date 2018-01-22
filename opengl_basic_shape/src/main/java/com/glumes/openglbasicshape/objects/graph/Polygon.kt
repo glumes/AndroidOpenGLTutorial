@@ -6,6 +6,8 @@ import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.data.VertexArray
 import com.glumes.openglbasicshape.objects.BaseShape
 import com.glumes.openglbasicshape.utils.ShaderHelper
+import javax.microedition.khronos.egl.EGLConfig
+import javax.microedition.khronos.opengles.GL10
 
 /**
  * @Author glumes
@@ -47,7 +49,7 @@ class Polygon(context: Context) : BaseShape(context) {
 
     }
 
-    override fun bindData() {
+    override fun onSurfaceCreated(gl: GL10, config: EGLConfig) {
         aColorLocation = glGetUniformLocation(mProgram,U_COLOR)
         aPositionLocation = glGetAttribLocation(mProgram,A_POSITION)
 
@@ -55,8 +57,8 @@ class Polygon(context: Context) : BaseShape(context) {
 
     }
 
-    override fun draw() {
-        super.draw()
+    override fun onDrawFrame(gl: GL10) {
+        super.onDrawFrame(gl)
         glUniform4f(aColorLocation!!, 0.0f, 1.0f, 0.0f, 0.0f)
         glDrawArrays(GL_LINE_LOOP, 1, VERTEX_DATA_NUM)
     }

@@ -6,24 +6,18 @@ import com.glumes.openglbasicshape.R;
 import com.glumes.openglbasicshape.data.VertexArray;
 import com.glumes.openglbasicshape.objects.BaseShape;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
-import com.glumes.openglbasicshape.utils.TextureHelper;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.ShortBuffer;
 
-import static android.opengl.GLES20.GL_TEXTURE0;
-import static android.opengl.GLES20.GL_TEXTURE_2D;
-import static android.opengl.GLES20.GL_TRIANGLES;
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
+
 import static android.opengl.GLES20.GL_TRIANGLE_FAN;
-import static android.opengl.GLES20.GL_UNSIGNED_SHORT;
-import static android.opengl.GLES20.glActiveTexture;
-import static android.opengl.GLES20.glBindTexture;
 import static android.opengl.GLES20.glDrawArrays;
-import static android.opengl.GLES20.glDrawElements;
 import static android.opengl.GLES20.glGetAttribLocation;
 import static android.opengl.GLES20.glGetUniformLocation;
-import static android.opengl.GLES20.glUniform1i;
 import static android.opengl.GLES20.glUniform4f;
 import static android.opengl.GLES20.glUniformMatrix4fv;
 import static android.opengl.GLES20.glUseProgram;
@@ -129,7 +123,7 @@ public class Rectangle extends BaseShape {
     }
 
     @Override
-    public void bindData() {
+    public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 
         // 不使用纹理的单一颜色
         aColorLocation = glGetUniformLocation(mProgram, U_COLOR);
@@ -168,8 +162,8 @@ public class Rectangle extends BaseShape {
     }
 
     @Override
-    public void draw(float[] mvpMatrix) {
-        super.draw(mvpMatrix);
+    public void onDrawFrame(GL10 gl, float[] mvpMatrix) {
+        super.onDrawFrame(gl, mvpMatrix);
 
         glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
 
@@ -180,8 +174,8 @@ public class Rectangle extends BaseShape {
     }
 
     @Override
-    public void draw() {
-        super.draw();
+    public void onDrawFrame(GL10 gl) {
+        super.onDrawFrame(gl);
 
         glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
         glUniformMatrix4fv(uMatrixLocation, 1, false, mvpMatrix, 0);

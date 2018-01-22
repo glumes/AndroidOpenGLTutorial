@@ -50,8 +50,8 @@ public class SphereRenderer extends BaseRenderer {
         sphere = new Sphere(mContext);
         sphereTexture = new SphereTexture(mContext);
 
-        sphere.bindData();
-        sphereTexture.bindData();
+        sphere.onSurfaceCreated(gl,config );
+        sphereTexture.onSurfaceCreated(gl,config );
 
         mRotateThread = new RotateThread();
         mRotateThread.start();
@@ -85,7 +85,7 @@ public class SphereRenderer extends BaseRenderer {
         Matrix.multiplyMM(mvpMatrix, 0, projectionMatrix, 0, temp, 0);
 
 //        sphere.draw(mvpMatrix);
-        sphereTexture.draw(mvpMatrix);
+        sphereTexture.onDrawFrame(gl, mvpMatrix);
     }
 
     /**

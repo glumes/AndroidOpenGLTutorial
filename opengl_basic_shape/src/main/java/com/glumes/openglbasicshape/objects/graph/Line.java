@@ -8,6 +8,9 @@ import com.glumes.openglbasicshape.data.VertexArray;
 import com.glumes.openglbasicshape.objects.BaseShape;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
 
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
+
 import static android.opengl.GLES20.GL_LINES;
 import static android.opengl.GLES20.glDrawArrays;
 import static android.opengl.GLES20.glGetAttribLocation;
@@ -52,7 +55,7 @@ public class Line extends BaseShape {
     }
 
     @Override
-    public void bindData() {
+    public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         aColorLocation = glGetUniformLocation(mProgram, U_COLOR);
 
         aPositionLocation = glGetAttribLocation(mProgram, A_POSITION);
@@ -67,8 +70,8 @@ public class Line extends BaseShape {
     }
 
     @Override
-    public void draw() {
-        super.draw();
+    public void onDrawFrame(GL10 gl) {
+        super.onDrawFrame(gl);
 
         glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
 

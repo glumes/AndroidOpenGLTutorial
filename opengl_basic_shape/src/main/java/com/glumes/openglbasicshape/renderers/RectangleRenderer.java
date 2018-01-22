@@ -30,6 +30,8 @@ public class RectangleRenderer extends BaseRenderer {
 
 
         mRectangle = new Rectangle(mContext);
+
+        mRectangle.onSurfaceCreated(gl,config);
     }
 
     @Override
@@ -57,6 +59,7 @@ public class RectangleRenderer extends BaseRenderer {
 
 //        Matrix.perspectiveM();
 
+//        Matrix.orthoM();
         Matrix.setLookAtM(viewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
 
         final float[] temp = new float[16];
@@ -67,7 +70,6 @@ public class RectangleRenderer extends BaseRenderer {
 
         System.arraycopy(result, 0, projectionMatrix, 0, result.length);
 
-        mRectangle.bindData();
 
     }
 
@@ -78,7 +80,7 @@ public class RectangleRenderer extends BaseRenderer {
 
 //        mRectangle.draw(modelMatrix);
 
-        mRectangle.draw();
+        mRectangle.onDrawFrame(gl);
     }
 
 }

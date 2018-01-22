@@ -4,6 +4,9 @@ import android.content.Context;
 
 import com.glumes.openglbasicshape.data.VertexArray;
 
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
+
 /**
  * Created by glumes on 2017/7/29.
  */
@@ -36,19 +39,26 @@ public abstract class BaseShape {
 
     }
 
-    public void draw() {
+
+    public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 
     }
 
-    public void draw(float[] mvpMatrix) {
+    public void onSurfaceChanged(GL10 gl, int width, int height) {
 
     }
 
-    public void bindData() {
+    public void onDrawFrame(GL10 gl) {
 
     }
 
-    public void destroy(){
+
+    public void onDrawFrame(GL10 gl, float[] mvpMatrix) {
+
+    }
+
+
+    public void onSurfaceDestroyed() {
 
     }
 

@@ -3,10 +3,13 @@ package com.glumes.openglbasicshape
 import android.opengl.GLSurfaceView
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
+import android.util.SparseArray
 import com.glumes.openglbasicshape.base.BaseToolbarActivity
 import com.glumes.openglbasicshape.glviews.BaseShapeView
 import com.glumes.openglbasicshape.objects.BaseShape
+import com.glumes.openglbasicshape.objects.graph.Point
 import com.glumes.openglbasicshape.objects.shape.Cube
+import com.glumes.openglbasicshape.objects.shape.Sphere
 import com.glumes.openglbasicshape.renderers.BasicShapeRender
 import com.glumes.openglbasicshape.utils.ACTIVITY_TITLE
 
@@ -14,6 +17,10 @@ class BasicShapeActivity : BaseToolbarActivity() {
 
     lateinit var mBaseShapeView: BaseShapeView
     lateinit var mRenderer: BasicShapeRender
+
+    var shapeClazzArray = SparseArray<Class<out BaseShape>>(4)
+
+    var clazz: Class<out BaseShape> = Point::class.java
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +36,8 @@ class BasicShapeActivity : BaseToolbarActivity() {
             mRenderer.setShape(Cube::class.java)
         }
 
+        shapeClazzArray.put(R.id.sphere,Sphere::class.java)
+        shapeClazzArray.put(R.id.cube,Cube::class.java)
         setContentView(mBaseShapeView)
     }
 
@@ -43,7 +52,14 @@ class BasicShapeActivity : BaseToolbarActivity() {
     }
 
     fun updateShape(itemId: Int) {
+        clazz = shapeClazzArray.get(itemId)
 
+        recreate()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putSerializable("shape",clazz)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onResume() {

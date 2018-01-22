@@ -5,7 +5,7 @@ import android.support.v7.widget.Toolbar
 import android.util.SparseArray
 import com.glumes.openglbasicshape.base.BaseToolbarActivity
 import com.glumes.openglbasicshape.glviews.BaseShapeView
-import com.glumes.openglbasicshape.objects.*
+import com.glumes.openglbasicshape.objects.BaseShape
 import com.glumes.openglbasicshape.objects.graph.*
 import com.glumes.openglbasicshape.renderers.BasicShapeRender
 import com.glumes.openglbasicshape.utils.ACTIVITY_TITLE
@@ -19,8 +19,6 @@ class BasicGraphActivity : BaseToolbarActivity() {
 
 
     var clazz: Class<out BaseShape> = Point::class.java
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

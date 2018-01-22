@@ -32,23 +32,20 @@ class BasicShapeRender(context: Context) : BaseRenderer(context) {
             Timber.e(e)
         }
 
-
-        shape.bindData()
+        shape.onSurfaceCreated(gl,config )
 
     }
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
-        super.onSurfaceChanged(gl, width, height)
+        shape.onSurfaceChanged(gl,width,height)
     }
 
     override fun onDrawFrame(gl: GL10?) {
-        super.onDrawFrame(gl)
-        shape.draw()
+        shape.onDrawFrame(gl)
     }
 
     override fun onSurfaceDestroyed() {
-        super.onSurfaceDestroyed()
-        shape.destroy()
+        shape.onSurfaceDestroyed()
     }
 
 

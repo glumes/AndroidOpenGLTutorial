@@ -1,13 +1,12 @@
 package com.glumes.openglbasicshape.base
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-
 import com.glumes.openglbasicshape.R
 
 abstract class BaseToolbarActivity : AppCompatActivity() {

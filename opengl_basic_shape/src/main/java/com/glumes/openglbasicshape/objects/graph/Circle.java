@@ -7,6 +7,9 @@ import com.glumes.openglbasicshape.data.VertexArray;
 import com.glumes.openglbasicshape.objects.BaseShape;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
 
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
+
 import static android.opengl.GLES20.GL_LINE_LOOP;
 import static android.opengl.GLES20.glDrawArrays;
 import static android.opengl.GLES20.glGetAttribLocation;
@@ -71,8 +74,7 @@ public class Circle extends BaseShape {
     }
 
     @Override
-    public void bindData() {
-
+    public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         aColorLocation = glGetUniformLocation(mProgram, U_COLOR);
         aPositionLocation = glGetAttribLocation(mProgram, A_POSITION);
 
@@ -80,7 +82,12 @@ public class Circle extends BaseShape {
     }
 
     @Override
-    public void draw() {
+    public void onSurfaceDestroyed() {
+
+    }
+
+    @Override
+    public void onDrawFrame(GL10 gl) {
         glUniform4f(aColorLocation, 0.0f, 1.0f, 0.0f, 0.0f);
         // 绘制实心的圆形
 //        glDrawArrays(GL_TRIANGLE_FAN, 0, VERTEX_DATA_NUM + 2);

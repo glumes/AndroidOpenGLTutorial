@@ -1,6 +1,9 @@
 package com.glumes.openglbasicshape.objects.shape;
 
 import android.content.Context;
+import android.opengl.GLES20;
+import android.opengl.Matrix;
+import android.os.SystemClock;
 
 import com.glumes.comlib.LogUtil;
 import com.glumes.openglbasicshape.R;
@@ -13,6 +16,9 @@ import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
 import java.util.ArrayList;
+
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
 
 import static android.opengl.GLES20.GL_TRIANGLES;
 import static android.opengl.GLES20.GL_TRIANGLE_STRIP;
@@ -90,7 +96,7 @@ public class Sphere extends BaseShape {
 
 
     @Override
-    public void bindData() {
+    public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 
         aPositionLocation = glGetAttribLocation(mProgram, A_POSITION);
         uMatrixLocation = glGetUniformLocation(mProgram, U_MATRIX);
@@ -104,18 +110,32 @@ public class Sphere extends BaseShape {
 
 
     @Override
-    public void draw() {
+    public void onDrawFrame(GL10 gl) {
+
+
+
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
+
+        long time  = SystemClock.uptimeMillis() % 10000L;
+        float angleInDegrees = (360.0f / 10000.0f) * ((int) time);
+
+
+        Matrix.setIdentityM(modelMatrix,0);
+
+        Matrix.rotateM(modelMatrix,0,angleInDegrees,1.0f,1.0f,0.0f);
 
         glUniformMatrix4fv(uMatrixLocation, 1, false, modelMatrix, 0);
 //        glUniform4f(uColorLocation, 0.0f, 1.0f, 0.0f, 1.0f);
+
+
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, length);
 
     }
 
     @Override
-    public void draw(float[] mvpMatrix) {
-        super.draw(mvpMatrix);
+    public void onDrawFrame(GL10 gl, float[] mvpMatrix) {
+        super.onDrawFrame(gl, mvpMatrix);
 
         glUniformMatrix4fv(uMatrixLocation, 1, false, mvpMatrix, 0);
 //        glUniform4f(uColorLocation, 0.0f, 1.0f, 0.0f, 1.0f);

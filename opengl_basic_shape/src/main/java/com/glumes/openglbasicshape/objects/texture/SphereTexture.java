@@ -15,6 +15,9 @@ import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
 import java.util.ArrayList;
 
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
+
 import static android.opengl.GLES20.GL_TEXTURE0;
 import static android.opengl.GLES20.GL_TEXTURE_2D;
 import static android.opengl.GLES20.GL_TRIANGLES;
@@ -100,7 +103,7 @@ public class SphereTexture extends BaseShape {
 
 
     @Override
-    public void bindData() {
+    public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 
         aPositionLocation = glGetAttribLocation(mProgram, A_POSITION);
         uMatrixLocation = glGetUniformLocation(mProgram, U_MATRIX);
@@ -133,7 +136,7 @@ public class SphereTexture extends BaseShape {
 
 
     @Override
-    public void draw() {
+    public void onDrawFrame(GL10 gl) {
 
         glUniformMatrix4fv(uMatrixLocation, 1, false, modelMatrix, 0);
 //        glUniform4f(uColorLocation, 0.0f, 1.0f, 0.0f, 1.0f);
@@ -143,8 +146,8 @@ public class SphereTexture extends BaseShape {
     }
 
     @Override
-    public void draw(float[] mvpMatrix) {
-        super.draw(mvpMatrix);
+    public void onDrawFrame(GL10 gl, float[] mvpMatrix) {
+        super.onDrawFrame(gl, mvpMatrix);
 
         glUniformMatrix4fv(uMatrixLocation, 1, false, mvpMatrix, 0);
 //        glUniform4f(uColorLocation, 0.0f, 1.0f, 0.0f, 1.0f);

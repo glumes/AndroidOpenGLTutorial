@@ -8,6 +8,9 @@ import com.glumes.openglbasicshape.data.VertexArray;
 import com.glumes.openglbasicshape.objects.BaseShape;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
 
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
+
 import static android.opengl.GLES20.GL_POINTS;
 import static android.opengl.GLES20.glDrawArrays;
 import static android.opengl.GLES20.glGetAttribLocation;
@@ -42,7 +45,7 @@ public class Point extends BaseShape {
     }
 
     @Override
-    public void bindData() {
+    public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         //绑定值
         aColorLocation = glGetUniformLocation(mProgram, U_COLOR);
 
@@ -54,20 +57,20 @@ public class Point extends BaseShape {
     }
 
     @Override
-    public void draw() {
+    public void onDrawFrame(GL10 gl) {
         // 给绑定的值赋值
         glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
         glDrawArrays(GL_POINTS, 0, 1);
     }
 
     @Override
-    public void draw(float[] mvpMatrix) {
-        super.draw(mvpMatrix);
+    public void onDrawFrame(GL10 gl, float[] mvpMatrix) {
+        super.onDrawFrame(gl, mvpMatrix);
     }
 
     @Override
-    public void destroy() {
-        super.destroy();
+    public void onSurfaceDestroyed() {
+        super.onSurfaceDestroyed();
         GLES20.glDeleteProgram(mProgram);
     }
 }

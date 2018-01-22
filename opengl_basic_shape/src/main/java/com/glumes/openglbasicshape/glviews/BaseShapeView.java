@@ -5,7 +5,6 @@ import android.opengl.GLSurfaceView;
 import android.view.SurfaceHolder;
 
 import com.glumes.openglbasicshape.renderers.BaseRenderer;
-import com.orhanobut.logger.Logger;
 
 /**
  * Created by glumes on 2017/8/16.

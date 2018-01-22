@@ -66,7 +66,7 @@ public class MultiCubeRender extends BaseRenderer {
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
         cube = new Cube(mContext);
 
-        cube.bindData();
+        cube.onSurfaceCreated(gl,config );
 
         mRotateThread = new RotateThread();
 
@@ -119,7 +119,7 @@ public class MultiCubeRender extends BaseRenderer {
 
 
 //            drawCube(mCubePositions, mCubeColors);
-            cube.draw(result);
+            cube.onDrawFrame(gl, result);
         }
 
 

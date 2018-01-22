@@ -9,6 +9,9 @@ import com.glumes.openglbasicshape.utils.ShaderHelper;
 
 import java.nio.ByteBuffer;
 
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
+
 import static android.opengl.GLES20.GL_TRIANGLES;
 import static android.opengl.GLES20.glDrawArrays;
 import static android.opengl.GLES20.glGetAttribLocation;
@@ -108,8 +111,8 @@ public class Triangle extends BaseShape {
     }
 
     @Override
-    public void bindData() {
-        super.bindData();
+    public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+
 
         aColorLocation = glGetUniformLocation(mProgram, U_COLOR);
         aPositionLocation = glGetAttribLocation(mProgram, A_POSITION);
@@ -123,8 +126,8 @@ public class Triangle extends BaseShape {
     }
 
     @Override
-    public void draw() {
-        super.draw();
+    public void onDrawFrame(GL10 gl) {
+        super.onDrawFrame(gl);
 
         glUniform4f(aColorLocation, 0.0f, 1.0f, 1.0f, 1.0f);
         glUniformMatrix4fv(uMatrixLocation, 1, false, modelMatrix, 0);
@@ -137,8 +140,8 @@ public class Triangle extends BaseShape {
     }
 
     @Override
-    public void draw(float[] mvpMatrix) {
-        super.draw(mvpMatrix);
+    public void onDrawFrame(GL10 gl, float[] mvpMatrix) {
+        super.onDrawFrame(gl, mvpMatrix);
 
         glUniform4f(aColorLocation, 0.0f, 1.0f, 1.0f, 1.0f);
         glUniformMatrix4fv(uMatrixLocation, 1, false, mvpMatrix, 0);

@@ -1,6 +1,9 @@
 package com.glumes.openglbasicshape.objects.shape;
 
 import android.content.Context;
+import android.opengl.GLES20;
+import android.opengl.Matrix;
+import android.os.SystemClock;
 
 import com.glumes.comlib.LogUtil;
 import com.glumes.openglbasicshape.R;
@@ -10,6 +13,9 @@ import com.glumes.openglbasicshape.utils.Constants;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
 
 import java.nio.ByteBuffer;
+
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
 
 import static android.opengl.GLES20.GL_TRIANGLES;
 import static android.opengl.GLES20.GL_UNSIGNED_BYTE;
@@ -153,14 +159,9 @@ public class Cube extends BaseShape {
             };
 
 
-
-
     public Cube(Context context) {
         super(context);
 
-        mProgram = ShaderHelper.buildProgram(context, R.raw.cube_vertex_shader, R.raw.cube_fragment_shader);
-
-        glUseProgram(mProgram);
 
         POSITION_COMPONENT_COUNT = 3;
 
@@ -171,17 +172,46 @@ public class Cube extends BaseShape {
         byteBuffer = ByteBuffer.allocateDirect(position.length * Constants.BYTES_PRE_BYTE)
                 .put(position);
 
-
         byteBuffer.position(0);
 
         LogUtil.d("index length is" + position.length);
 
+
     }
 
     @Override
-    public void bindData() {
+    public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 
-//        uColorLocation = glGetUniformLocation(mProgram, U_COLOR);
+
+        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+        GLES20.glEnable(GLES20.GL_CULL_FACE);
+        GLES20.glEnable(GLES20.GL_DEPTH_TEST);
+
+
+        // Position the eye behind the origin.
+        final float eyeX = 0.0f;
+        final float eyeY = 0.0f;
+        final float eyeZ = -0.5f;
+
+        // We are looking toward the distance
+        final float lookX = 0.0f;
+        final float lookY = 0.0f;
+        final float lookZ = -5.0f;
+
+        // Set our up vector. This is where our head would be pointing were we holding the camera.
+        final float upX = 0.0f;
+        final float upY = 1.0f;
+        final float upZ = 0.0f;
+
+        Matrix.setLookAtM(viewMatrix, 0, eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ);
+
+
+
+        mProgram = ShaderHelper.buildProgram(mContext, R.raw.cube_vertex_shader, R.raw.cube_fragment_shader);
+
+        glUseProgram(mProgram);
+
 
         aColorLocation = glGetAttribLocation(mProgram, A_COLOR);
 
@@ -193,23 +223,52 @@ public class Cube extends BaseShape {
 
         indexArray.setVertexAttribPointer(0, aColorLocation, POSITION_COMPONENT_COUNT + 1, 0);
 
-        setIdentityM(mvpMatrix, 0);
+        setIdentityM(modelMatrix, 0);
+
 
     }
 
+
     @Override
-    public void draw() {
+    public void onSurfaceChanged(GL10 gl, int width, int height) {
+        super.onSurfaceChanged(gl, width, height);
+        GLES20.glViewport(0, 0, width, height);
+
+        final float ratio = (float) width / height;
+        final float left = -ratio;
+        final float right = ratio;
+        final float bottom = -1.0f;
+        final float top = 1.0f;
+        final float near = 1.0f;
+        final float far = 10.0f;
+
+        Matrix.frustumM(projectionMatrix, 0, left, right, bottom, top, near, far);
+
+    }
+
+
+    @Override
+    public void onDrawFrame(GL10 gl) {
+
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
+
+        long time  = SystemClock.uptimeMillis() % 10000L;
+        float angleInDegrees = (360.0f / 10000.0f) * ((int) time);
+
+        Matrix.setIdentityM(modelMatrix,0);
+
+        Matrix.rotateM(modelMatrix,0,angleInDegrees,1.0f,1.0f,0.0f);
 
         glUniform4f(uColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
 
-        glUniformMatrix4fv(uMatrixLocation, 1, false, mvpMatrix, 0);
+        glUniformMatrix4fv(uMatrixLocation, 1, false, modelMatrix, 0);
 
         glDrawElements(GL_TRIANGLES, position.length, GL_UNSIGNED_BYTE, byteBuffer);
 
     }
 
     @Override
-    public void draw(float[] mvpMatrix) {
+    public void onDrawFrame(GL10 gl, float[] mvpMatrix) {
 
         glUniform4f(uColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
 

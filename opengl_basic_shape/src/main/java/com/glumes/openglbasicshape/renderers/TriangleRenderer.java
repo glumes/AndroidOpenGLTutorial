@@ -54,7 +54,7 @@ public class TriangleRenderer extends BaseRenderer {
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 
         mTriangle = new Triangle(mContext);
-        mTriangle.bindData();
+        mTriangle.onSurfaceCreated(gl,config );
         mRotateThread = new RotateThread();
 
         LogUtil.d("radian is " + radian);
@@ -122,7 +122,7 @@ public class TriangleRenderer extends BaseRenderer {
 
         System.arraycopy(result, 0, mvpMatrix, 0, result.length);
 
-        mTriangle.draw(mvpMatrix);
+        mTriangle.onDrawFrame(gl, mvpMatrix);
 
 //        mTriangle.draw();
     }
