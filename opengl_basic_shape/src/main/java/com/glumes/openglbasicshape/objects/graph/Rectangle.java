@@ -1,6 +1,7 @@
 package com.glumes.openglbasicshape.objects.graph;
 
 import android.content.Context;
+import android.opengl.Matrix;
 
 import com.glumes.openglbasicshape.R;
 import com.glumes.openglbasicshape.data.VertexArray;
@@ -21,6 +22,7 @@ import static android.opengl.GLES20.glGetUniformLocation;
 import static android.opengl.GLES20.glUniform4f;
 import static android.opengl.GLES20.glUniformMatrix4fv;
 import static android.opengl.GLES20.glUseProgram;
+import static android.opengl.Matrix.orthoM;
 import static android.opengl.Matrix.setIdentityM;
 
 /**
@@ -33,6 +35,7 @@ public class Rectangle extends BaseShape {
     private static final String U_COLOR = "u_Color";
     private static final String A_POSITION = "a_Position";
     private static final String U_MATRIX = "u_Matrix";
+    public static final String  U_PRO_MATRIX = "u_ProMatrix";
     private static final String A_TEXTURE_COORDINATES = "a_TextureCoordinates";
 
     private static final String U_TEXTURE_UNIT = "u_TextureUnit";
@@ -41,6 +44,8 @@ public class Rectangle extends BaseShape {
     private int aColorLocation;
     private int aPositionLocation;
     private int uMatrixLocation;
+
+    private int uProMatrixLocation;
     private int aTextureCoordinatesLocation;
     private int uTextureUnitLocation;
 
@@ -131,6 +136,8 @@ public class Rectangle extends BaseShape {
         aPositionLocation = glGetAttribLocation(mProgram, A_POSITION);
         uMatrixLocation = glGetUniformLocation(mProgram, U_MATRIX);
 
+
+
         // 对应纹理的设置
 //        aTextureCoordinatesLocation = glGetAttribLocation(mProgram, A_TEXTURE_COORDINATES);
 //        uTextureUnitLocation = glGetUniformLocation(mProgram, U_TEXTURE_UNIT);
@@ -145,6 +152,8 @@ public class Rectangle extends BaseShape {
 //        textureVertexArray.setVertexAttribPointer(0, aTextureCoordinatesLocation, TEXTURE_COORDINATES_COMPONENT_COUNT, STRIDE);
 
         setIdentityM(mvpMatrix, 0);
+
+        setIdentityM(projectionMatrix,0);
 
 //        int texture = TextureHelper.loadTexture(mContext, R.drawable.texture);
 
@@ -161,16 +170,20 @@ public class Rectangle extends BaseShape {
 
     }
 
+
+
     @Override
     public void onDrawFrame(GL10 gl, float[] mvpMatrix) {
         super.onDrawFrame(gl, mvpMatrix);
 
-        glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
-
-        glUniformMatrix4fv(uMatrixLocation, 1, false, mvpMatrix, 0);
-
-        glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
-
+//        glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
+//
+//        glUniformMatrix4fv(uMatrixLocation, 1, false, mvpMatrix, 0);
+//
+//        glUniformMatrix4fv(uProMatrixLocation,1,false,projectionMatrix,0);
+//
+//
+//        glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
     }
 
     @Override
@@ -178,7 +191,11 @@ public class Rectangle extends BaseShape {
         super.onDrawFrame(gl);
 
         glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
+
         glUniformMatrix4fv(uMatrixLocation, 1, false, mvpMatrix, 0);
+
+        glUniformMatrix4fv(uProMatrixLocation,1,false,projectionMatrix,0);
+
         glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
 
 //        glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_SHORT, indexBuffer);

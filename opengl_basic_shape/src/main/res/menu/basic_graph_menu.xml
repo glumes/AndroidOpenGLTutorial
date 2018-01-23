@@ -9,6 +9,10 @@
         android:title="线" />
 
     <item
+        android:id="@+id/triangle"
+        android:title="三角形"/>
+
+    <item
         android:id="@+id/rectangle"
         android:title="矩形" />
 

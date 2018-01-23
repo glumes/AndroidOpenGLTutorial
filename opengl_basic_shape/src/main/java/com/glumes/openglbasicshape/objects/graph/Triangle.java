@@ -1,6 +1,7 @@
 package com.glumes.openglbasicshape.objects.graph;
 
 import android.content.Context;
+import android.opengl.Matrix;
 
 import com.glumes.openglbasicshape.R;
 import com.glumes.openglbasicshape.data.VertexArray;
@@ -31,10 +32,14 @@ public class Triangle extends BaseShape {
     private static final String U_COLOR = "u_Color";
     private static final String A_POSITION = "a_Position";
     private static final String U_MATRIX = "u_Matrix";
+    public static final String  U_PRO_MATRIX = "u_ProMatrix";
+
 
     private int aColorLocation;
     private int aPositionLocation;
     private int uMatrixLocation;
+
+    private int uProMatrixLocation;
 
     float[] triangleVertex = {
             -1f, 1f,
@@ -117,13 +122,32 @@ public class Triangle extends BaseShape {
         aColorLocation = glGetUniformLocation(mProgram, U_COLOR);
         aPositionLocation = glGetAttribLocation(mProgram, A_POSITION);
         uMatrixLocation = glGetUniformLocation(mProgram, U_MATRIX);
+        uProMatrixLocation = glGetUniformLocation(mProgram,U_PRO_MATRIX);
+
 
         vertexArray.setVertexAttribPointer(0, aPositionLocation, POSITION_COMPONENT_COUNT, 0);
 
         setIdentityM(modelMatrix, 0);
 //        Matrix.translateM(modelMatrix, 0, 0.5f, 0, 0);
-
+//        setIdentityM(projectionMatrix,0);
     }
+
+
+
+    @Override
+    public void onSurfaceChanged(GL10 gl, int width, int height) {
+        super.onSurfaceChanged(gl, width, height);
+
+        float aspectRatio = width > height ? (float) width / (float) height : (float) height / (float) width;
+
+        if (width > height){
+            Matrix.orthoM(projectionMatrix,0,-aspectRatio,aspectRatio,-1f,1f,-1f,1f);
+        }else {
+            Matrix.orthoM(projectionMatrix,0,-1f,1f,-aspectRatio,aspectRatio,-1f,1f);
+        }
+    }
+
+
 
     @Override
     public void onDrawFrame(GL10 gl) {
@@ -131,6 +155,8 @@ public class Triangle extends BaseShape {
 
         glUniform4f(aColorLocation, 0.0f, 1.0f, 1.0f, 1.0f);
         glUniformMatrix4fv(uMatrixLocation, 1, false, modelMatrix, 0);
+
+        glUniformMatrix4fv(uProMatrixLocation,1,false,projectionMatrix,0);
 
         // 使用 glDrawArrays方式绘图
         glDrawArrays(GL_TRIANGLES, 0, 3);

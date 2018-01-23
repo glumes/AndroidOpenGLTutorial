@@ -36,6 +36,7 @@ class BasicGraphActivity : BaseToolbarActivity() {
 
         shapeClazzArray.put(R.id.point, Point::class.java)
         shapeClazzArray.put(R.id.line, Line::class.java)
+        shapeClazzArray.put(R.id.triangle,Triangle::class.java)
         shapeClazzArray.put(R.id.rectangle, Rectangle::class.java)
         shapeClazzArray.put(R.id.polygon, Polygon::class.java)
         shapeClazzArray.put(R.id.circle, Circle::class.java)
