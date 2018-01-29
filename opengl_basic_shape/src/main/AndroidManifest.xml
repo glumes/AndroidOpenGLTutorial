@@ -19,14 +19,13 @@
         </activity>
         <activity android:name=".MagicCubeActivity" />
         <activity android:name=".TouchActivity" />
-
         <activity
             android:name=".BasicGraphActivity"
-            android:theme="@style/NoActionBarTheme"/>
-
-
-        <activity android:name=".BasicShapeActivity"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/NoActionBarTheme" />
+        <activity
+            android:name=".BasicShapeActivity"
+            android:theme="@style/NoActionBarTheme" />
+        <activity android:name=".TextureActivity"></activity>
     </application>
 
 </manifest>

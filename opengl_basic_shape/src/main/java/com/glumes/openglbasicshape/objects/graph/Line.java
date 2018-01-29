@@ -7,6 +7,8 @@ import com.glumes.openglbasicshape.R;
 import com.glumes.openglbasicshape.data.VertexArray;
 import com.glumes.openglbasicshape.objects.BaseShape;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
+import com.orhanobut.logger.Logger;
+
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -28,14 +30,19 @@ public class Line extends BaseShape {
 
 
     float[] lineVertex = {
-            -0.5f, 0.5f,
-            0.5f, -0.5f
+            -1f, 1f,
+            1f, -1f
     };
 
 
     private static final String U_COLOR = "u_Color";
     private static final String A_POSITION = "a_Position";
-    private static final String U_MATRIX = "u_Matrix";
+    private static final String U_MODEL_MATRIX = "u_ModelMatrix";
+    private static final String U_PROJECTION_MATRIX = "u_ProjectionMatrix";
+    private static final String U_VIEW_MATRIX = "u_ViewMatrix";
+
+    private int uProjectionMatrixLocation;
+    private int uViewMatrixLocation;
     private int aColorLocation;
     private int aPositionLocation;
     private int uMatrixLocation;
@@ -60,13 +67,43 @@ public class Line extends BaseShape {
 
         aPositionLocation = glGetAttribLocation(mProgram, A_POSITION);
 
-        uMatrixLocation = glGetUniformLocation(mProgram, U_MATRIX);
+        uMatrixLocation = glGetUniformLocation(mProgram, U_MODEL_MATRIX);
+
+        uProjectionMatrixLocation = glGetUniformLocation(mProgram, U_PROJECTION_MATRIX);
+
+        uViewMatrixLocation = glGetUniformLocation(mProgram, U_VIEW_MATRIX);
 
         vertexArray.setVertexAttribPointer(0, aPositionLocation, POSITION_COMPONENT_COUNT, 0);
 
         setIdentityM(modelMatrix, 0);
-
+        setIdentityM(viewMatrix, 0);
         Matrix.translateM(modelMatrix, 0, 0.5f, 0, 0);
+
+        Matrix.setLookAtM(viewMatrix, 0, 0f, 0f, 10f, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+    }
+
+    @Override
+    public void onSurfaceChanged(GL10 gl, int width, int height) {
+        super.onSurfaceChanged(gl, width, height);
+
+
+        Logger.d("width is " + width + " height is " + height);
+
+
+        Matrix.perspectiveM(projectionMatrix, 0, 5f, (float) width / (float) height, 9f, 20f);
+
+//        float aspectRatio = width > height ? (float) width / (float) height : (float) height / (float) width;
+//
+//        if (width > height){
+//
+//            Matrix.frustumM(projectionMatrix,0,-aspectRatio,aspectRatio,-1f,1f,5f,20f);
+//
+//        }else {
+//
+//            Matrix.frustumM(projectionMatrix,0,-1f,1f,-aspectRatio,aspectRatio,5f,20f);
+//
+//        }
+
     }
 
     @Override
@@ -77,6 +114,11 @@ public class Line extends BaseShape {
 
         // 使用矩阵平移，将坐标 x 轴平移 0.5 个单位
         glUniformMatrix4fv(uMatrixLocation, 1, false, modelMatrix, 0);
+
+        glUniformMatrix4fv(uProjectionMatrixLocation, 1, false, projectionMatrix, 0);
+
+        glUniformMatrix4fv(uViewMatrixLocation, 1, false, viewMatrix, 0);
+
         glDrawArrays(GL_LINES, 0, 2);
     }
 }

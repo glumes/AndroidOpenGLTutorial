@@ -38,7 +38,7 @@ public class RendererActivity extends AppCompatActivity {
 
         items.add(new RenderModel("基本图形的绘制", RenderType.RENDER_TYPE_TITLE, BasicGraphActivity.class));
         items.add(new RenderModel("基本形状的绘制", RenderType.RENDER_TYPE_TITLE, BasicShapeActivity.class));
-
+        items.add(new RenderModel("绘制的使用", RenderType.RENDER_TYPE_TITLE, TextureActivity.class));
     }
 
 

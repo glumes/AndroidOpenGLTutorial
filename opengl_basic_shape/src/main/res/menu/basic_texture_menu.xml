@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/tirangle_texture"
+        android:title="三角形绘制纹理" />
+
+    <item android:id="@+id/rectangle_texture"
+        android:title="矩形纹理"/>
+</menu>

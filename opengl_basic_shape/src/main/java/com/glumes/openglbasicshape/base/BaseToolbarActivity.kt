@@ -21,6 +21,7 @@ abstract class BaseToolbarActivity : AppCompatActivity() {
         mContainer = findViewById(R.id.baseContainer) as FrameLayout
         updateToolbar()
 
+
     }
 
     private fun setContent(id: Int) {

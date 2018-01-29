@@ -130,6 +130,7 @@ public class Triangle extends BaseShape {
         setIdentityM(modelMatrix, 0);
 //        Matrix.translateM(modelMatrix, 0, 0.5f, 0, 0);
 //        setIdentityM(projectionMatrix,0);
+
     }
 
 
@@ -141,9 +142,9 @@ public class Triangle extends BaseShape {
         float aspectRatio = width > height ? (float) width / (float) height : (float) height / (float) width;
 
         if (width > height){
-            Matrix.orthoM(projectionMatrix,0,-aspectRatio,aspectRatio,-1f,1f,-1f,1f);
+            Matrix.orthoM(projectionMatrix,0,-aspectRatio,aspectRatio,-1f,1f,0f,10f);
         }else {
-            Matrix.orthoM(projectionMatrix,0,-1f,1f,-aspectRatio,aspectRatio,-1f,1f);
+            Matrix.orthoM(projectionMatrix,0,-1f,1f,-aspectRatio,aspectRatio,0f,10f);
         }
     }
 
