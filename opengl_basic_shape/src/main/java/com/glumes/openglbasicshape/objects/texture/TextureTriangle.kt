@@ -2,10 +2,12 @@ package com.glumes.openglbasicshape.objects.texture
 
 import android.content.Context
 import android.opengl.GLES20.*
+import android.opengl.Matrix
 import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.data.VertexArray
 import com.glumes.openglbasicshape.objects.BaseShape
 import com.glumes.openglbasicshape.utils.ShaderHelper
+import com.glumes.openglbasicshape.utils.TextureHelper
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
@@ -20,14 +22,16 @@ class TextureTriangle(context: Context) : BaseShape(context) {
     private val U_PROJECTION_MATRIX = "u_ProjectionMatrix"
     private val A_POSITION = "a_Position"
     private val A_TEXTURE_COORDINATE = "a_TextureCoordinates"
-
+    private val U_TEXTURE_UNIT = "u_TextureUnit"
 
     private var uModelMatrixAttr: Int = 0
     private var uViewMatrixAttr: Int = 0
     private var uProjectionMatrixAttr: Int = 0
     private var aPositionAttr: Int = 0
     private var aTextureCoordinateAttr: Int = 0
+    private var uTextureUnitAttr: Int = 0
 
+    private var mTextureId: Int = 0
 
     var vertexArrayData = floatArrayOf(
             0.0f, 1.0f
@@ -35,8 +39,10 @@ class TextureTriangle(context: Context) : BaseShape(context) {
             1.0f, 0.0f
     )
 
-    var textureArrayData = floatArrayOf(
-
+    private var textureArrayData = floatArrayOf(
+            0.5f, 0f,
+            0f, 1f,
+            1f, 1f
     )
 
     var mVertexArray: VertexArray
@@ -48,6 +54,7 @@ class TextureTriangle(context: Context) : BaseShape(context) {
 
         mVertexArray = VertexArray(vertexArrayData)
         mTextureArray = VertexArray(textureArrayData)
+
 
         POSITION_COMPONENT_COUNT = 2
     }
@@ -62,6 +69,24 @@ class TextureTriangle(context: Context) : BaseShape(context) {
         uProjectionMatrixAttr = glGetUniformLocation(mProgram, U_PROJECTION_MATRIX)
 
 
+        aTextureCoordinateAttr = glGetAttribLocation(mProgram, A_TEXTURE_COORDINATE)
+        uTextureUnitAttr = glGetUniformLocation(mProgram, U_TEXTURE_UNIT)
+
+
+        mVertexArray.setVertexAttribPointer(0, aPositionAttr, POSITION_COMPONENT_COUNT, 0)
+        mTextureArray.setVertexAttribPointer(0, aTextureCoordinateAttr, POSITION_COMPONENT_COUNT, 0)
+
+        mTextureId = TextureHelper.loadTexture(mContext, R.drawable.image)
+
+        glActiveTexture(GL_TEXTURE0)
+
+        glBindTexture(GL_TEXTURE0, mTextureId)
+
+        glUniform1i(uTextureUnitAttr, 0)
+
+        Matrix.setIdentityM(modelMatrix, 0)
+        Matrix.setIdentityM(viewMatrix, 0)
+        Matrix.setIdentityM(projectionMatrix, 0)
     }
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
@@ -70,6 +95,11 @@ class TextureTriangle(context: Context) : BaseShape(context) {
 
     override fun onDrawFrame(gl: GL10?) {
         super.onDrawFrame(gl)
+        glUniformMatrix4fv(uModelMatrixAttr, 1, false, modelMatrix, 0)
+        glUniformMatrix4fv(uViewMatrixAttr, 1, false, viewMatrix, 0)
+        glUniformMatrix4fv(uProjectionMatrixAttr, 1, false, projectionMatrix, 0)
+
+        glDrawArrays(GL_TRIANGLES, 0, 3)
     }
 
     override fun onSurfaceDestroyed() {

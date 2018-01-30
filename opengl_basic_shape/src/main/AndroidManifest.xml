@@ -25,7 +25,9 @@
         <activity
             android:name=".BasicShapeActivity"
             android:theme="@style/NoActionBarTheme" />
-        <activity android:name=".TextureActivity"></activity>
+        <activity
+            android:name=".TextureActivity"
+            android:theme="@style/NoActionBarTheme" />
     </application>
 
 </manifest>
