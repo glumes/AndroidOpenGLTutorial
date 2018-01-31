@@ -7,6 +7,9 @@ import android.support.v7.widget.RecyclerView;
 
 import com.glumes.databindingadapter.DataBindingAdapter;
 import com.glumes.databindingadapter.Items;
+import com.glumes.openglbasicshape.type.BasicGraphActivity;
+import com.glumes.openglbasicshape.type.BasicShapeActivity;
+import com.glumes.openglbasicshape.type.TextureActivity;
 import com.glumes.openglbasicshape.utils.RenderType;
 import com.glumes.openglbasicshape.viewholderitem.RenderBinder;
 import com.glumes.openglbasicshape.viewholderitem.RenderModel;

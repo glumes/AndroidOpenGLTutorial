@@ -1,5 +1,6 @@
-package com.glumes.openglbasicshape
+package com.glumes.openglbasicshape.type
 
+import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.base.BaseRenderActivity
 import com.glumes.openglbasicshape.objects.graph.*
 

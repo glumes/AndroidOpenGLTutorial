@@ -57,6 +57,13 @@ public class Point extends BaseShape {
     }
 
     @Override
+    public void onSurfaceChanged(GL10 gl, int width, int height) {
+        super.onSurfaceChanged(gl, width, height);
+        GLES20.glViewport(0, 0, width, height);
+
+    }
+
+    @Override
     public void onDrawFrame(GL10 gl) {
         // 给绑定的值赋值
         glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
