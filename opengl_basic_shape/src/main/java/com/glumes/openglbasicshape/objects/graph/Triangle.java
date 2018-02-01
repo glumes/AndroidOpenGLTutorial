@@ -42,11 +42,15 @@ public class Triangle extends BaseShape {
     private int uProMatrixLocation;
 
     float[] triangleVertex = {
-            -1f, 1f,
-//            -0.5f, 0f,
-            -0.5f, -0.5f,
-            0.5f, -0.5f,
-            0.5f, 0.5f
+//            -1f, 1f,
+////            -0.5f, 0f,
+//            -0.5f, -0.5f,
+//            0.5f, -0.5f,
+//            0.5f, 0.5f,
+
+            0.5f, 0f,
+            0f, 1.0f,
+            1.0f, 1.0f
 //            0f, 0f
     };
 
@@ -128,6 +132,9 @@ public class Triangle extends BaseShape {
         vertexArray.setVertexAttribPointer(0, aPositionLocation, POSITION_COMPONENT_COUNT, 0);
 
         setIdentityM(modelMatrix, 0);
+        Matrix.rotateM(modelMatrix,0,180f,1f,0f,0f);
+        Matrix.translateM(modelMatrix,0,-0.5f,-0.5f,0f);
+
 //        Matrix.translateM(modelMatrix, 0, 0.5f, 0, 0);
 //        setIdentityM(projectionMatrix,0);
 

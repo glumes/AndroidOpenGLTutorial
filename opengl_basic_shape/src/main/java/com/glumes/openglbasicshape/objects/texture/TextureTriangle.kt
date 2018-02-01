@@ -27,7 +27,6 @@ class TextureTriangle(context: Context) : BaseShape(context) {
     private val A_TEXTURE_COORDINATE = "a_TextureCoordinates"
     private val U_TEXTURE_UNIT = "u_TextureUnit"
 
-    private val U_MATRIX = "u_Matrix"
 
     private var uModelMatrixAttr: Int = 0
     private var uViewMatrixAttr: Int = 0
@@ -38,18 +37,18 @@ class TextureTriangle(context: Context) : BaseShape(context) {
 
     private var mTextureId: Int = 0
 
-    private var uMatrix:Int = 0
 
     private var vertexArrayData = floatArrayOf(
-            0.0f, 1.0f
-            - 1.0f, 0.0f,
-            1.0f, 0.0f
+
+            0.5f, 0f,
+            0f, 1.0f,
+            1.0f, 1.0f
     )
 
     private var textureArrayData = floatArrayOf(
             0.5f, 0f,
-            0f, 1f,
-            1f, 1f
+            0f, 1.0f,
+            1.0f, 1.0f
     )
 
     var mVertexArray: VertexArray
@@ -78,8 +77,6 @@ class TextureTriangle(context: Context) : BaseShape(context) {
         uProjectionMatrixAttr = glGetUniformLocation(mProgram, U_PROJECTION_MATRIX)
 
 
-        uMatrix = glGetUniformLocation(mProgram,U_MATRIX)
-
         aTextureCoordinateAttr = glGetAttribLocation(mProgram, A_TEXTURE_COORDINATE)
         uTextureUnitAttr = glGetUniformLocation(mProgram, U_TEXTURE_UNIT)
 
@@ -97,6 +94,10 @@ class TextureTriangle(context: Context) : BaseShape(context) {
 
 
         Matrix.setIdentityM(modelMatrix, 0)
+
+        Matrix.rotateM(modelMatrix,0,180f,1f,0f,0f)
+        Matrix.translateM(modelMatrix,0,-0.5f,-0.5f,0f)
+
         Matrix.setIdentityM(viewMatrix, 0)
         Matrix.setIdentityM(projectionMatrix, 0)
     }
@@ -104,6 +105,14 @@ class TextureTriangle(context: Context) : BaseShape(context) {
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
         super.onSurfaceChanged(gl, width, height)
         GLES20.glViewport(0, 0, width, height)
+
+        val aspectRatio = if (width > height) width.toFloat() / height.toFloat() else height.toFloat() / width.toFloat()
+
+        if (width > height) {
+            Matrix.orthoM(projectionMatrix, 0, -aspectRatio, aspectRatio, -1f, 1f, 0f, 10f)
+        } else {
+            Matrix.orthoM(projectionMatrix, 0, -1f, 1f, -aspectRatio, aspectRatio, 0f, 10f)
+        }
     }
 
     override fun onDrawFrame(gl: GL10?) {
@@ -111,16 +120,16 @@ class TextureTriangle(context: Context) : BaseShape(context) {
 
         glClear(GLES20.GL_DEPTH_BUFFER_BIT)
 
-//        glUniformMatrix4fv(uModelMatrixAttr, 1, false, modelMatrix, 0)
-//        glUniformMatrix4fv(uViewMatrixAttr, 1, false, viewMatrix, 0)
-//        glUniformMatrix4fv(uProjectionMatrixAttr, 1, false, projectionMatrix, 0)
+        glUniformMatrix4fv(uModelMatrixAttr, 1, false, modelMatrix, 0)
+        glUniformMatrix4fv(uViewMatrixAttr, 1, false, viewMatrix, 0)
+        glUniformMatrix4fv(uProjectionMatrixAttr, 1, false, projectionMatrix, 0)
 
-        glUniformMatrix4fv(uMatrix,1,false,modelMatrix,0)
 
         glDrawArrays(GL_TRIANGLES, 0, 3)
     }
 
     override fun onSurfaceDestroyed() {
         super.onSurfaceDestroyed()
+        glDeleteProgram(mProgram)
     }
 }

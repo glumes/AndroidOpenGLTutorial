@@ -10,8 +10,7 @@ uniform mat4 u_Matrix;
 void main() {
     v_TextureCoordinates = a_TextureCoordinates ;
 
-//    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;
+    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;
 
-    gl_Position = u_Matrix * a_Position ;
 
 }
