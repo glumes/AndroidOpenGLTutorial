@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.glumes.openglbasicshape.TouchActivity">
+    tools:context="com.glumes.openglbasicshape.touch.TouchActivity">
 
 
-    <com.glumes.openglbasicshape.glviews.TouchView
+    <com.glumes.openglbasicshape.touch.TouchView
         android:id="@+id/touchSurface"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

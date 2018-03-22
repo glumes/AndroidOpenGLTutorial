@@ -26,17 +26,24 @@ public class RenderViewHolder extends BindingViewHolder<RenderModel, RenderTypeL
         mBinding.setViewmodel(renderTypeModel);
         mBinding.executePendingBindings();
 
-        if (renderTypeModel.mType == RenderType.RENDER_TYPE_TITLE) {
+        if (renderTypeModel.mType == RenderType.RENDER_TYPE_JUMP_ACTIVITY) {
             mBinding.text.setTextColor(Color.BLUE);
 
             mBinding.text.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent  =new Intent(v.getContext(),renderTypeModel.mClass);
-                    intent.putExtra(KotlinConstantKt.ACTIVITY_TITLE,renderTypeModel.mTitle);
+                    if (renderTypeModel.mClass == null){
+                        return;
+                    }
+                    Intent intent = new Intent(v.getContext(), renderTypeModel.mClass);
+                    intent.putExtra(KotlinConstantKt.ACTIVITY_TITLE, renderTypeModel.mTitle);
                     v.getContext().startActivity(intent);
                 }
             });
+        } else if (renderTypeModel.mType == RenderType.RENDER_TYPE_TITLE) {
+
+            mBinding.text.setTextColor(Color.BLACK);
+
         }
     }
 

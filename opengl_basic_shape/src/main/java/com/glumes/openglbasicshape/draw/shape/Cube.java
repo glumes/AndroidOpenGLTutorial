@@ -1,4 +1,4 @@
-package com.glumes.openglbasicshape.objects.shape;
+package com.glumes.openglbasicshape.draw.shape;
 
 import android.content.Context;
 import android.opengl.GLES20;
@@ -7,10 +7,10 @@ import android.os.SystemClock;
 
 import com.glumes.comlib.LogUtil;
 import com.glumes.openglbasicshape.R;
-import com.glumes.openglbasicshape.data.VertexArray;
-import com.glumes.openglbasicshape.objects.BaseShape;
+import com.glumes.openglbasicshape.draw.BaseShape;
 import com.glumes.openglbasicshape.utils.Constants;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
+import com.glumes.openglbasicshape.utils.VertexArray;
 
 import java.nio.ByteBuffer;
 

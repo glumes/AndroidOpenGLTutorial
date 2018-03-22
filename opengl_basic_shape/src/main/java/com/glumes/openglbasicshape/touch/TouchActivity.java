@@ -1,9 +1,9 @@
-package com.glumes.openglbasicshape;
+package com.glumes.openglbasicshape.touch;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.glumes.openglbasicshape.glviews.TouchView;
+import com.glumes.openglbasicshape.R;
 
 public class TouchActivity extends AppCompatActivity {
 

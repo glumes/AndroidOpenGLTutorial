@@ -6,7 +6,7 @@ import android.opengl.Matrix;
 import android.os.SystemClock;
 
 import com.glumes.openglbasicshape.R;
-import com.glumes.openglbasicshape.objects.BaseShape;
+import com.glumes.openglbasicshape.draw.BaseShape;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
 
 import java.nio.ByteBuffer;

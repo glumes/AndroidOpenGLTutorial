@@ -1,8 +1,8 @@
-package com.glumes.openglbasicshape.type
+package com.glumes.openglbasicshape.activitiy
 
 import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.base.BaseRenderActivity
-import com.glumes.openglbasicshape.objects.graph.*
+import com.glumes.openglbasicshape.draw.graph.*
 
 class BasicGraphActivity : BaseRenderActivity() {
 

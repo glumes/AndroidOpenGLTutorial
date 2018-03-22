@@ -1,4 +1,4 @@
-package com.glumes.openglbasicshape.glviews;
+package com.glumes.openglbasicshape.touch;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;

@@ -1,12 +1,11 @@
-package com.glumes.openglbasicshape.objects.graph;
+package com.glumes.openglbasicshape.draw.graph;
 
 import android.content.Context;
-import android.opengl.Matrix;
 
 import com.glumes.openglbasicshape.R;
-import com.glumes.openglbasicshape.data.VertexArray;
-import com.glumes.openglbasicshape.objects.BaseShape;
+import com.glumes.openglbasicshape.draw.BaseShape;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
+import com.glumes.openglbasicshape.utils.VertexArray;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -22,7 +21,6 @@ import static android.opengl.GLES20.glGetUniformLocation;
 import static android.opengl.GLES20.glUniform4f;
 import static android.opengl.GLES20.glUniformMatrix4fv;
 import static android.opengl.GLES20.glUseProgram;
-import static android.opengl.Matrix.orthoM;
 import static android.opengl.Matrix.setIdentityM;
 
 /**

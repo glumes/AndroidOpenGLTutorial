@@ -1,9 +1,9 @@
-package com.glumes.openglbasicshape.type
+package com.glumes.openglbasicshape.activitiy
 
 import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.base.BaseRenderActivity
-import com.glumes.openglbasicshape.objects.texture.SphereTexture
-import com.glumes.openglbasicshape.objects.texture.TextureTriangle
+import com.glumes.openglbasicshape.draw.texture.SphereTexture
+import com.glumes.openglbasicshape.draw.texture.TextureTriangle
 
 class TextureActivity : BaseRenderActivity() {
 

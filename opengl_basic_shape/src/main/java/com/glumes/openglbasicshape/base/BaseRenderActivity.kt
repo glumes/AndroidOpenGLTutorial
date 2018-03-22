@@ -4,10 +4,10 @@ import android.opengl.GLSurfaceView
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import android.util.SparseArray
-import com.glumes.openglbasicshape.glviews.BaseShapeView
-import com.glumes.openglbasicshape.objects.BaseShape
-import com.glumes.openglbasicshape.objects.graph.Point
-import com.glumes.openglbasicshape.objects.shape.Cube
+import com.glumes.openglbasicshape.draw.BaseShape
+import com.glumes.openglbasicshape.draw.BaseShapeView
+import com.glumes.openglbasicshape.draw.graph.Point
+import com.glumes.openglbasicshape.draw.shape.Cube
 import com.glumes.openglbasicshape.renderers.BasicShapeRender
 import com.glumes.openglbasicshape.utils.ACTIVITY_TITLE
 import com.glumes.openglbasicshape.utils.RENDERER_SHAPE

@@ -18,15 +18,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".MagicCubeActivity" />
-        <activity android:name=".TouchActivity" />
+        <activity android:name=".touch.TouchActivity" />
         <activity
-            android:name=".type.BasicGraphActivity"
+            android:name=".activitiy.BasicGraphActivity"
             android:theme="@style/NoActionBarTheme" />
         <activity
-            android:name=".type.BasicShapeActivity"
+            android:name=".activitiy.BasicShapeActivity"
             android:theme="@style/NoActionBarTheme" />
         <activity
-            android:name=".type.TextureActivity"
+            android:name=".activitiy.TextureActivity"
             android:theme="@style/NoActionBarTheme" />
     </application>
 

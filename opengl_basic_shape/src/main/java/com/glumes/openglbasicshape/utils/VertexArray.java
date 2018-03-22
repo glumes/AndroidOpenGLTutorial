@@ -1,6 +1,4 @@
-package com.glumes.openglbasicshape.data;
-
-import com.glumes.openglbasicshape.utils.Constants;
+package com.glumes.openglbasicshape.utils;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

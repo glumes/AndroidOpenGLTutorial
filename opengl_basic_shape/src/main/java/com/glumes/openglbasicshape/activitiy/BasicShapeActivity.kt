@@ -1,9 +1,9 @@
-package com.glumes.openglbasicshape.type
+package com.glumes.openglbasicshape.activitiy
 
 import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.base.BaseRenderActivity
-import com.glumes.openglbasicshape.objects.shape.Cube
-import com.glumes.openglbasicshape.objects.shape.Sphere
+import com.glumes.openglbasicshape.draw.shape.Cube
+import com.glumes.openglbasicshape.draw.shape.Sphere
 
 class BasicShapeActivity : BaseRenderActivity() {
 

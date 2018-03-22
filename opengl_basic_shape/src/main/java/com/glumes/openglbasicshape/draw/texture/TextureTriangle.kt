@@ -1,16 +1,16 @@
-package com.glumes.openglbasicshape.objects.texture
+package com.glumes.openglbasicshape.draw.texture
 
 import android.content.Context
 import android.opengl.GLES20
 import android.opengl.GLES20.*
-import android.opengl.GLES30
 import android.opengl.Matrix
 import com.glumes.comlib.LogUtil
 import com.glumes.openglbasicshape.R
-import com.glumes.openglbasicshape.data.VertexArray
-import com.glumes.openglbasicshape.objects.BaseShape
+import com.glumes.openglbasicshape.draw.BaseShape
 import com.glumes.openglbasicshape.utils.ShaderHelper
 import com.glumes.openglbasicshape.utils.TextureHelper
+import com.glumes.openglbasicshape.utils.VertexArray
+import java.nio.IntBuffer
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
@@ -86,11 +86,19 @@ class TextureTriangle(context: Context) : BaseShape(context) {
 
         mTextureId = TextureHelper.loadTexture(mContext, R.drawable.texture)
 
+        glUniform1i(uTextureUnitAttr, 1)
+
+
         glActiveTexture(GL_TEXTURE0)
+
+        var intBuffer:IntBuffer = IntBuffer.allocate(1)
+
+        glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS,intBuffer)
+
+        LogUtil.d("max combined texture image units " + intBuffer[0])
 
         glBindTexture(GL_TEXTURE_2D, mTextureId)
 
-        glUniform1i(uTextureUnitAttr, 0)
 
 
         Matrix.setIdentityM(modelMatrix, 0)

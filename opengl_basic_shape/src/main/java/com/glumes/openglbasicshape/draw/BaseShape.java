@@ -1,8 +1,8 @@
-package com.glumes.openglbasicshape.objects;
+package com.glumes.openglbasicshape.draw;
 
 import android.content.Context;
 
-import com.glumes.openglbasicshape.data.VertexArray;
+import com.glumes.openglbasicshape.utils.VertexArray;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;

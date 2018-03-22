@@ -1,15 +1,13 @@
-package com.glumes.openglbasicshape.objects.shape;
+package com.glumes.openglbasicshape.draw.texture;
 
 import android.content.Context;
-import android.opengl.GLES20;
-import android.opengl.Matrix;
-import android.os.SystemClock;
 
 import com.glumes.comlib.LogUtil;
 import com.glumes.openglbasicshape.R;
-import com.glumes.openglbasicshape.data.VertexArray;
-import com.glumes.openglbasicshape.objects.BaseShape;
+import com.glumes.openglbasicshape.draw.BaseShape;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
+import com.glumes.openglbasicshape.utils.TextureHelper;
+import com.glumes.openglbasicshape.utils.VertexArray;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -20,32 +18,41 @@ import java.util.ArrayList;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import static android.opengl.GLES20.GL_TEXTURE0;
+import static android.opengl.GLES20.GL_TEXTURE_2D;
 import static android.opengl.GLES20.GL_TRIANGLES;
 import static android.opengl.GLES20.GL_TRIANGLE_STRIP;
 import static android.opengl.GLES20.GL_UNSIGNED_SHORT;
+import static android.opengl.GLES20.glActiveTexture;
+import static android.opengl.GLES20.glBindTexture;
 import static android.opengl.GLES20.glDrawArrays;
 import static android.opengl.GLES20.glDrawElements;
 import static android.opengl.GLES20.glGetAttribLocation;
 import static android.opengl.GLES20.glGetUniformLocation;
+import static android.opengl.GLES20.glUniform1i;
 import static android.opengl.GLES20.glUniformMatrix4fv;
 import static android.opengl.GLES20.glUseProgram;
 import static android.opengl.Matrix.setIdentityM;
 
 /**
- * Created by glumes on 2017/8/9.
+ * Created by glumes on 2017/8/27.
  */
 
-public class Sphere extends BaseShape {
+public class SphereTexture extends BaseShape {
 
     private static final String U_MATRIX = "u_Matrix";
     private static final String A_POSITION = "a_Position";
 //    private static final String U_COLOR = "u_Color";
 
+    private static final String A_TEXTURE_COORDINATES = "a_TextureCoordinates";
+    private static final String U_TEXTURE_UNIT = "u_TextureUnit";
+
 
     private int uMatrixLocation;
     private int aPositionLocation;
-//    private int uColorLocation;
-
+    //    private int uColorLocation;
+    private int aTextureCoordinatesLocation;
+    private int uTextureUnitLocation;
 
     float[] sphereVertex;
 
@@ -62,10 +69,15 @@ public class Sphere extends BaseShape {
 
     private short[] indices;
 
-    public Sphere(Context context) {
+    private float[] textureIndex;
+
+    VertexArray textureVertexArray;
+
+    public SphereTexture(Context context) {
         super(context);
 
-        mProgram = ShaderHelper.buildProgram(context, R.raw.sphere_vertex_shader, R.raw.sphere_fragment_shader);
+        mProgram = ShaderHelper.buildProgram(context, R.raw.sphere_texture_vertex_shader,
+                R.raw.sphere_texture_fragment_shader);
 
         glUseProgram(mProgram);
 
@@ -77,15 +89,10 @@ public class Sphere extends BaseShape {
 
         vertexArray = new VertexArray(sphereVertex);
 
+        textureVertexArray = new VertexArray(textureIndex);
+
+
         length = sphereVertex.length / 3;
-
-//        LogUtil.d("buffer length is " + position.length);
-//
-//
-//        intBuffer = ByteBuffer.allocateDirect(position.length * 4).asIntBuffer().put(position);
-//
-//        intBuffer.position(0);
-
 
         indexBuffer = ByteBuffer.allocateDirect(indices.length * 2).order(ByteOrder.nativeOrder())
                 .asShortBuffer().put(indices);
@@ -102,32 +109,37 @@ public class Sphere extends BaseShape {
         uMatrixLocation = glGetUniformLocation(mProgram, U_MATRIX);
 //        uColorLocation = glGetUniformLocation(mProgram, U_COLOR);
 
+        aTextureCoordinatesLocation = glGetAttribLocation(mProgram, A_TEXTURE_COORDINATES);
+
+        uTextureUnitLocation = glGetUniformLocation(mProgram, U_TEXTURE_UNIT);
+
         vertexArray.setVertexAttribPointer(0, aPositionLocation, POSITION_COMPONENT_COUNT, 0);
+
+        textureVertexArray.setVertexAttribPointer(0, aTextureCoordinatesLocation, TEXTURE_COORDINATES_COMPONENT_COUNT, 0);
+
 
         setIdentityM(modelMatrix, 0);
 
+        int texture = TextureHelper.loadTexture(mContext, R.drawable.sphere);
+
+        // OpenGL 在使用纹理进行绘制时，不需要直接给着色器传递纹理。
+        // 相反，我们使用纹理单元保存那个纹理，因为，一个 GPU 只能同时绘制数量有限的纹理
+        // 它使用那些纹理单元表示当前正在被绘制的活动的纹理
+
+        // 通过调用 glActiveTexture 把活动的纹理单元设置为纹理单元 0
+        glActiveTexture(GL_TEXTURE0);
+        // 然后通过调用 glBindTexture 把纹理绑定到这个单元
+        glBindTexture(GL_TEXTURE_2D, texture);
+        // 接着通过调用 glUniform1i 把被选定的纹理单元传递给片段着色器中的 u_TextureUnit
+        glUniform1i(uTextureUnitLocation, 0);
     }
 
 
     @Override
     public void onDrawFrame(GL10 gl) {
 
-
-
-        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
-
-        long time  = SystemClock.uptimeMillis() % 10000L;
-        float angleInDegrees = (360.0f / 10000.0f) * ((int) time);
-
-
-        Matrix.setIdentityM(modelMatrix,0);
-
-        Matrix.rotateM(modelMatrix,0,angleInDegrees,1.0f,1.0f,0.0f);
-
         glUniformMatrix4fv(uMatrixLocation, 1, false, modelMatrix, 0);
 //        glUniform4f(uColorLocation, 0.0f, 1.0f, 0.0f, 1.0f);
-
-
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, length);
 
@@ -214,18 +226,19 @@ public class Sphere extends BaseShape {
         float sin;
         float cos;
 
-        sphereVertex = new float[rings * sectors * 3];
+        sphereVertex = new float[(rings + 1) * (sectors + 1) * 3];
+        textureIndex = new float[(rings + 1) * (sectors + 1) * 2];
 
         /**
          * 只遍历一边顶点就好了
          */
         int count = 0;
-        for (float i = -90.0f; i < 90.0f; i += step) {
+        for (float i = -90.0f; i <= 90.0f; i += step) {
 
             r = (float) Math.cos(i * Math.PI / 180.0);
             y = (float) Math.sin(i * Math.PI / 180.0);
 
-            for (float j = 0.0f; j < 360.0f; j += step2) {
+            for (float j = 0.0f; j <= 360.0f; j += step2) {
 
                 cos = (float) Math.cos(j * Math.PI / 180.0);
                 sin = (float) Math.sin(j * Math.PI / 180.0);
@@ -233,26 +246,44 @@ public class Sphere extends BaseShape {
                 sphereVertex[count++] = r * sin;
                 sphereVertex[count++] = y;
                 sphereVertex[count++] = r * cos;
+
             }
         }
 
+        int textureCount = 0;
+        float xPos;
+        float yPos;
+        for (int i = 0; i <= rings; i++) {
+
+            xPos = i * 1.0f * (1.0f / rings);
+            LogUtil.d("xPos is " + xPos);
+
+            for (int j = 0; j <= sectors; j++) {
+
+                yPos = j * 1.0f * (1.0f / sectors);
+                LogUtil.d("yPos is " + yPos);
+
+                textureIndex[textureCount++] = yPos;
+                textureIndex[textureCount++] = xPos;
+            }
+        }
 
         LogUtil.d("count num is " + sphereVertex.length);
 
         // 对于不存在的顶点索引 也可以绘制 嘛？
         int counter = 0;
-        indices = new short[rings * sectors * 6 * 2];
-        for (int i = 0; i < rings * 2; i++) {
-            for (int j = 0; j < sectors; j++) {
+        indices = new short[(rings + 1) * (sectors + 1) * 6];
+        for (int i = 0; i <= rings; i++) {
+            for (int j = 0; j <= sectors; j++) {
                 indices[counter++] = (short) (i * sectors + j);       //(a)
                 indices[counter++] = (short) (i * sectors + (j + 1));    //(b)
                 indices[counter++] = (short) ((i + 1) * sectors + j);  // (c)
                 indices[counter++] = (short) ((i + 1) * sectors + j);  // (c)
                 indices[counter++] = (short) (i * sectors + (j + 1));    //(b)
                 indices[counter++] = (short) ((i + 1) * sectors + (j + 1));     //(d)
-                if (i == rings * 2 - 1) {
-                    LogUtil.d("count is " + ((i + 1) * sectors + (j + 1)));
-                }
+//                if (i == rings * 2 - 1) {
+//                    LogUtil.d("count is " + ((i + 1) * sectors + (j + 1)));
+//                }
             }
         }
 
@@ -316,6 +347,5 @@ public class Sphere extends BaseShape {
 
         return f;
     }
-
 
 }

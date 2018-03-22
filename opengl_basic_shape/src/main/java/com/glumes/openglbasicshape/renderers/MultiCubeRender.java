@@ -5,7 +5,7 @@ import android.opengl.GLES20;
 import android.opengl.Matrix;
 
 import com.glumes.comlib.LogUtil;
-import com.glumes.openglbasicshape.objects.shape.Cube;
+import com.glumes.openglbasicshape.draw.shape.Cube;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;

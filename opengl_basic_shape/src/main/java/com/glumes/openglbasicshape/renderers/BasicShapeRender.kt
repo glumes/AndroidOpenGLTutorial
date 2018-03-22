@@ -1,8 +1,8 @@
 package com.glumes.openglbasicshape.renderers
 
 import android.content.Context
-import com.glumes.openglbasicshape.objects.BaseShape
-import com.glumes.openglbasicshape.objects.graph.Point
+import com.glumes.openglbasicshape.draw.BaseShape
+import com.glumes.openglbasicshape.draw.graph.Point
 import timber.log.Timber
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
