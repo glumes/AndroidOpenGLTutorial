@@ -13,6 +13,14 @@ import com.glumes.openglbasicshape.R
 import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_camera_info.*
 
+
+/**
+ * 打开相机的流程：
+ * 1、根据相机的提供的画面尺寸，以及生产的照片尺寸，还有预览的界面的尺寸综合得出合适的比例
+ * 2、调整旋转的方向
+ * 3、调整 3A 模式
+ *
+ */
 class CameraInfoActivity : AppCompatActivity() {
 
 
@@ -50,8 +58,11 @@ class CameraInfoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_camera_info)
+        if (!mCamera2.openCamera()) {
+            Logger.d("open camera failed")
+        }
 
+        setContentView(R.layout.activity_camera_info)
     }
 
 
@@ -71,20 +82,15 @@ class CameraInfoActivity : AppCompatActivity() {
             return
         }
 
-
-
-        mCamera2.setPreviewSurface(Surface(mSurfaceTexture))
+//        mCamera2.setPreviewSurface(Surface(mSurfaceTexture))
 
         mCamera2.setPreviewSurfaceTexture(mSurfaceTexture)
 
         mCamera2.setPreviewSize(mSurfaceWidth, mSurfaceHeight)
 
-        mCamera2.openCamera()
+//        mCamera2.openCamera()
 
-//        val size = mCamera2.setPreviewSize(mSurfaceWidth, mSurfaceHeight)
-//
-//        mCameraView.surfaceTexture.setDefaultBufferSize(size.width, size.height)
-
+        mCamera2.startPreview()
 
     }
 

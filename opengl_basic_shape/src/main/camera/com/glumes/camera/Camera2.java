@@ -15,6 +15,8 @@ import android.hardware.camera2.CaptureResult;
 import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.ImageReader;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.util.SparseIntArray;
 import android.view.Surface;
@@ -57,6 +59,9 @@ public class Camera2 implements ICamera {
     private int mSurfaceWidth;
     private int mSurfaceHeight;
 
+    private HandlerThread mCameraThread;
+    private Handler mCameraHandler;
+
 
     static {
         INTERNAL_FACINGS.put(Constants.FACING_BACK, CameraCharacteristics.LENS_FACING_BACK);
@@ -86,7 +91,7 @@ public class Camera2 implements ICamera {
         @Override
         public void onOpened(@NonNull CameraDevice camera) {
             mCameraDevice = camera;
-            startCaptureSession(mSurfaceWidth, mSurfaceHeight);
+//            startCaptureSession(mSurfaceWidth, mSurfaceHeight);
         }
 
         @Override
@@ -112,10 +117,11 @@ public class Camera2 implements ICamera {
             // 处理闪关灯
 
             try {
-                mCaptureSession.setRepeatingRequest(mPreviewRequestBuilder.build(), null, null);
+                mCaptureSession.setRepeatingRequest(mPreviewRequestBuilder.build(), null, mCameraHandler);
                 Logger.d("set repeating request");
             } catch (CameraAccessException e) {
                 e.printStackTrace();
+                Logger.e(e, e.getMessage());
             }
 
         }
@@ -171,6 +177,14 @@ public class Camera2 implements ICamera {
 
     public Camera2(Context context) {
         mContext = context;
+        startCameraThread();
+
+    }
+
+    private void startCameraThread() {
+        mCameraThread = new HandlerThread("CameraThread");
+        mCameraThread.start();
+        mCameraHandler = new Handler(mCameraThread.getLooper());
     }
 
 
@@ -295,20 +309,22 @@ public class Camera2 implements ICamera {
 
     @SuppressLint("MissingPermission")
     @Override
-    public void openCamera() {
+    public boolean openCamera() {
 
         if (!chooseCamera()) {
-            return;
+            return false;
         }
 
         collectCameraInfo();
         prepareImageReader();
 
         try {
-            mCameraManager.openCamera(mCameraId, mStateCallback, null);
+            mCameraManager.openCamera(mCameraId, mStateCallback, mCameraHandler);
         } catch (CameraAccessException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
 
@@ -323,6 +339,10 @@ public class Camera2 implements ICamera {
     }
 
 
+    /**
+     * @param previewWidth
+     * @param previewHeight
+     */
     void startCaptureSession(int previewWidth, int previewHeight) {
         if (!isCameraOpened()) {
             return;
@@ -334,10 +354,18 @@ public class Camera2 implements ICamera {
             mSurfaceTexture.setDefaultBufferSize(previewSize.getWidth(), previewSize.getHeight());
         }
 
+//        printCameraInfo();
+
+
+        Surface surface = new Surface(mSurfaceTexture);
+
+
         try {
             mPreviewRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
-            mPreviewRequestBuilder.addTarget(mPreviewSurface);
-            mCameraDevice.createCaptureSession(Arrays.asList(mPreviewSurface, mImageReader.getSurface()), mSessionCallback, null);
+
+            mPreviewRequestBuilder.addTarget(surface);
+
+            mCameraDevice.createCaptureSession(Arrays.asList(surface/*, mImageReader.getSurface()*/), mSessionCallback, mCameraHandler);
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
@@ -345,7 +373,30 @@ public class Camera2 implements ICamera {
     }
 
 
-    // 根据 view 的宽高比和相机提供的预览的宽高比 选择合适的宽高比比例
+    private void printCameraInfo() {
+        int[] AFModes = mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AF_AVAILABLE_MODES);
+        for (int AFMode : AFModes) {
+            Logger.d("af mode value is " + AFMode);
+        }
+
+        int[] AEModes = mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_AVAILABLE_MODES);
+        for (int AEMode : AEModes) {
+            Logger.d("ae mode value is " + AEMode);
+        }
+
+        int[] AWBModes = mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES);
+        for (int AWBMode : AWBModes) {
+            Logger.d("awb mode value is " + AWBMode);
+        }
+    }
+
+    /**
+     * 根据 view 的宽高比和相机提供的预览的宽高比 选择合适的宽高比比例
+     *
+     * @param previewWidth
+     * @param previewHeight
+     * @return
+     */
     private Size chooseOptimalSize(int previewWidth, int previewHeight) {
         int surfaceLonger, surfaceShorter;
         final int surfaceWidth = previewWidth;
@@ -369,17 +420,21 @@ public class Camera2 implements ICamera {
         return candidates.last();
     }
 
+
+    public void startPreview() {
+        startCaptureSession(mSurfaceWidth, mSurfaceHeight);
+    }
+
+
     @Override
     public void stopPreview() {
 
     }
 
-
     @Override
     public void closeCamera() {
 
     }
-
 
     @Override
     public int getFacing() {

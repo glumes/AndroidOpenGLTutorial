@@ -7,7 +7,7 @@ package com.glumes.camera;
 public interface ICamera {
 
 
-    void openCamera();
+    boolean openCamera();
 
     void closeCamera();
 

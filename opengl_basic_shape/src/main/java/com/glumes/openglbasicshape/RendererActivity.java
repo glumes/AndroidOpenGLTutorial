@@ -10,6 +10,7 @@ import com.glumes.databindingadapter.Items;
 import com.glumes.openglbasicshape.activitiy.BasicGraphActivity;
 import com.glumes.openglbasicshape.activitiy.BasicShapeActivity;
 import com.glumes.openglbasicshape.activitiy.TextureActivity;
+import com.glumes.openglbasicshape.filter.GLSurfaceViewFilterActivity;
 import com.glumes.openglbasicshape.info.CameraInfoActivity;
 import com.glumes.openglbasicshape.utils.RenderType;
 import com.glumes.openglbasicshape.viewholderitem.RenderBinder;
@@ -50,7 +51,8 @@ public class RendererActivity extends AppCompatActivity {
 
         items.add(new RenderModel("滤镜偏", RenderType.RENDER_TYPE_TITLE));
 
-        items.add(new RenderModel("基于GLSurfaceView的滤镜", RenderType.RENDER_TYPE_JUMP_ACTIVITY));
+        items.add(new RenderModel("基于GLSurfaceView的滤镜", RenderType.RENDER_TYPE_JUMP_ACTIVITY, GLSurfaceViewFilterActivity.class));
+
         items.add(new RenderModel("基于EGL的滤镜", RenderType.RENDER_TYPE_JUMP_ACTIVITY));
         items.add(new RenderModel("组合滤镜效果实现", RenderType.RENDER_TYPE_JUMP_ACTIVITY));
         items.add(new RenderModel("多个滤镜切换", RenderType.RENDER_TYPE_JUMP_ACTIVITY));
