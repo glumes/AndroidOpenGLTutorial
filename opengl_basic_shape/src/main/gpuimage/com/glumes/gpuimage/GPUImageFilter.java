@@ -5,9 +5,10 @@ import android.graphics.PointF;
 import android.opengl.GLES11Ext;
 import android.opengl.GLES20;
 
+import com.glumes.gpuimage.utils.OpenGlUtils;
+import com.glumes.gpuimage.utils.Rotation;
 import com.glumes.gpuimage.utils.TextureRotationUtil;
 import com.glumes.openglbasicshape.R;
-import com.glumes.openglbasicshape.utils.OpenGlUtils;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -15,7 +16,6 @@ import java.nio.FloatBuffer;
 import java.util.LinkedList;
 
 import static android.opengl.GLES11Ext.GL_TEXTURE_EXTERNAL_OES;
-import static android.opengl.GLES20.glActiveTexture;
 
 /**
  * Created by glumes on 30/03/2018
@@ -51,9 +51,11 @@ public class GPUImageFilter {
                 .asFloatBuffer();
         mGLCubeBuffer.put(TextureRotationUtil.CUBE).position(0);
 
-        mGLTextureBuffer = ByteBuffer.allocateDirect(TextureRotationUtil.TEXTURE_NO_ROTATION.length * 4)
+        mGLTextureBuffer = ByteBuffer.allocateDirect(TextureRotationUtil.TEXTURE_ROTATED_90.length * 4)
                 .order(ByteOrder.nativeOrder())
                 .asFloatBuffer();
+
+        mGLTextureBuffer.put(TextureRotationUtil.getRotation(Rotation.ROTATION_90, false, true)).position(0);
 
     }
 
@@ -262,6 +264,5 @@ public class GPUImageFilter {
             }
         });
     }
-
 
 }

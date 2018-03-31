@@ -22,17 +22,16 @@ class FilterSurfaceView : GLSurfaceView, SurfaceTexture.OnFrameAvailableListener
     init {
         setEGLContextClientVersion(2)
         setRenderer(mRender)
-        renderMode = RENDERMODE_WHEN_DIRTY
+//        renderMode = RENDERMODE_WHEN_DIRTY
+        renderMode = RENDERMODE_CONTINUOUSLY
     }
 
 
     override fun onFrameAvailable(surfaceTexture: SurfaceTexture?) {
-        requestRender()
+//        requestRender()
     }
 
-    fun setCamera(mCamera2: Camera2) {
-        mRender.setCamera(mCamera2)
-    }
+
 
 
 }

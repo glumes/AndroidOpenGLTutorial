@@ -10,27 +10,14 @@ class GLSurfaceViewFilterActivity : AppCompatActivity() {
 
     var mView: FilterSurfaceView? = null
 
-    lateinit var mCamera2: Camera2
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_glsurface_view_filter)
 
 
-        mCamera2 = Camera2(this)
 
-        if (mCamera2.openCamera()) {
-            mView = FilterSurfaceView(this)
+        mView = FilterSurfaceView(this)
 
-            mView!!.setCamera(mCamera2)
-        }
-
-
-        if (mView == null) {
-            setContentView(R.layout.activity_main)
-        } else {
-            setContentView(mView)
-        }
-
+        setContentView(mView)
 
     }
 

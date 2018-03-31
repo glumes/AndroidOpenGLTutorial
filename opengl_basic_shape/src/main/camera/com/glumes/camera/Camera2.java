@@ -91,7 +91,7 @@ public class Camera2 implements ICamera {
         @Override
         public void onOpened(@NonNull CameraDevice camera) {
             mCameraDevice = camera;
-//            startCaptureSession(mSurfaceWidth, mSurfaceHeight);
+            startCaptureSession(mSurfaceWidth, mSurfaceHeight);
         }
 
         @Override
@@ -335,7 +335,7 @@ public class Camera2 implements ICamera {
         Size largest = mPictureSizes.sizes(mAspectRatio).last();
         mImageReader = ImageReader.newInstance(largest.getWidth(), largest.getHeight(),
                 ImageFormat.JPEG, /* maxImages */ 2);
-        mImageReader.setOnImageAvailableListener(new OnImageAvailableListener(), null);
+        mImageReader.setOnImageAvailableListener(new OnImageAvailableListener(), mCameraHandler);
     }
 
 

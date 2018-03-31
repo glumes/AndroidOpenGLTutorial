@@ -39,7 +39,7 @@ class FilterRender(val mContext: Context, val mFrameAvailableListener: SurfaceTe
     init {
         mFilter = GPUImageFilter(mContext)
 
-//        mCamera2 = Camera2(mContext)
+        mCamera2 = Camera2(mContext)
     }
 
 
@@ -50,7 +50,7 @@ class FilterRender(val mContext: Context, val mFrameAvailableListener: SurfaceTe
 
         mTextureId = OpenGlUtils.getExternalOESTextureID()
         mSurfaceTexture = SurfaceTexture(mTextureId)
-        mSurfaceTexture!!.setOnFrameAvailableListener(mFrameAvailableListener)
+//        mSurfaceTexture!!.setOnFrameAvailableListener(mFrameAvailableListener)
 
     }
 
@@ -84,11 +84,7 @@ class FilterRender(val mContext: Context, val mFrameAvailableListener: SurfaceTe
         mCamera2?.setPreviewSize(mSurfaceWidth, mSurfaceHeight)
         mCamera2?.setPreviewSurfaceTexture(mSurfaceTexture!!)
         Log.d(TAG, "startPreview")
-        mCamera2?.startPreview()
-    }
-
-    fun setCamera(camera: Camera2) {
-        mCamera2 = camera
+        mCamera2?.openCamera()
     }
 
 

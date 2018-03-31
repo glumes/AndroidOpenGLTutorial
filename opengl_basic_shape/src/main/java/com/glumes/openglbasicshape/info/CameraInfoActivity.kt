@@ -82,13 +82,12 @@ class CameraInfoActivity : AppCompatActivity() {
             return
         }
 
-//        mCamera2.setPreviewSurface(Surface(mSurfaceTexture))
 
         mCamera2.setPreviewSurfaceTexture(mSurfaceTexture)
 
         mCamera2.setPreviewSize(mSurfaceWidth, mSurfaceHeight)
 
-//        mCamera2.openCamera()
+        mCamera2.openCamera()
 
         mCamera2.startPreview()
 
