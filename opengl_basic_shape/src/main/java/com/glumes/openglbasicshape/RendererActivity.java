@@ -49,13 +49,15 @@ public class RendererActivity extends AppCompatActivity {
         items.add(new RenderModel("基本形状的绘制", RenderType.RENDER_TYPE_JUMP_ACTIVITY, BasicShapeActivity.class));
         items.add(new RenderModel("绘制纹理", RenderType.RENDER_TYPE_JUMP_ACTIVITY, TextureActivity.class));
 
-        items.add(new RenderModel("滤镜偏", RenderType.RENDER_TYPE_TITLE));
+        items.add(new RenderModel("滤镜篇", RenderType.RENDER_TYPE_TITLE));
 
         items.add(new RenderModel("基于GLSurfaceView的滤镜", RenderType.RENDER_TYPE_JUMP_ACTIVITY, GLSurfaceViewFilterActivity.class));
 
         items.add(new RenderModel("基于EGL的滤镜", RenderType.RENDER_TYPE_JUMP_ACTIVITY));
         items.add(new RenderModel("组合滤镜效果实现", RenderType.RENDER_TYPE_JUMP_ACTIVITY));
         items.add(new RenderModel("多个滤镜切换", RenderType.RENDER_TYPE_JUMP_ACTIVITY));
+
+
 
         items.add(new RenderModel("相机信息", RenderType.RENDER_TYPE_JUMP_ACTIVITY, CameraInfoActivity.class));
 

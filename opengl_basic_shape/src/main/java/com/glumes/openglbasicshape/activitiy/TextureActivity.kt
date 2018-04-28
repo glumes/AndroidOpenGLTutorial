@@ -2,15 +2,17 @@ package com.glumes.openglbasicshape.activitiy
 
 import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.base.BaseRenderActivity
-import com.glumes.openglbasicshape.draw.texture.SphereTexture
-import com.glumes.openglbasicshape.draw.texture.TextureTriangle
+import com.glumes.openglbasicshape.draw.texture.CircleTexture
+import com.glumes.openglbasicshape.draw.texture.RectangleTexture
+import com.glumes.openglbasicshape.draw.texture.TriangleTexture
 
 class TextureActivity : BaseRenderActivity() {
 
 
     override fun initShapeClass() {
-        shapeClazzArray.put(R.id.tirangle_texture,TextureTriangle::class.java)
-        shapeClazzArray.put(R.id.rectangle_texture,SphereTexture::class.java)
+        shapeClazzArray.put(R.id.tirangle_texture, TriangleTexture::class.java)
+        shapeClazzArray.put(R.id.rectangle_texture, RectangleTexture::class.java)
+        shapeClazzArray.put(R.id.circle_texture, CircleTexture::class.java)
     }
 
     override fun setMenuId() {
