@@ -4,6 +4,7 @@ import android.content.Context
 import android.opengl.GLES20
 import android.opengl.GLES20.glUseProgram
 import android.opengl.Matrix
+import com.glumes.comlib.LogUtil
 import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.draw.BaseShape
 import com.glumes.openglbasicshape.utils.ShaderHelper
@@ -83,24 +84,18 @@ class RectangleTexture(context: Context) : BaseShape(context) {
         uViewMatrixAttr = GLES20.glGetUniformLocation(mProgram, U_VIEW_MATRIX)
         uProjectionMatrixAttr = GLES20.glGetUniformLocation(mProgram, U_PROJECTION_MATRIX)
 
-
         aTextureCoordinateAttr = GLES20.glGetAttribLocation(mProgram, A_TEXTURE_COORDINATE)
         uTextureUnitAttr = GLES20.glGetUniformLocation(mProgram, U_TEXTURE_UNIT)
 
-
-        mVertexArray.setVertexAttribPointer(0, aPositionAttr, POSITION_COMPONENT_COUNT, 0)
-        mTextureArray.setVertexAttribPointer(0, aTextureCoordinateAttr, POSITION_COMPONENT_COUNT, 0)
+//        mVertexArray.setVertexAttribPointer(0, aPositionAttr, POSITION_COMPONENT_COUNT, 0)
+//        mTextureArray.setVertexAttribPointer(0, aTextureCoordinateAttr, POSITION_COMPONENT_COUNT, 0)
 
         mTextureId = TextureHelper.loadTexture(mContext, R.drawable.texture)
 
         GLES20.glUniform1i(uTextureUnitAttr, 0)
 
-
-        GLES20.glActiveTexture(GLES20.GL_TEXTURE0)
-
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureId)
-
         Matrix.setIdentityM(modelMatrix, 0)
+//        Matrix.scaleM(modelMatrix, 0, 0.5f, 0.5f, 0f)
         Matrix.setIdentityM(viewMatrix, 0)
         Matrix.setIdentityM(projectionMatrix, 0)
     }
@@ -126,8 +121,21 @@ class RectangleTexture(context: Context) : BaseShape(context) {
         GLES20.glUniformMatrix4fv(uViewMatrixAttr, 1, false, viewMatrix, 0)
         GLES20.glUniformMatrix4fv(uProjectionMatrixAttr, 1, false, projectionMatrix, 0)
 
+        mVertexArray.setVertexAttribPointer(0, aPositionAttr, POSITION_COMPONENT_COUNT, 0)
+        mTextureArray.setVertexAttribPointer(0, aTextureCoordinateAttr, POSITION_COMPONENT_COUNT, 0)
+
+
+        GLES20.glActiveTexture(GLES20.GL_TEXTURE0)
+
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureId)
 
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
+
+        GLES20.glDisableVertexAttribArray(aPositionAttr)
+        GLES20.glDisableVertexAttribArray(aTextureCoordinateAttr)
+
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0)
+
     }
 
     override fun onSurfaceDestroyed() {

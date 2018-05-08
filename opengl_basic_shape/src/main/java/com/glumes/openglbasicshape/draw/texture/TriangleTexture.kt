@@ -81,30 +81,21 @@ class TriangleTexture(context: Context) : BaseShape(context) {
         uTextureUnitAttr = glGetUniformLocation(mProgram, U_TEXTURE_UNIT)
 
 
-        mVertexArray.setVertexAttribPointer(0, aPositionAttr, POSITION_COMPONENT_COUNT, 0)
-        mTextureArray.setVertexAttribPointer(0, aTextureCoordinateAttr, POSITION_COMPONENT_COUNT, 0)
-
         mTextureId = TextureHelper.loadTexture(mContext, R.drawable.texture)
 
         glUniform1i(uTextureUnitAttr, 0)
 
 
-        glActiveTexture(GL_TEXTURE0)
+        val intBuffer: IntBuffer = IntBuffer.allocate(1)
 
-        var intBuffer:IntBuffer = IntBuffer.allocate(1)
-
-        glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS,intBuffer)
+        glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, intBuffer)
 
         LogUtil.d("max combined texture image units " + intBuffer[0])
 
-        glBindTexture(GL_TEXTURE_2D, mTextureId)
-
-
-
         Matrix.setIdentityM(modelMatrix, 0)
 
-        Matrix.rotateM(modelMatrix,0,180f,1f,0f,0f)
-        Matrix.translateM(modelMatrix,0,-0.5f,-0.5f,0f)
+//        Matrix.rotateM(modelMatrix,0,180f,1f,0f,0f)
+        Matrix.translateM(modelMatrix,0,0f,0.5f,0f)
 
         Matrix.setIdentityM(viewMatrix, 0)
         Matrix.setIdentityM(projectionMatrix, 0)
@@ -132,8 +123,21 @@ class TriangleTexture(context: Context) : BaseShape(context) {
         glUniformMatrix4fv(uViewMatrixAttr, 1, false, viewMatrix, 0)
         glUniformMatrix4fv(uProjectionMatrixAttr, 1, false, projectionMatrix, 0)
 
+        mVertexArray.setVertexAttribPointer(0, aPositionAttr, POSITION_COMPONENT_COUNT, 0)
+        mTextureArray.setVertexAttribPointer(0, aTextureCoordinateAttr, POSITION_COMPONENT_COUNT, 0)
+
+        glActiveTexture(GL_TEXTURE0)
+
+        glBindTexture(GL_TEXTURE_2D, mTextureId)
 
         glDrawArrays(GL_TRIANGLES, 0, 3)
+
+        GLES20.glDisableVertexAttribArray(aPositionAttr)
+        GLES20.glDisableVertexAttribArray(aTextureCoordinateAttr)
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0)
+
+        LogUtil.d("draw triangle")
+
     }
 
     override fun onSurfaceDestroyed() {
