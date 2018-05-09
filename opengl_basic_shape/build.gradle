@@ -56,5 +56,5 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$support_version"
     compile "com.android.support:support-v4:$support_version"
 
-
+    compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
 }

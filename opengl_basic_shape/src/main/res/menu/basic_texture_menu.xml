@@ -17,9 +17,9 @@
         android:id="@+id/multi_texture"
         android:title="多个纹理绘制" />
 
-    <!--<item-->
-        <!--android:id="@+id/cube_texture"-->
-        <!--android:title="立方体绘制纹理" />-->
+    <item
+        android:id="@+id/cube_texture"
+        android:title="立方体绘制纹理" />
 
 
 </menu>

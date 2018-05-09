@@ -134,6 +134,7 @@ public class GLFace {
 		
 		GLColor color = getColor();
 
+		// 绘制两个纹理，就是弄两个形状，然后把两个形状绘制上去。
 
 		gl.glColor4f(color.red, color.green, color.blue, color.alpha);
 		

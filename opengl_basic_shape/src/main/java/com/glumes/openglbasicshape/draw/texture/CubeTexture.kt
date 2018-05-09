@@ -2,22 +2,22 @@ package com.glumes.openglbasicshape.draw.texture
 
 import android.content.Context
 import android.opengl.GLES20
-import android.opengl.GLES20.GL_TRIANGLE_FAN
 import android.opengl.Matrix
+import com.glumes.comlib.LogUtil
 import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.draw.BaseShape
 import com.glumes.openglbasicshape.utils.ShaderHelper
 import com.glumes.openglbasicshape.utils.TextureHelper
 import com.glumes.openglbasicshape.utils.VertexArray
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
 /**
- * Created by glumes on 28/04/2018
- * 球形纹理图
+ * Created by glumes on 09/05/2018
  */
-class CircleTexture(context: Context) : BaseShape(context) {
-
+class CubeTexture(context: Context) : BaseShape(context) {
 
     private val U_VIEW_MATRIX = "u_ViewMatrix"
     private val U_MODEL_MATRIX = "u_ModelMatrix"
@@ -36,27 +36,30 @@ class CircleTexture(context: Context) : BaseShape(context) {
 
     private var mTextureId: Int = 0
 
-    val VERTEX_DATA_NUM = 360
+    private var vertexArrayData = FloatArray(8 * 6)
 
+    private var textureArrayData = FloatArray(8 * 6)
 
-    private var vertexArrayData = FloatArray(VERTEX_DATA_NUM * 2 + 4)
+//    var mVertexArray: VertexArray
+//
+//    var mTextureArray: VertexArray
 
-    private var textureArrayData = FloatArray(VERTEX_DATA_NUM * 2 + 4)
+    var vertexFloatBuffer = ByteBuffer
+            .allocateDirect(8 * 6 * 4)
+            .order(ByteOrder.nativeOrder())
+            .asFloatBuffer()
 
-    var mVertexArray: VertexArray
+    var textureFloagBuffer = ByteBuffer
+            .allocateDirect(8 * 6 * 4)
+            .order(ByteOrder.nativeOrder())
+            .asFloatBuffer()
 
-    var mTextureArray: VertexArray
-
-    // 分成 360 份，每一份的弧度
-    val radian = (2 * Math.PI / VERTEX_DATA_NUM).toFloat()
-
-    // 绘制的半径
-    val radius = 0.8f
-
-    val textureRadius = 0.4f
+    val CubeSize = 1.0f
 
     init {
 
+
+        LogUtil.d("cube texture")
         mProgram = ShaderHelper.buildProgram(mContext, R.raw.texture_vertex_shader, R.raw.texture_fragment_shader)
 
         GLES20.glUseProgram(mProgram)
@@ -65,37 +68,43 @@ class CircleTexture(context: Context) : BaseShape(context) {
 
         initTextureData()
 
-        mVertexArray = VertexArray(vertexArrayData)
-        mTextureArray = VertexArray(textureArrayData)
+//        mVertexArray = VertexArray(vertexArrayData)
+//        mTextureArray = VertexArray(textureArrayData)
 
         POSITION_COMPONENT_COUNT = 2
 
     }
 
     private fun initVertexData() {
-        vertexArrayData[0] = 0f
-        vertexArrayData[1] = 0f
+        val faceLeft = -CubeSize / 2
+        val faceRight = -faceLeft
+        val faceTop = CubeSize / 2
+        val faceBottom = -faceTop
 
-        for (it in 0..VERTEX_DATA_NUM) {
-            vertexArrayData[2 * it + 2] = (radius * Math.cos((radian * it).toDouble())).toFloat()
-            vertexArrayData[2 * it + 2 + 1] = (radius * Math.sin((radian * it).toDouble())).toFloat()
+        val vertices = floatArrayOf(
+                faceLeft, faceBottom,
+                faceRight, faceBottom,
+                faceLeft, faceTop,
+                faceRight, faceTop
+        )
+        for (it in 0..5) {
+            vertexFloatBuffer.put(vertices)
         }
-
-        vertexArrayData[VERTEX_DATA_NUM * 2 + 2] = (radius * Math.cos(radian.toDouble())).toFloat()
-        vertexArrayData[VERTEX_DATA_NUM * 2 + 2 + 1] = (radius * Math.sin(radian.toDouble())).toFloat()
-
+        vertexFloatBuffer.position(0)
     }
 
 
     private fun initTextureData() {
-        textureArrayData[0] = 0.5f
-        textureArrayData[1] = 0.5f
-        for (it in 0..VERTEX_DATA_NUM) {
-            textureArrayData[2 * it + 2] = (textureRadius * Math.cos((radian * it).toDouble())).toFloat() + 0.5f
-            textureArrayData[2 * it + 2 + 1] = (textureRadius * Math.sin((radian * it).toDouble())).toFloat() + 0.5f
+        val texCoords = floatArrayOf(
+                0.0f, 1.0f,
+                1.0f, 1.0f,
+                0.0f, 0.0f,
+                1.0f, 0.0f
+        )
+        for (it in 0..5) {
+            textureFloagBuffer.put(texCoords)
         }
-        textureArrayData[VERTEX_DATA_NUM * 2 + 2] = (textureRadius * Math.cos(radian.toDouble())).toFloat() + 0.5f
-        textureArrayData[VERTEX_DATA_NUM * 2 + 2 + 1] = (textureRadius * Math.sin(radian.toDouble())).toFloat() + 0.5f
+        textureFloagBuffer.position(0)
     }
 
 
@@ -115,45 +124,76 @@ class CircleTexture(context: Context) : BaseShape(context) {
         GLES20.glUniform1i(uTextureUnitAttr, 0)
 
         Matrix.setIdentityM(modelMatrix, 0)
-        Matrix.rotateM(modelMatrix,0,180f,1f,0f,0f)
-        Matrix.scaleM(modelMatrix,0,0.5f,0.5f,0f)
-        Matrix.translateM(modelMatrix,0,1.0f,1.0f,0f)
-
         Matrix.setIdentityM(viewMatrix, 0)
         Matrix.setIdentityM(projectionMatrix, 0)
+
+        // Position the eye behind the origin.
+        val eyeX = 0.0f
+        val eyeY = 0.0f
+        val eyeZ = -0.5f
+
+        // We are looking toward the distance
+        val lookX = 0.0f
+        val lookY = 0.0f
+        val lookZ = -5.0f
+
+        // Set our up vector. This is where our head would be pointing were we holding the camera.
+        val upX = 0.0f
+        val upY = 1.0f
+        val upZ = 0.0f
+
+        Matrix.setLookAtM(viewMatrix, 0, eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ)
     }
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
         super.onSurfaceChanged(gl, width, height)
         GLES20.glViewport(0, 0, width, height)
 
-        val aspectRatio = if (width > height) width.toFloat() / height.toFloat() else height.toFloat() / width.toFloat()
 
-        if (width > height) {
-            Matrix.orthoM(projectionMatrix, 0, -aspectRatio, aspectRatio, -1f, 1f, 0f, 10f)
-        } else {
-            Matrix.orthoM(projectionMatrix, 0, -1f, 1f, -aspectRatio, aspectRatio, 0f, 10f)
-        }
+        val ratio = width.toFloat() / height
+        val left = -ratio
+        val bottom = -1.0f
+        val top = 1.0f
+        val near = 1.0f
+        val far = 10.0f
+
+        Matrix.frustumM(projectionMatrix, 0, left, ratio, bottom, top, near, far)
+
         GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, modelMatrix, 0)
         GLES20.glUniformMatrix4fv(uViewMatrixAttr, 1, false, viewMatrix, 0)
         GLES20.glUniformMatrix4fv(uProjectionMatrixAttr, 1, false, projectionMatrix, 0)
+
     }
 
     override fun onDrawFrame(gl: GL10?) {
         super.onDrawFrame(gl)
+        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
         GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT)
+//        GLES20.glEnable(GLES20.GL_CULL_FACE)
+//        GLES20.glEnable(GLES20.GL_DEPTH_TEST)
 
+        vertexFloatBuffer.position(0)
+        GLES20.glVertexAttribPointer(aPositionAttr, POSITION_COMPONENT_COUNT, GLES20.GL_FLOAT, false, 0, vertexFloatBuffer)
+        GLES20.glEnableVertexAttribArray(aPositionAttr)
 
-        mVertexArray.setVertexAttribPointer(0, aPositionAttr, POSITION_COMPONENT_COUNT, 0)
-        mTextureArray.setVertexAttribPointer(0, aTextureCoordinateAttr, POSITION_COMPONENT_COUNT, 0)
+        textureFloagBuffer.position(0)
+        GLES20.glVertexAttribPointer(aTextureCoordinateAttr, POSITION_COMPONENT_COUNT, GLES20.GL_FLOAT, false, 0, textureFloagBuffer)
+        GLES20.glEnableVertexAttribArray(aTextureCoordinateAttr)
 
 
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0)
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureId)
 
+//        GLES20.glFrontFace(GLES20.GL_CCW)
+//        GLES20.glEnable(GLES20.GL_CULL_FACE)
+//        GLES20.glCullFace(GLES20.GL_BACK)
+
 //        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
 
-        GLES20.glDrawArrays(GL_TRIANGLE_FAN, 0, VERTEX_DATA_NUM + 2)
+//        Matrix.rotateM(modelMatrix, 0, 270.0f, 0.0f, 1.0f, 0.0f)
+//        Matrix.translateM(modelMatrix, 0, 0.0f, 0.0f, CubeSize)
+
+        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 4, 4)
 
         GLES20.glDisableVertexAttribArray(aPositionAttr)
         GLES20.glDisableVertexAttribArray(aTextureCoordinateAttr)

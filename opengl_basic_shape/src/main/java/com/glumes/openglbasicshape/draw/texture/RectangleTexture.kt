@@ -95,7 +95,10 @@ class RectangleTexture(context: Context) : BaseShape(context) {
         GLES20.glUniform1i(uTextureUnitAttr, 0)
 
         Matrix.setIdentityM(modelMatrix, 0)
-//        Matrix.scaleM(modelMatrix, 0, 0.5f, 0.5f, 0f)
+        Matrix.scaleM(modelMatrix, 0, 0.5f, 0.5f, 0f)
+
+        Matrix.rotateM(modelMatrix, 0, 250f, 0f, 1f, 0f)
+
         Matrix.setIdentityM(viewMatrix, 0)
         Matrix.setIdentityM(projectionMatrix, 0)
     }
@@ -120,6 +123,7 @@ class RectangleTexture(context: Context) : BaseShape(context) {
         GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, modelMatrix, 0)
         GLES20.glUniformMatrix4fv(uViewMatrixAttr, 1, false, viewMatrix, 0)
         GLES20.glUniformMatrix4fv(uProjectionMatrixAttr, 1, false, projectionMatrix, 0)
+
 
         mVertexArray.setVertexAttribPointer(0, aPositionAttr, POSITION_COMPONENT_COUNT, 0)
         mTextureArray.setVertexAttribPointer(0, aTextureCoordinateAttr, POSITION_COMPONENT_COUNT, 0)
