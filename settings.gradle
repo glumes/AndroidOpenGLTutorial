@@ -1,7 +1,6 @@
-include ':app',
-        ':opengl_basic_shape',
-        ':comlib',
-        ':official_opengl_sample',
-        ':magic_cube',
-        ':opengl_kotlin_native',
-        ':MagicCube'
+include ':opengl_tutorial',
+        ':comlib'
+//        ':official_opengl_sample',
+//        ':magic_cube',
+//        ':opengl_kotlin_native',
+//        ':MagicCube'
