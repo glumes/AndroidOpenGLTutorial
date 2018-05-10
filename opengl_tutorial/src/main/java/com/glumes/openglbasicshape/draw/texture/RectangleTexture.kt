@@ -87,17 +87,12 @@ class RectangleTexture(context: Context) : BaseShape(context) {
         aTextureCoordinateAttr = GLES20.glGetAttribLocation(mProgram, A_TEXTURE_COORDINATE)
         uTextureUnitAttr = GLES20.glGetUniformLocation(mProgram, U_TEXTURE_UNIT)
 
-//        mVertexArray.setVertexAttribPointer(0, aPositionAttr, POSITION_COMPONENT_COUNT, 0)
-//        mTextureArray.setVertexAttribPointer(0, aTextureCoordinateAttr, POSITION_COMPONENT_COUNT, 0)
-
         mTextureId = TextureHelper.loadTexture(mContext, R.drawable.texture)
 
         GLES20.glUniform1i(uTextureUnitAttr, 0)
 
         Matrix.setIdentityM(modelMatrix, 0)
         Matrix.scaleM(modelMatrix, 0, 0.5f, 0.5f, 0f)
-
-        Matrix.rotateM(modelMatrix, 0, 250f, 0f, 1f, 0f)
 
         Matrix.setIdentityM(viewMatrix, 0)
         Matrix.setIdentityM(projectionMatrix, 0)
@@ -114,6 +109,8 @@ class RectangleTexture(context: Context) : BaseShape(context) {
         } else {
             Matrix.orthoM(projectionMatrix, 0, -1f, 1f, -aspectRatio, aspectRatio, 0f, 10f)
         }
+
+
     }
 
     override fun onDrawFrame(gl: GL10?) {
@@ -127,7 +124,6 @@ class RectangleTexture(context: Context) : BaseShape(context) {
 
         mVertexArray.setVertexAttribPointer(0, aPositionAttr, POSITION_COMPONENT_COUNT, 0)
         mTextureArray.setVertexAttribPointer(0, aTextureCoordinateAttr, POSITION_COMPONENT_COUNT, 0)
-
 
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0)
 

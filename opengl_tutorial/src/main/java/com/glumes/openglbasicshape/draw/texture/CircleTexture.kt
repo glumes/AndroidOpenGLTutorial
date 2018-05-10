@@ -14,7 +14,7 @@ import javax.microedition.khronos.opengles.GL10
 
 /**
  * Created by glumes on 28/04/2018
- * 球形纹理图
+ * 圆形纹理图
  */
 class CircleTexture(context: Context) : BaseShape(context) {
 
@@ -134,24 +134,24 @@ class CircleTexture(context: Context) : BaseShape(context) {
         } else {
             Matrix.orthoM(projectionMatrix, 0, -1f, 1f, -aspectRatio, aspectRatio, 0f, 10f)
         }
-        GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, modelMatrix, 0)
-        GLES20.glUniformMatrix4fv(uViewMatrixAttr, 1, false, viewMatrix, 0)
-        GLES20.glUniformMatrix4fv(uProjectionMatrixAttr, 1, false, projectionMatrix, 0)
+
+
     }
 
     override fun onDrawFrame(gl: GL10?) {
         super.onDrawFrame(gl)
         GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT)
 
+        GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, modelMatrix, 0)
+        GLES20.glUniformMatrix4fv(uViewMatrixAttr, 1, false, viewMatrix, 0)
+        GLES20.glUniformMatrix4fv(uProjectionMatrixAttr, 1, false, projectionMatrix, 0)
+
 
         mVertexArray.setVertexAttribPointer(0, aPositionAttr, POSITION_COMPONENT_COUNT, 0)
         mTextureArray.setVertexAttribPointer(0, aTextureCoordinateAttr, POSITION_COMPONENT_COUNT, 0)
 
-
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0)
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureId)
-
-//        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
 
         GLES20.glDrawArrays(GL_TRIANGLE_FAN, 0, VERTEX_DATA_NUM + 2)
 

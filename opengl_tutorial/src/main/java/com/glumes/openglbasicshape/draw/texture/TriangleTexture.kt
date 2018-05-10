@@ -112,6 +112,7 @@ class TriangleTexture(context: Context) : BaseShape(context) {
         } else {
             Matrix.orthoM(projectionMatrix, 0, -1f, 1f, -aspectRatio, aspectRatio, 0f, 10f)
         }
+
     }
 
     override fun onDrawFrame(gl: GL10?) {

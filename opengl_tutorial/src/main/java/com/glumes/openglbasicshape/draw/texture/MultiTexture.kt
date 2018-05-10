@@ -36,7 +36,6 @@ class MultiTexture(context: Context) : BaseShape(context) {
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
         super.onSurfaceChanged(gl, width, height)
-
         mTriangleTexture.onSurfaceChanged(gl, width, height)
         mRectangleTexture.onSurfaceChanged(gl, width, height)
         mCircleTexture.onSurfaceChanged(gl, width, height)

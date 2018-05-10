@@ -3,6 +3,7 @@ package com.glumes.openglbasicshape.draw.texture
 import android.content.Context
 import android.opengl.GLES20
 import android.opengl.Matrix
+import android.os.SystemClock
 import com.glumes.comlib.LogUtil
 import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.draw.BaseShape
@@ -36,13 +37,6 @@ class CubeTexture(context: Context) : BaseShape(context) {
 
     private var mTextureId: Int = 0
 
-    private var vertexArrayData = FloatArray(8 * 6)
-
-    private var textureArrayData = FloatArray(8 * 6)
-
-//    var mVertexArray: VertexArray
-//
-//    var mTextureArray: VertexArray
 
     var vertexFloatBuffer = ByteBuffer
             .allocateDirect(8 * 6 * 4)
@@ -57,7 +51,6 @@ class CubeTexture(context: Context) : BaseShape(context) {
     val CubeSize = 1.0f
 
     init {
-
 
         LogUtil.d("cube texture")
         mProgram = ShaderHelper.buildProgram(mContext, R.raw.texture_vertex_shader, R.raw.texture_fragment_shader)
@@ -127,15 +120,18 @@ class CubeTexture(context: Context) : BaseShape(context) {
         Matrix.setIdentityM(viewMatrix, 0)
         Matrix.setIdentityM(projectionMatrix, 0)
 
+        Matrix.rotateM(modelMatrix, 0, 250.0f, 0f, 1.0f, 0f)
+
+
         // Position the eye behind the origin.
         val eyeX = 0.0f
         val eyeY = 0.0f
-        val eyeZ = -0.5f
+        val eyeZ = 2.0f
 
         // We are looking toward the distance
         val lookX = 0.0f
         val lookY = 0.0f
-        val lookZ = -5.0f
+        val lookZ = 0.0f
 
         // Set our up vector. This is where our head would be pointing were we holding the camera.
         val upX = 0.0f
@@ -149,7 +145,6 @@ class CubeTexture(context: Context) : BaseShape(context) {
         super.onSurfaceChanged(gl, width, height)
         GLES20.glViewport(0, 0, width, height)
 
-
         val ratio = width.toFloat() / height
         val left = -ratio
         val bottom = -1.0f
@@ -159,18 +154,18 @@ class CubeTexture(context: Context) : BaseShape(context) {
 
         Matrix.frustumM(projectionMatrix, 0, left, ratio, bottom, top, near, far)
 
-        GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, modelMatrix, 0)
-        GLES20.glUniformMatrix4fv(uViewMatrixAttr, 1, false, viewMatrix, 0)
-        GLES20.glUniformMatrix4fv(uProjectionMatrixAttr, 1, false, projectionMatrix, 0)
-
     }
 
     override fun onDrawFrame(gl: GL10?) {
         super.onDrawFrame(gl)
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
-        GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT)
-//        GLES20.glEnable(GLES20.GL_CULL_FACE)
-//        GLES20.glEnable(GLES20.GL_DEPTH_TEST)
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT or GLES20.GL_DEPTH_BUFFER_BIT)
+
+
+        GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, modelMatrix, 0)
+        GLES20.glUniformMatrix4fv(uViewMatrixAttr, 1, false, viewMatrix, 0)
+        GLES20.glUniformMatrix4fv(uProjectionMatrixAttr, 1, false, projectionMatrix, 0)
+
 
         vertexFloatBuffer.position(0)
         GLES20.glVertexAttribPointer(aPositionAttr, POSITION_COMPONENT_COUNT, GLES20.GL_FLOAT, false, 0, vertexFloatBuffer)
@@ -180,20 +175,19 @@ class CubeTexture(context: Context) : BaseShape(context) {
         GLES20.glVertexAttribPointer(aTextureCoordinateAttr, POSITION_COMPONENT_COUNT, GLES20.GL_FLOAT, false, 0, textureFloagBuffer)
         GLES20.glEnableVertexAttribArray(aTextureCoordinateAttr)
 
-
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0)
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureId)
 
-//        GLES20.glFrontFace(GLES20.GL_CCW)
-//        GLES20.glEnable(GLES20.GL_CULL_FACE)
-//        GLES20.glCullFace(GLES20.GL_BACK)
-
-//        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
-
-//        Matrix.rotateM(modelMatrix, 0, 270.0f, 0.0f, 1.0f, 0.0f)
-//        Matrix.translateM(modelMatrix, 0, 0.0f, 0.0f, CubeSize)
-
+        Matrix.setIdentityM(modelMatrix, 0)
+        Matrix.rotateM(modelMatrix, 0, 270f, 0f, 1f, 0f)
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 4, 4)
+
+        val time = SystemClock.uptimeMillis() % 10000L
+        val angleInDegrees = 360.0f / 10000.0f * time.toInt()
+
+        Matrix.setIdentityM(modelMatrix, 0)
+        Matrix.rotateM(modelMatrix, 0, angleInDegrees, 1.0f, 0.0f, 0.0f)
+
 
         GLES20.glDisableVertexAttribArray(aPositionAttr)
         GLES20.glDisableVertexAttribArray(aTextureCoordinateAttr)
