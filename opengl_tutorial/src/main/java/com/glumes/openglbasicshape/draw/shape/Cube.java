@@ -5,7 +5,7 @@ import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 
-import com.glumes.comlib.LogUtil;
+import com.glumes.openglbasicshape.base.LogUtil;
 import com.glumes.openglbasicshape.R;
 import com.glumes.openglbasicshape.draw.BaseShape;
 import com.glumes.openglbasicshape.utils.Constants;

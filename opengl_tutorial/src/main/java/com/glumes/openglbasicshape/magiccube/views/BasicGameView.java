@@ -22,7 +22,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 
-import com.glumes.comlib.LogUtil;
+import com.glumes.openglbasicshape.base.LogUtil;
 import com.glumes.openglbasicshape.magiccube.MagicCubeRender;
 import com.glumes.openglbasicshape.magiccube.MagiccubePreference;
 import com.glumes.openglbasicshape.magiccube.interfaces.MessageSender;

@@ -2,7 +2,7 @@ package com.glumes.openglbasicshape.draw.texture;
 
 import android.content.Context;
 
-import com.glumes.comlib.LogUtil;
+import com.glumes.openglbasicshape.base.LogUtil;
 import com.glumes.openglbasicshape.R;
 import com.glumes.openglbasicshape.draw.BaseShape;
 import com.glumes.openglbasicshape.utils.ShaderHelper;

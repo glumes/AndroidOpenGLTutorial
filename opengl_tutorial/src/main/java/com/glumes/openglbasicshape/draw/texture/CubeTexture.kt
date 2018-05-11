@@ -3,15 +3,15 @@ package com.glumes.openglbasicshape.draw.texture
 import android.content.Context
 import android.opengl.GLES20
 import android.opengl.Matrix
-import android.os.SystemClock
-import com.glumes.comlib.LogUtil
+import com.glumes.openglbasicshape.base.LogUtil
 import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.draw.BaseShape
 import com.glumes.openglbasicshape.utils.ShaderHelper
 import com.glumes.openglbasicshape.utils.TextureHelper
-import com.glumes.openglbasicshape.utils.VertexArray
+import io.reactivex.Observable
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
+import java.util.concurrent.TimeUnit
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
@@ -49,6 +49,23 @@ class CubeTexture(context: Context) : BaseShape(context) {
             .asFloatBuffer()
 
     val CubeSize = 1.0f
+
+    val HalfCubeSize = CubeSize / 2
+
+    var eyeX = 0.0f
+    val eyeY = 0.0f
+    var eyeZ = 2.0f
+
+
+    val eyeDistance = 2.0f
+
+    val lookX = 0.0f
+    val lookY = 0.0f
+    val lookZ = 0.0f
+
+    val upX = 0.0f
+    val upY = 1.0f
+    val upZ = 0.0f
 
     init {
 
@@ -120,23 +137,17 @@ class CubeTexture(context: Context) : BaseShape(context) {
         Matrix.setIdentityM(viewMatrix, 0)
         Matrix.setIdentityM(projectionMatrix, 0)
 
-        Matrix.rotateM(modelMatrix, 0, 250.0f, 0f, 1.0f, 0f)
+        Matrix.rotateM(modelMatrix, 0, 200.0f, 0f, 1.0f, 0f)
 
 
         // Position the eye behind the origin.
-        val eyeX = 0.0f
-        val eyeY = 0.0f
-        val eyeZ = 2.0f
+
 
         // We are looking toward the distance
-        val lookX = 0.0f
-        val lookY = 0.0f
-        val lookZ = 0.0f
+
 
         // Set our up vector. This is where our head would be pointing were we holding the camera.
-        val upX = 0.0f
-        val upY = 1.0f
-        val upZ = 0.0f
+
 
         Matrix.setLookAtM(viewMatrix, 0, eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ)
     }
@@ -154,18 +165,30 @@ class CubeTexture(context: Context) : BaseShape(context) {
 
         Matrix.frustumM(projectionMatrix, 0, left, ratio, bottom, top, near, far)
 
+
+        Observable.interval(100, TimeUnit.MILLISECONDS)
+                .subscribe {
+                    eyeX = eyeDistance * Math.cos((radian * num).toDouble()).toFloat()
+                    eyeZ = eyeDistance * Math.sin((radian * num).toDouble()).toFloat()
+                    num++
+                    if (num > 360) {
+                        num = 0
+                    }
+                    LogUtil.d("eyex is $eyeX eyez is $eyeZ num is $num")
+                }
+
+
     }
+
+    var num = 0
+    val VERTEX_DATA_NUM = 360
+    val radian = (2 * Math.PI / VERTEX_DATA_NUM).toFloat()
+
 
     override fun onDrawFrame(gl: GL10?) {
         super.onDrawFrame(gl)
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT or GLES20.GL_DEPTH_BUFFER_BIT)
-
-
-        GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, modelMatrix, 0)
-        GLES20.glUniformMatrix4fv(uViewMatrixAttr, 1, false, viewMatrix, 0)
-        GLES20.glUniformMatrix4fv(uProjectionMatrixAttr, 1, false, projectionMatrix, 0)
-
 
         vertexFloatBuffer.position(0)
         GLES20.glVertexAttribPointer(aPositionAttr, POSITION_COMPONENT_COUNT, GLES20.GL_FLOAT, false, 0, vertexFloatBuffer)
@@ -178,15 +201,32 @@ class CubeTexture(context: Context) : BaseShape(context) {
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0)
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureId)
 
-        Matrix.setIdentityM(modelMatrix, 0)
-        Matrix.rotateM(modelMatrix, 0, 270f, 0f, 1f, 0f)
+//        Matrix.setIdentityM(modelMatrix, 0)
+//        Matrix.rotateM(modelMatrix, 0, 270f, 0f, 1f, 0f)
+
+
+//        val time = SystemClock.uptimeMillis() % 10000L
+//        val angleInDegrees = 360.0f / 10000.0f * time.toInt()
+
+//        Matrix.setIdentityM(modelMatrix, 0)
+//        Matrix.rotateM(modelMatrix, 0, angleInDegrees, 1.0f, 0.0f, 0.0f)
+
+//
+//        eyeX = (eyeDistance * Math.cos(angleInDegrees.toDouble())).toFloat()
+//        eyeZ = (eyeDistance * Math.sin(angleInDegrees.toDouble())).toFloat()
+
+        Matrix.setLookAtM(viewMatrix, 0, eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ)
+
+
+
+
+        GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, modelMatrix, 0)
+        GLES20.glUniformMatrix4fv(uViewMatrixAttr, 1, false, viewMatrix, 0)
+        GLES20.glUniformMatrix4fv(uProjectionMatrixAttr, 1, false, projectionMatrix, 0)
+
+
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 4, 4)
 
-        val time = SystemClock.uptimeMillis() % 10000L
-        val angleInDegrees = 360.0f / 10000.0f * time.toInt()
-
-        Matrix.setIdentityM(modelMatrix, 0)
-        Matrix.rotateM(modelMatrix, 0, angleInDegrees, 1.0f, 0.0f, 0.0f)
 
 
         GLES20.glDisableVertexAttribArray(aPositionAttr)

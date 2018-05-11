@@ -5,7 +5,7 @@ import android.opengl.GLES20;
 import android.opengl.GLU;
 import android.opengl.Matrix;
 
-import com.glumes.comlib.LogUtil;
+import com.glumes.openglbasicshape.base.LogUtil;
 import com.glumes.openglbasicshape.draw.graph.Triangle;
 import com.glumes.openglbasicshape.utils.DisplayManager;
 

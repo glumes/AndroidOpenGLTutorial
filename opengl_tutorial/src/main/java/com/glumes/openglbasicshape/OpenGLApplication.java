@@ -3,7 +3,7 @@ package com.glumes.openglbasicshape;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
-import com.glumes.comlib.BaseApplication;
+import com.glumes.openglbasicshape.base.BaseApplication;
 import com.glumes.openglbasicshape.utils.DisplayManager;
 
 /**
