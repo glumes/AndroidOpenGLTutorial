@@ -16,7 +16,6 @@
 
 package com.glumes.gpuimage.utils;
 
-import com.glumes.gpuimage.utils.Rotation;
 
 public class TextureRotationUtil {
 
