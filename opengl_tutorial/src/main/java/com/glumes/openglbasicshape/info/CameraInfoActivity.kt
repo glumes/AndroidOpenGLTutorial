@@ -2,10 +2,9 @@ package com.glumes.openglbasicshape.info
 
 import android.Manifest
 import android.graphics.SurfaceTexture
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
-import android.view.Surface
+import android.support.v7.app.AppCompatActivity
 import android.view.TextureView.SurfaceTextureListener
 import com.glumes.camera.Camera2
 import com.glumes.camera.CameraUtil

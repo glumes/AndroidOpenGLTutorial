@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.glumes.openglbasicshape.R;
+
 import timber.log.Timber;
 
 import static android.opengl.GLES20.GL_LINEAR;
@@ -69,5 +71,37 @@ public class TextureHelper {
         glBindTexture(GL_TEXTURE_2D, 0);
 
         return textureObjectIds[0];
+    }
+
+    /**
+     * 立方体纹理 生成多个纹理贴图
+     * @param context
+     * @return
+     */
+    public static int[] loadCubeTexture(Context context) {
+
+        final int[] cubeTextureIds = new int[7];
+        Bitmap[] bitmap = new Bitmap[7];
+        glGenTextures(6, cubeTextureIds, 0);
+        int[] imageFileIDs = { // Image file IDs
+                R.drawable.a, R.drawable.b, R.drawable.c, R.drawable.d, R.drawable.e,
+                R.drawable.f, R.drawable.g};
+
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inScaled = false;
+        for (int i = 0; i < 7; i++) {
+            bitmap[i] = BitmapFactory.decodeResource(context.getResources(), imageFileIDs[i], options);
+            glBindTexture(GL_TEXTURE_2D, cubeTextureIds[i]);
+            // 设置缩小的情况下过滤方式
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+            // 设置放大的情况下过滤方式
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            texImage2D(GL_TEXTURE_2D, 0, bitmap[i], 0);
+            bitmap[i].recycle();
+            glGenerateMipmap(GL_TEXTURE_2D);
+            glBindTexture(GL_TEXTURE_2D, 0);
+        }
+
+        return cubeTextureIds;
     }
 }

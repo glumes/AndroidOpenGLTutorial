@@ -51,8 +51,6 @@ public class Camera2 implements ICamera {
 
 
     private static final int MAX_PREVIEW_WIDTH = 1920;
-
-
     private static final int MAX_PREVIEW_HEIGHT = 1080;
 
 

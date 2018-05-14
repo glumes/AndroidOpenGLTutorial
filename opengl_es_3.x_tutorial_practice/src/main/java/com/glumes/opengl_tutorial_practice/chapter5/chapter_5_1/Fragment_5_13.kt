@@ -110,19 +110,22 @@ class SceneRenderer_5_13(val mContext: Context) : GLSurfaceView.Renderer {
     override fun onDrawFrame(gl: GL10?) {
         //清除深度缓冲与颜色缓冲
         GLES30.glClear(GLES30.GL_DEPTH_BUFFER_BIT or GLES30.GL_COLOR_BUFFER_BIT)
-        //保护现场
+        //保护现场,栈中保存了当前的变换矩阵
         MatrixState.pushMatrix()
         //绕Y轴旋转（实现总场景旋转）
         MatrixState.rotate(yAngle, 0f, 1f, 0f)
 
-        //绘制左侧立方体
+        //绘制左侧立方体，栈中保存了绘制左侧立方体前的变换矩阵
+
+        // 调用了 pushMatrix 之后，这段操作，变换矩阵的起点是 总场景旋转，然后进行自己单独的操作
+        // 操作结束之后，再进行出栈操作，操作之后的起点又是 总场景旋转了。
         MatrixState.pushMatrix()
         MatrixState.translate(-3f, 0f, 0f)
         MatrixState.rotate(60f, 0f, 1f, 0f)
         cube.drawSelf()
         MatrixState.popMatrix()
 
-        //绘制右侧立方体
+        //绘制右侧立方体，栈中保存了绘制右侧立方体前的变换矩阵
         MatrixState.pushMatrix()
         MatrixState.translate(3f, 0f, 0f)
         MatrixState.rotate(-60f, 0f, 1f, 0f)

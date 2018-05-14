@@ -1,7 +1,7 @@
 package com.glumes.openglbasicshape.offscreen
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import com.glumes.openglbasicshape.R
 
 class EglDemoActivity : AppCompatActivity() {

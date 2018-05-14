@@ -1,23 +1,31 @@
 package com.glumes.openglbasicshape.filter
 
-import android.support.v7.app.AppCompatActivity
+import android.Manifest
 import android.os.Bundle
-import com.glumes.camera.Camera2
-import com.glumes.openglbasicshape.R
+import android.support.v7.app.AppCompatActivity
+import android.widget.TextView
+import com.tbruyelle.rxpermissions2.RxPermissions
 
 class GLSurfaceViewFilterActivity : AppCompatActivity() {
 
 
     var mView: FilterSurfaceView? = null
-
+    lateinit var mPermission: RxPermissions
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-
-        mView = FilterSurfaceView(this)
-
-        setContentView(mView)
+        mPermission = RxPermissions(this)
+        mPermission.request(Manifest.permission.CAMERA)
+                .subscribe {
+                    if (it) {
+                        mView = FilterSurfaceView(this)
+                        setContentView(mView)
+                    } else {
+                        val tipsView = TextView(this)
+                        tipsView.text = "请打开相机权限"
+                        setContentView(mView)
+                    }
+                }
 
     }
 

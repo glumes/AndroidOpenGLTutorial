@@ -24,8 +24,8 @@ import android.opengl.GLU;
 import android.opengl.GLUtils;
 import android.opengl.Matrix;
 
-import com.glumes.openglbasicshape.base.LogUtil;
 import com.glumes.openglbasicshape.R;
+import com.glumes.openglbasicshape.base.LogUtil;
 import com.glumes.openglbasicshape.magiccube.interfaces.OnStateListener;
 
 import java.nio.ByteBuffer;

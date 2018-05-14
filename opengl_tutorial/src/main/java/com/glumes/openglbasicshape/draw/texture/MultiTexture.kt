@@ -1,13 +1,7 @@
 package com.glumes.openglbasicshape.draw.texture
 
 import android.content.Context
-import android.opengl.GLES20
-import android.opengl.Matrix
-import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.draw.BaseShape
-import com.glumes.openglbasicshape.utils.ShaderHelper
-import com.glumes.openglbasicshape.utils.TextureHelper
-import com.glumes.openglbasicshape.utils.VertexArray
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 

@@ -10,6 +10,7 @@ import com.glumes.databindingadapter.Items;
 import com.glumes.openglbasicshape.activitiy.BasicGraphActivity;
 import com.glumes.openglbasicshape.activitiy.BasicShapeActivity;
 import com.glumes.openglbasicshape.activitiy.TextureActivity;
+import com.glumes.openglbasicshape.filter.GLSurfaceViewFilterActivity;
 import com.glumes.openglbasicshape.utils.RenderType;
 import com.glumes.openglbasicshape.viewholderitem.RenderBinder;
 import com.glumes.openglbasicshape.viewholderitem.RenderModel;
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         items.add(new RenderModel("滤镜篇", RenderType.RENDER_TYPE_TITLE));
 
-        items.add(new RenderModel("基于GLSurfaceView的滤镜", RenderType.RENDER_TYPE_JUMP_ACTIVITY));
+        items.add(new RenderModel("基于GLSurfaceView的滤镜", RenderType.RENDER_TYPE_JUMP_ACTIVITY, GLSurfaceViewFilterActivity.class));
 
         items.add(new RenderModel("基于EGL的滤镜", RenderType.RENDER_TYPE_JUMP_ACTIVITY));
         items.add(new RenderModel("组合滤镜效果实现", RenderType.RENDER_TYPE_JUMP_ACTIVITY));

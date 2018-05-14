@@ -22,6 +22,31 @@ import static android.opengl.GLES11Ext.GL_TEXTURE_EXTERNAL_OES;
  */
 public class GPUImageFilter {
 
+
+    public static final String NO_FILTER_VERTEX_SHADER = "" +
+            "attribute vec4 position;\n" +
+            "attribute vec4 inputTextureCoordinate;\n" +
+            " \n" +
+            "varying vec2 textureCoordinate;\n" +
+            " \n" +
+            "void main()\n" +
+            "{\n" +
+            "    gl_Position = position;\n" +
+            "    textureCoordinate = inputTextureCoordinate.xy;\n" +
+            "}";
+    public static final String NO_FILTER_FRAGMENT_SHADER = "" +
+            "#extension GL_OES_EGL_image_external : require\n" +
+            "precision mediump float;\n" +
+            "varying highp vec2 textureCoordinate;\n" +
+            " \n" +
+            "uniform samplerExternalOES inputImageTexture;\n" +
+            " \n" +
+            "void main()\n" +
+            "{\n" +
+            "     gl_FragColor = texture2D(inputImageTexture, textureCoordinate);\n" +
+            "}";
+
+
     private final LinkedList<Runnable> mRunOnDraw;
     private final String mVertexShader;
     private final String mFragmentShader;
@@ -36,9 +61,8 @@ public class GPUImageFilter {
     protected FloatBuffer mGLCubeBuffer;
     protected FloatBuffer mGLTextureBuffer;
 
-    public GPUImageFilter(Context context) {
-        this(OpenGlUtils.readShaderFromRawResource(context, R.raw.no_filter_vertex_shader),
-                OpenGlUtils.readShaderFromRawResource(context, R.raw.no_filter_external_fragment_shader));
+    public GPUImageFilter() {
+        this(NO_FILTER_VERTEX_SHADER, NO_FILTER_FRAGMENT_SHADER);
     }
 
     public GPUImageFilter(String vertexShader, String fragmentShader) {

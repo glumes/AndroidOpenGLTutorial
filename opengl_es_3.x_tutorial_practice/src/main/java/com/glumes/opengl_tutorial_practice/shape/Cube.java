@@ -26,6 +26,7 @@ public class Cube
         //总绘制思想：通过把一个颜色矩形旋转移位到立方体每个面的位置
         //绘制立方体的每个面
 
+        // 每次绘制前，都要用 glUniformMatrix4fv 来进行赋值一样的操作
         //保护现场
         MatrixState.pushMatrix();
 

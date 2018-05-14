@@ -4,10 +4,10 @@ import android.content.Context
 import android.graphics.SurfaceTexture
 import android.opengl.GLES20
 import android.opengl.GLSurfaceView
-import android.util.Log
 import com.glumes.camera.Camera2
 import com.glumes.gpuimage.GPUImageFilter
 import com.glumes.gpuimage.utils.OpenGlUtils
+import com.glumes.openglbasicshape.base.LogUtil
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
@@ -22,13 +22,10 @@ class FilterRender(val mContext: Context, val mFrameAvailableListener: SurfaceTe
     private var mBackgroundGreen = 0f
     private var mBackgroundBlue = 0f
 
-
     private var mTextureId = -1
     private var mSurfaceTexture: SurfaceTexture? = null
 
-
     private var mCamera2: Camera2? = null
-
 
     private var isCameraInit = false
     private var mSurfaceWidth = 0
@@ -37,8 +34,7 @@ class FilterRender(val mContext: Context, val mFrameAvailableListener: SurfaceTe
     private val TAG = "FilterRender"
 
     init {
-        mFilter = GPUImageFilter(mContext)
-
+        mFilter = GPUImageFilter()
         mCamera2 = Camera2(mContext)
     }
 
@@ -50,7 +46,7 @@ class FilterRender(val mContext: Context, val mFrameAvailableListener: SurfaceTe
 
         mTextureId = OpenGlUtils.getExternalOESTextureID()
         mSurfaceTexture = SurfaceTexture(mTextureId)
-//        mSurfaceTexture!!.setOnFrameAvailableListener(mFrameAvailableListener)
+        mSurfaceTexture!!.setOnFrameAvailableListener(mFrameAvailableListener)
 
     }
 
@@ -76,15 +72,22 @@ class FilterRender(val mContext: Context, val mFrameAvailableListener: SurfaceTe
 
         mFilter!!.onDraw(mTextureId)
 
-
-        Log.d(TAG, "onDrawFrame")
     }
 
     private fun initCameraSurfaceTexture() {
         mCamera2?.setPreviewSize(mSurfaceWidth, mSurfaceHeight)
         mCamera2?.setPreviewSurfaceTexture(mSurfaceTexture!!)
-        Log.d(TAG, "startPreview")
         mCamera2?.openCamera()
+    }
+
+
+    fun changeFilter() {
+        if (mFilter != null) {
+            mFilter!!.destroy()
+            mFilter = FilterFactory.getFilterCycle()
+
+            mFilter!!.init()
+        }
     }
 
 
