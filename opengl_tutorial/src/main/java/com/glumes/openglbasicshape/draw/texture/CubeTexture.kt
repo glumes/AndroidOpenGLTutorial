@@ -155,7 +155,7 @@ class CubeTexture(context: Context) : BaseShape(context) {
         val near = 1.0f
         val far = 6.0f
 
-        Observable.interval(100, TimeUnit.MILLISECONDS)
+        Observable.interval(30, TimeUnit.MILLISECONDS)
                 .subscribe {
                     eyeX = eyeDistance * Math.sin((radian * num).toDouble()).toFloat()
                     eyeZ = eyeDistance * Math.cos((radian * num).toDouble()).toFloat()
@@ -172,6 +172,7 @@ class CubeTexture(context: Context) : BaseShape(context) {
 
         MatrixState.setInitStack()
 
+        MatrixState.rotate(-30f, 0f, 0f, 1f)
     }
 
     var num = 0
@@ -201,13 +202,14 @@ class CubeTexture(context: Context) : BaseShape(context) {
         GLES20.glUniformMatrix4fv(uProjectionMatrixAttr, 1, false, MatrixState.getProMatrix(), 0)
         GLES20.glUniformMatrix4fv(uViewMatrixAttr, 1, false, MatrixState.getVMatrix(), 0)
 
+
         MatrixState.pushMatrix()
 
-        val time = SystemClock.uptimeMillis() % 10000L
-        val angleInDegrees = 360.0f / 10000.0f * time.toInt()
+//        val time = SystemClock.uptimeMillis() % 10000L
+//        val angleInDegrees = 360.0f / 10000.0f * time.toInt()
 
         // 通过改变旋转矩阵来观察不同的面
-        MatrixState.rotate(angleInDegrees, 0f, 1.0f, 0f)
+//        MatrixState.rotate(angleInDegrees, 0f, 1.0f, 0f)
 
 
         // 开始绘制立方体的每个面
