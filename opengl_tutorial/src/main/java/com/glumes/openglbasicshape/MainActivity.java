@@ -9,6 +9,7 @@ import com.glumes.databindingadapter.DataBindingAdapter;
 import com.glumes.databindingadapter.Items;
 import com.glumes.openglbasicshape.activitiy.BasicGraphActivity;
 import com.glumes.openglbasicshape.activitiy.BasicShapeActivity;
+import com.glumes.openglbasicshape.activitiy.RotateAndMoveActivity;
 import com.glumes.openglbasicshape.activitiy.TextureActivity;
 import com.glumes.openglbasicshape.filter.GLSurfaceViewFilterActivity;
 import com.glumes.openglbasicshape.utils.RenderType;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         items.add(new RenderModel("基本形状的绘制", RenderType.RENDER_TYPE_JUMP_ACTIVITY, BasicShapeActivity.class));
         items.add(new RenderModel("绘制纹理", RenderType.RENDER_TYPE_JUMP_ACTIVITY, TextureActivity.class));
 
-        items.add(new RenderModel("旋转与移动篇", RenderType.RENDER_TYPE_TITLE));
+        items.add(new RenderModel("旋转与移动篇", RenderType.RENDER_TYPE_JUMP_ACTIVITY, RotateAndMoveActivity.class));
 
         items.add(new RenderModel("滤镜篇", RenderType.RENDER_TYPE_TITLE));
 

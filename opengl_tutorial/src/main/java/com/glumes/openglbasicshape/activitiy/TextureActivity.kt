@@ -12,7 +12,7 @@ class TextureActivity : BaseRenderActivity() {
         shapeClazzArray.put(R.id.rectangle_texture, RectangleTexture::class.java)
         shapeClazzArray.put(R.id.circle_texture, CircleTexture::class.java)
         shapeClazzArray.put(R.id.multi_texture, MultiTexture::class.java)
-        shapeClazzArray.put(R.id.cube_texture, CubeTexture::class.java)
+        shapeClazzArray.put(R.id.cube_texture, CubeTexture2::class.java)
 
     }
 

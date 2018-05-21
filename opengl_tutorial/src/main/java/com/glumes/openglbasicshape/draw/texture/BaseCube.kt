@@ -3,7 +3,6 @@ package com.glumes.openglbasicshape.draw.texture
 import android.content.Context
 import android.opengl.GLES20
 import android.opengl.GLES30
-import android.os.SystemClock
 import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.base.LogUtil
 import com.glumes.openglbasicshape.draw.BaseShape
@@ -18,9 +17,9 @@ import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
 /**
- * Created by glumes on 09/05/2018
+ * @Author  glumes
  */
-open class CubeTexture(context: Context) : BaseShape(context) {
+open class BaseCube(context: Context) : BaseShape(context) {
 
     private val U_VIEW_MATRIX = "u_ViewMatrix"
     private val U_MODEL_MATRIX = "u_ModelMatrix"
@@ -30,12 +29,12 @@ open class CubeTexture(context: Context) : BaseShape(context) {
     private val U_TEXTURE_UNIT = "u_TextureUnit"
 
 
-    private var uModelMatrixAttr: Int = 0
-    private var uViewMatrixAttr: Int = 0
-    private var uProjectionMatrixAttr: Int = 0
-    private var aPositionAttr: Int = 0
-    private var aTextureCoordinateAttr: Int = 0
-    private var uTextureUnitAttr: Int = 0
+    protected var uModelMatrixAttr: Int = 0
+    protected var uViewMatrixAttr: Int = 0
+    protected var uProjectionMatrixAttr: Int = 0
+    protected var aPositionAttr: Int = 0
+    protected var aTextureCoordinateAttr: Int = 0
+    protected var uTextureUnitAttr: Int = 0
 
     private var mTextureId: IntArray? = null
 
@@ -59,7 +58,7 @@ open class CubeTexture(context: Context) : BaseShape(context) {
     var eyeZ = 2.0f
 
 
-    val eyeDistance = 2.0f
+//    val eyeDistance = 2.0f
 
     val lookX = 0.0f
     val lookY = 0.0f
@@ -71,7 +70,6 @@ open class CubeTexture(context: Context) : BaseShape(context) {
 
     init {
 
-        LogUtil.d("cube texture")
         mProgram = ShaderHelper.buildProgram(mContext, R.raw.texture_vertex_shader, R.raw.texture_fragment_shader)
 
         GLES20.glUseProgram(mProgram)
@@ -79,9 +77,6 @@ open class CubeTexture(context: Context) : BaseShape(context) {
         initVertexData()
 
         initTextureData()
-
-//        mVertexArray = VertexArray(vertexArrayData)
-//        mTextureArray = VertexArray(textureArrayData)
 
         POSITION_COMPONENT_COUNT = 2
 
@@ -154,17 +149,17 @@ open class CubeTexture(context: Context) : BaseShape(context) {
         val top = 1.0f
         val near = 1.0f
         val far = 6.0f
-
-        Observable.interval(30, TimeUnit.MILLISECONDS)
-                .subscribe {
-                    eyeX = eyeDistance * Math.sin((radian * num).toDouble()).toFloat()
-                    eyeZ = eyeDistance * Math.cos((radian * num).toDouble()).toFloat()
-                    num++
-                    if (num > 360) {
-                        num = 0
-                    }
-                }
-
+//
+//        Observable.interval(30, TimeUnit.MILLISECONDS)
+//                .subscribe {
+//                    eyeX = eyeDistance * Math.sin((radian * num).toDouble()).toFloat()
+//                    eyeZ = eyeDistance * Math.cos((radian * num).toDouble()).toFloat()
+//                    num++
+//                    if (num > 360) {
+//                        num = 0
+//                    }
+//                }
+//
 
         MatrixState.setCamera(eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ)
 
@@ -172,12 +167,12 @@ open class CubeTexture(context: Context) : BaseShape(context) {
 
         MatrixState.setInitStack()
 
-        MatrixState.rotate(-30f, 0f, 0f, 1f)
+//        MatrixState.rotate(-30f, 0f, 0f, 1f)
     }
-
-    var num = 0
-    var RotateNum  = 360
-    val radian = (2 * Math.PI / RotateNum).toFloat()
+//
+//    var num = 0
+//    var RotateNum = 360
+//    val radian = (2 * Math.PI / RotateNum).toFloat()
 
 
     override fun onDrawFrame(gl: GL10?) {
@@ -196,12 +191,13 @@ open class CubeTexture(context: Context) : BaseShape(context) {
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0)
 
         // 控制调整相机来观察不同的面
-        MatrixState.setCamera(eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ)
+//        MatrixState.setCamera(eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ)
 
 
         GLES20.glUniformMatrix4fv(uProjectionMatrixAttr, 1, false, MatrixState.getProMatrix(), 0)
         GLES20.glUniformMatrix4fv(uViewMatrixAttr, 1, false, MatrixState.getVMatrix(), 0)
 
+        onDrawCubePre()
 
         MatrixState.pushMatrix()
 
@@ -283,4 +279,6 @@ open class CubeTexture(context: Context) : BaseShape(context) {
         super.onSurfaceDestroyed()
         GLES20.glDeleteProgram(mProgram)
     }
+
+    open fun onDrawCubePre() {}
 }

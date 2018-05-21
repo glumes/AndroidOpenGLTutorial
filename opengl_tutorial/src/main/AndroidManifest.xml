@@ -36,7 +36,10 @@
         <activity android:name=".filter.GLSurfaceViewFilterActivity" />
         <activity android:name=".info.CameraInfoActivity" />
         <activity android:name=".write.GLWriteActivity" />
-        <activity android:name=".offscreen.EglDemoActivity"></activity>
+        <activity android:name=".offscreen.EglDemoActivity" />
+        <activity
+            android:name=".activitiy.RotateAndMoveActivity"
+            android:theme="@style/NoActionBarTheme" />
     </application>
 
 </manifest>

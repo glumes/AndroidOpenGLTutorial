@@ -66,6 +66,11 @@ abstract class BaseToolbarActivity : AppCompatActivity() {
         mToolbar.setLogo(logo)
     }
 
+    fun setTitleTextColor(color: Int) {
+        mToolbar.setTitleTextColor(color)
+    }
+
+
     abstract fun updateToolbar()
 
 }
