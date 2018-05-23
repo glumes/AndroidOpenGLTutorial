@@ -4,13 +4,13 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.glumes.openglbasicshape"
         minSdkVersion 22
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
 
@@ -47,7 +47,7 @@ dependencies {
 
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.jakewharton:butterknife:8.6.0'
-    implementation 'com.android.support:support-v4:26.1.0'
+    implementation "com.android.support:support-v4:$support_version"
     testImplementation 'junit:junit:4.12'
     kapt 'com.jakewharton:butterknife-compiler:8.6.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

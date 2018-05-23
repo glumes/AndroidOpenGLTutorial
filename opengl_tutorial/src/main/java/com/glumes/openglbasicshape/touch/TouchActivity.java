@@ -5,18 +5,18 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.glumes.openglbasicshape.R;
 
+
 public class TouchActivity extends AppCompatActivity {
 
 
-    TouchView touchSurfaceView;
+    PhotoEditor touchSurfaceView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_touch);
 
-        touchSurfaceView = (TouchView) findViewById(R.id.touchSurface);
-
+        touchSurfaceView = findViewById(R.id.photoEditor);
     }
 
     @Override
@@ -29,5 +29,9 @@ public class TouchActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         touchSurfaceView.onResume();
+        touchSurfaceView.addView();
+
+
+        touchSurfaceView.getPhoto();
     }
 }

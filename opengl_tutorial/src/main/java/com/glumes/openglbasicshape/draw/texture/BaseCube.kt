@@ -6,6 +6,7 @@ import android.opengl.GLES30
 import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.base.LogUtil
 import com.glumes.openglbasicshape.draw.BaseShape
+import com.glumes.openglbasicshape.utils.Constants
 import com.glumes.openglbasicshape.utils.MatrixState
 import com.glumes.openglbasicshape.utils.ShaderHelper
 import com.glumes.openglbasicshape.utils.TextureHelper
@@ -57,9 +58,6 @@ open class BaseCube(context: Context) : BaseShape(context) {
     val eyeY = 0.0f
     var eyeZ = 2.0f
 
-
-//    val eyeDistance = 2.0f
-
     val lookX = 0.0f
     val lookY = 0.0f
     val lookZ = 0.0f
@@ -95,9 +93,7 @@ open class BaseCube(context: Context) : BaseShape(context) {
                 faceLeft, faceTop,
                 faceRight, faceTop
         )
-        for (it in 0..5) {
-            vertexFloatBuffer.put(vertices)
-        }
+        vertexFloatBuffer.put(vertices)
         vertexFloatBuffer.position(0)
     }
 
@@ -109,12 +105,16 @@ open class BaseCube(context: Context) : BaseShape(context) {
                 0.0f, 0.0f,
                 1.0f, 0.0f
         )
-        for (it in 0..5) {
-            textureFloagBuffer.put(texCoords)
-        }
+        textureFloagBuffer.put(texCoords)
         textureFloagBuffer.position(0)
     }
 
+
+    private val indices = byteArrayOf(
+            0, 1, 2, 3
+    )
+
+    private var byteBuffer: ByteBuffer? = null
 
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
         super.onSurfaceCreated(gl, config)
@@ -133,10 +133,12 @@ open class BaseCube(context: Context) : BaseShape(context) {
         aTextureCoordinateAttr = GLES20.glGetAttribLocation(mProgram, A_TEXTURE_COORDINATE)
         uTextureUnitAttr = GLES20.glGetUniformLocation(mProgram, U_TEXTURE_UNIT)
 
-        mTextureId = TextureHelper.loadCubeTexture(mContext)
+        mTextureId = TextureHelper.loadCubeTexture(mContext, TextureHelper.ANIMAL)
 
         GLES20.glUniform1i(uTextureUnitAttr, 0)
 
+        byteBuffer = ByteBuffer.allocateDirect(indices.size * Constants.BYTES_PRE_BYTE).put(indices)
+        byteBuffer!!.position(0)
     }
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
@@ -149,17 +151,6 @@ open class BaseCube(context: Context) : BaseShape(context) {
         val top = 1.0f
         val near = 1.0f
         val far = 6.0f
-//
-//        Observable.interval(30, TimeUnit.MILLISECONDS)
-//                .subscribe {
-//                    eyeX = eyeDistance * Math.sin((radian * num).toDouble()).toFloat()
-//                    eyeZ = eyeDistance * Math.cos((radian * num).toDouble()).toFloat()
-//                    num++
-//                    if (num > 360) {
-//                        num = 0
-//                    }
-//                }
-//
 
         MatrixState.setCamera(eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ)
 
@@ -167,13 +158,7 @@ open class BaseCube(context: Context) : BaseShape(context) {
 
         MatrixState.setInitStack()
 
-//        MatrixState.rotate(-30f, 0f, 0f, 1f)
     }
-//
-//    var num = 0
-//    var RotateNum = 360
-//    val radian = (2 * Math.PI / RotateNum).toFloat()
-
 
     override fun onDrawFrame(gl: GL10?) {
         super.onDrawFrame(gl)
@@ -190,10 +175,6 @@ open class BaseCube(context: Context) : BaseShape(context) {
 
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0)
 
-        // 控制调整相机来观察不同的面
-//        MatrixState.setCamera(eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ)
-
-
         GLES20.glUniformMatrix4fv(uProjectionMatrixAttr, 1, false, MatrixState.getProMatrix(), 0)
         GLES20.glUniformMatrix4fv(uViewMatrixAttr, 1, false, MatrixState.getVMatrix(), 0)
 
@@ -201,20 +182,14 @@ open class BaseCube(context: Context) : BaseShape(context) {
 
         MatrixState.pushMatrix()
 
-//        val time = SystemClock.uptimeMillis() % 10000L
-//        val angleInDegrees = 360.0f / 10000.0f * time.toInt()
-
-        // 通过改变旋转矩阵来观察不同的面
-//        MatrixState.rotate(angleInDegrees, 0f, 1.0f, 0f)
-
-
         // 开始绘制立方体的每个面
         // 前面
         MatrixState.pushMatrix()
         MatrixState.translate(0f, 0f, HalfCubeSize)
         GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, MatrixState.getMMatrix(), 0)
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureId!![0])
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
+//        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
+        GLES20.glDrawElements(GLES20.GL_TRIANGLE_STRIP, indices.size, GLES20.GL_UNSIGNED_BYTE, byteBuffer)
         MatrixState.popMatrix()
 
         // 后面
@@ -223,7 +198,8 @@ open class BaseCube(context: Context) : BaseShape(context) {
         MatrixState.rotate(180f, 0f, 1f, 0f)
         GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, MatrixState.getMMatrix(), 0)
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureId!![1])
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
+//        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
+        GLES20.glDrawElements(GLES20.GL_TRIANGLE_STRIP, indices.size, GLES20.GL_UNSIGNED_BYTE, byteBuffer)
         MatrixState.popMatrix()
 
         // 上面
@@ -232,7 +208,8 @@ open class BaseCube(context: Context) : BaseShape(context) {
         MatrixState.rotate(-90f, 1f, 0f, 0f)
         GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, MatrixState.getMMatrix(), 0)
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureId!![2])
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
+//        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
+        GLES20.glDrawElements(GLES20.GL_TRIANGLE_STRIP, indices.size, GLES20.GL_UNSIGNED_BYTE, byteBuffer)
         MatrixState.popMatrix()
 
 
@@ -242,7 +219,8 @@ open class BaseCube(context: Context) : BaseShape(context) {
         MatrixState.rotate(90f, 1f, 0f, 0f)
         GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, MatrixState.getMMatrix(), 0)
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureId!![3])
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
+//        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
+        GLES20.glDrawElements(GLES20.GL_TRIANGLE_STRIP, indices.size, GLES20.GL_UNSIGNED_BYTE, byteBuffer)
         MatrixState.popMatrix()
 
 
@@ -253,7 +231,8 @@ open class BaseCube(context: Context) : BaseShape(context) {
         MatrixState.rotate(90f, 0f, 1f, 0f)
         GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, MatrixState.getMMatrix(), 0)
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureId!![4])
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
+//        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
+        GLES20.glDrawElements(GLES20.GL_TRIANGLE_STRIP, indices.size, GLES20.GL_UNSIGNED_BYTE, byteBuffer)
         MatrixState.popMatrix()
 
         // 右面
@@ -263,6 +242,7 @@ open class BaseCube(context: Context) : BaseShape(context) {
         MatrixState.rotate(-90f, 0f, 1f, 0f)
         GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, MatrixState.getMMatrix(), 0)
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureId!![5])
+//        GLES20.glDrawElements(GLES20.GL_TRIANGLE_STRIP, indices.size, GLES20.GL_UNSIGNED_BYTE, byteBuffer)
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
         MatrixState.popMatrix()
 

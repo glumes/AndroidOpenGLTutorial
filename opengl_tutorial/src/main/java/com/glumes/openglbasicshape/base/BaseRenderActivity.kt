@@ -8,6 +8,7 @@ import com.glumes.openglbasicshape.draw.BaseShape
 import com.glumes.openglbasicshape.draw.BaseShapeView
 import com.glumes.openglbasicshape.draw.graph.Point
 import com.glumes.openglbasicshape.draw.shape.Cube
+import com.glumes.openglbasicshape.draw.shape.Cube2
 import com.glumes.openglbasicshape.renderers.BasicShapeRender
 import com.glumes.openglbasicshape.utils.ACTIVITY_TITLE
 import com.glumes.openglbasicshape.utils.RENDERER_SHAPE
@@ -36,7 +37,7 @@ abstract class BaseRenderActivity : BaseToolbarActivity() {
         if (savedInstanceState != null) {
             mRenderer.setShape(savedInstanceState.getSerializable(RENDERER_SHAPE) as Class<out BaseShape>)
         } else {
-            mRenderer.setShape(Cube::class.java)
+            mRenderer.setShape(Cube2::class.java)
         }
 
         initShapeClass()

@@ -1,21 +1,15 @@
 package com.glumes.openglbasicshape.fragment
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.opengl.GLES20
-import android.opengl.GLES30
 import android.opengl.GLSurfaceView
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import com.glumes.openglbasicshape.base.LogUtil
 import com.glumes.openglbasicshape.draw.BaseShapeView
 import com.glumes.openglbasicshape.draw.texture.BaseCube
-import com.glumes.openglbasicshape.draw.texture.CubeTexture
-import com.glumes.openglbasicshape.draw.texture.CubeTexture2
 import com.glumes.openglbasicshape.renderers.BaseRenderer
 import com.glumes.openglbasicshape.utils.MatrixState
 import io.reactivex.Observable
@@ -31,10 +25,11 @@ class RotateFragment : Fragment() {
 
     lateinit var surfaceView: BaseShapeView
     lateinit var renderder: RotateRenderer
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        renderder = RotateRenderer(context)
-        surfaceView = RotateSurface(context, renderder)
+        renderder = RotateRenderer(context!!)
+        surfaceView = BaseShapeView(context, renderder)
+        surfaceView.renderMode = GLSurfaceView.RENDERMODE_CONTINUOUSLY
         surfaceView.requestFocus()
         surfaceView.isFocusableInTouchMode = true
         return surfaceView
@@ -48,35 +43,6 @@ class RotateFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         surfaceView.onPause()
-    }
-}
-
-
-@SuppressLint("ViewConstructor")
-class RotateSurface(context: Context, renderer: BaseRenderer) : BaseShapeView(context, renderer) {
-
-    private val TOUCH_SCALE_FACTOR = 180.0f / 320
-
-    private var mPreviewX: Float = 0f
-    private var mPreviewY: Float = 0f
-
-
-    init {
-        renderMode = GLSurfaceView.RENDERMODE_CONTINUOUSLY
-    }
-
-    override fun onTouchEvent(event: MotionEvent): Boolean {
-        val x = event.x
-        val y = event.y
-        when (event.action) {
-            MotionEvent.ACTION_MOVE -> {
-                val dy = y - mPreviewY
-                val dx = x - mPreviewX
-            }
-        }
-        mPreviewX = x
-        mPreviewY = y
-        return true
     }
 }
 
@@ -102,43 +68,45 @@ class RotateRenderer(context: Context) : BaseRenderer(context) {
 
 class RotateCube(context: Context) : BaseCube(context) {
 
-    private var isPlus = true
+
+    val eyeDistance = 2.0f
+    var num = 0
+    var RotateNum = 180
+    val radian = (2 * Math.PI / RotateNum).toFloat()
+
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
         super.onSurfaceChanged(gl, width, height)
+        var isPlus = true
+        var distance = eyeZ
         Observable.interval(100, TimeUnit.MILLISECONDS)
                 .subscribe {
+                    distance = if (isPlus) distance + 0.1f else distance - 0.1f
 
-                    if (eyeZ in 1.5f..5f) {
-                        if (isPlus) {
-                            LogUtil.d("is plus ")
-                            eyeZ += 0.2f
-                        } else {
-                            LogUtil.d("is not plus ")
-                            eyeZ -= 0.2f
-                        }
-                    }
-
-                    if (eyeZ <= 1.5f) {
-                        eyeZ = 1.5f
+                    if (distance < 2.0f) {
                         isPlus = true
                     }
 
-                    if (eyeZ >= 5f) {
-                        eyeZ = 5f
+                    if (distance > 5.0f) {
                         isPlus = false
                     }
+//                    eyeZ = distance
+
+                    eyeX = eyeDistance * Math.sin((radian * num).toDouble()).toFloat()
+                    eyeZ = distance * Math.cos((radian * num).toDouble()).toFloat()
+                    num++
+                    if (num > 360) {
+                        num = 0
+                    }
+                    updateCamera()
                 }
-        MatrixState.rotate(-30f, 0f, 0f, 1f)
+        // 将物体调整一下，可以看到三个面
+        MatrixState.rotate(-45f, 0f, 1f, 0f)
+        MatrixState.rotate(45f, 1f, 0f, 0f)
     }
 
-
-    override fun onDrawCubePre() {
-        super.onDrawCubePre()
-
-        // 控制调整相机来观察不同的面
+    private fun updateCamera() {
         MatrixState.setCamera(eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ)
         GLES20.glUniformMatrix4fv(uViewMatrixAttr, 1, false, MatrixState.getVMatrix(), 0)
     }
-
 }
 

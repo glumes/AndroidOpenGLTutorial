@@ -12,6 +12,7 @@ import com.glumes.openglbasicshape.activitiy.BasicShapeActivity;
 import com.glumes.openglbasicshape.activitiy.RotateAndMoveActivity;
 import com.glumes.openglbasicshape.activitiy.TextureActivity;
 import com.glumes.openglbasicshape.filter.GLSurfaceViewFilterActivity;
+import com.glumes.openglbasicshape.touch.TouchActivity;
 import com.glumes.openglbasicshape.utils.RenderType;
 import com.glumes.openglbasicshape.viewholderitem.RenderBinder;
 import com.glumes.openglbasicshape.viewholderitem.RenderModel;
@@ -55,20 +56,20 @@ public class MainActivity extends AppCompatActivity {
 
         items.add(new RenderModel("基于GLSurfaceView的滤镜", RenderType.RENDER_TYPE_JUMP_ACTIVITY, GLSurfaceViewFilterActivity.class));
 
-        items.add(new RenderModel("基于EGL的滤镜", RenderType.RENDER_TYPE_JUMP_ACTIVITY));
-        items.add(new RenderModel("组合滤镜效果实现", RenderType.RENDER_TYPE_JUMP_ACTIVITY));
-        items.add(new RenderModel("多个滤镜切换", RenderType.RENDER_TYPE_JUMP_ACTIVITY));
+//        items.add(new RenderModel("基于EGL的滤镜", RenderType.RENDER_TYPE_JUMP_ACTIVITY));
+//        items.add(new RenderModel("组合滤镜效果实现", RenderType.RENDER_TYPE_JUMP_ACTIVITY));
+//        items.add(new RenderModel("多个滤镜切换", RenderType.RENDER_TYPE_JUMP_ACTIVITY));
 
-
-        items.add(new RenderModel("相机信息", RenderType.RENDER_TYPE_JUMP_ACTIVITY));
-
-        items.add(new RenderModel("触摸操作", RenderType.RENDER_TYPE_TITLE));
-
-        items.add(new RenderModel("光照篇", RenderType.RENDER_TYPE_TITLE));
-
-        items.add(new RenderModel("VR实践", RenderType.RENDER_TYPE_TITLE));
-
-        items.add(new RenderModel("导入模型", RenderType.RENDER_TYPE_TITLE));
+//
+//        items.add(new RenderModel("相机信息", RenderType.RENDER_TYPE_JUMP_ACTIVITY));
+//
+//        items.add(new RenderModel("触摸操作", RenderType.RENDER_TYPE_JUMP_ACTIVITY, TouchActivity.class));
+//
+//        items.add(new RenderModel("光照篇", RenderType.RENDER_TYPE_TITLE));
+//
+//        items.add(new RenderModel("VR实践", RenderType.RENDER_TYPE_TITLE));
+//
+//        items.add(new RenderModel("导入模型", RenderType.RENDER_TYPE_TITLE));
 
 
     }

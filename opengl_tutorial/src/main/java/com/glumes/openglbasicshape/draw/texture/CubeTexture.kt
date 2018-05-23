@@ -41,12 +41,12 @@ open class CubeTexture(context: Context) : BaseShape(context) {
 
 
     var vertexFloatBuffer = ByteBuffer
-            .allocateDirect(8 * 6 * 4)
+            .allocateDirect(8 * 4)
             .order(ByteOrder.nativeOrder())
             .asFloatBuffer()
 
     var textureFloagBuffer = ByteBuffer
-            .allocateDirect(8 * 6 * 4)
+            .allocateDirect(8 * 4)
             .order(ByteOrder.nativeOrder())
             .asFloatBuffer()
 
@@ -80,9 +80,6 @@ open class CubeTexture(context: Context) : BaseShape(context) {
 
         initTextureData()
 
-//        mVertexArray = VertexArray(vertexArrayData)
-//        mTextureArray = VertexArray(textureArrayData)
-
         POSITION_COMPONENT_COUNT = 2
 
     }
@@ -100,9 +97,7 @@ open class CubeTexture(context: Context) : BaseShape(context) {
                 faceLeft, faceTop,
                 faceRight, faceTop
         )
-        for (it in 0..5) {
-            vertexFloatBuffer.put(vertices)
-        }
+        vertexFloatBuffer.put(vertices)
         vertexFloatBuffer.position(0)
     }
 
@@ -114,9 +109,7 @@ open class CubeTexture(context: Context) : BaseShape(context) {
                 0.0f, 0.0f,
                 1.0f, 0.0f
         )
-        for (it in 0..5) {
-            textureFloagBuffer.put(texCoords)
-        }
+        textureFloagBuffer.put(texCoords)
         textureFloagBuffer.position(0)
     }
 
@@ -138,7 +131,7 @@ open class CubeTexture(context: Context) : BaseShape(context) {
         aTextureCoordinateAttr = GLES20.glGetAttribLocation(mProgram, A_TEXTURE_COORDINATE)
         uTextureUnitAttr = GLES20.glGetUniformLocation(mProgram, U_TEXTURE_UNIT)
 
-        mTextureId = TextureHelper.loadCubeTexture(mContext)
+        mTextureId = TextureHelper.loadCubeTexture(mContext, TextureHelper.CUBE)
 
         GLES20.glUniform1i(uTextureUnitAttr, 0)
 
@@ -176,7 +169,7 @@ open class CubeTexture(context: Context) : BaseShape(context) {
     }
 
     var num = 0
-    var RotateNum  = 360
+    var RotateNum = 360
     val radian = (2 * Math.PI / RotateNum).toFloat()
 
 

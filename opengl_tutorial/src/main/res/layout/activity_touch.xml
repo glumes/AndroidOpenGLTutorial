@@ -6,8 +6,8 @@
     tools:context="com.glumes.openglbasicshape.touch.TouchActivity">
 
 
-    <com.glumes.openglbasicshape.touch.TouchView
-        android:id="@+id/touchSurface"
+    <com.glumes.openglbasicshape.touch.PhotoEditor
+        android:id="@+id/photoEditor"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

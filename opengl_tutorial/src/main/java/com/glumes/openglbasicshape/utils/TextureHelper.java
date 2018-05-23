@@ -3,8 +3,12 @@ package com.glumes.openglbasicshape.utils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 
 import com.glumes.openglbasicshape.R;
+import com.glumes.openglbasicshape.base.LogUtil;
 
 import timber.log.Timber;
 
@@ -25,6 +29,20 @@ import static android.opengl.GLUtils.texImage2D;
  */
 
 public class TextureHelper {
+
+
+    private static int[] imageFileIDs = { // Image file IDs
+            R.drawable.a, R.drawable.b, R.drawable.c, R.drawable.d, R.drawable.e,
+            R.drawable.f, R.drawable.g};
+
+    private static int[] animalIds = {
+            R.drawable.dog,
+            R.drawable.elephant, R.drawable.frog,
+            R.drawable.monkey, R.drawable.rabbit, R.drawable.tortoise, R.drawable.tigger
+    };
+
+    public static int CUBE = 0x01;
+    public static int ANIMAL = 0x02;
 
     /**
      * 返回加载图像后的 OpenGl 纹理的 ID
@@ -75,29 +93,35 @@ public class TextureHelper {
 
     /**
      * 立方体纹理 生成多个纹理贴图
+     *
      * @param context
      * @return
      */
-    public static int[] loadCubeTexture(Context context) {
+    public static int[] loadCubeTexture(Context context, int type) {
 
         final int[] cubeTextureIds = new int[7];
-        Bitmap[] bitmap = new Bitmap[7];
+        Bitmap bitmap;
         glGenTextures(6, cubeTextureIds, 0);
-        int[] imageFileIDs = { // Image file IDs
-                R.drawable.a, R.drawable.b, R.drawable.c, R.drawable.d, R.drawable.e,
-                R.drawable.f, R.drawable.g};
+
+        int[] images = imageFileIDs;
+        if (type == ANIMAL) {
+            images = animalIds;
+        }
 
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inScaled = false;
         for (int i = 0; i < 7; i++) {
-            bitmap[i] = BitmapFactory.decodeResource(context.getResources(), imageFileIDs[i], options);
+            bitmap = BitmapFactory.decodeResource(context.getResources(), images[i], options);
+
             glBindTexture(GL_TEXTURE_2D, cubeTextureIds[i]);
             // 设置缩小的情况下过滤方式
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
             // 设置放大的情况下过滤方式
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            texImage2D(GL_TEXTURE_2D, 0, bitmap[i], 0);
-            bitmap[i].recycle();
+            texImage2D(GL_TEXTURE_2D, 0, bitmap, 0);
+
+            bitmap.recycle();
+
             glGenerateMipmap(GL_TEXTURE_2D);
             glBindTexture(GL_TEXTURE_2D, 0);
         }
