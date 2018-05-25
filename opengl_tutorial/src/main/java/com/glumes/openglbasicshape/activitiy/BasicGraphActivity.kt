@@ -21,4 +21,8 @@ class BasicGraphActivity : BaseRenderActivity() {
     }
 
 
+    override fun setInitShape() {
+        super.setInitShape()
+        mRenderer.setShape(Point::class.java)
+    }
 }

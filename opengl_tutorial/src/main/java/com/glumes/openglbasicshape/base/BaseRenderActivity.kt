@@ -42,6 +42,8 @@ abstract class BaseRenderActivity : BaseToolbarActivity() {
 
         initShapeClass()
 
+        setInitShape()
+
         setContentView(mBaseShapeView)
     }
 
@@ -79,4 +81,7 @@ abstract class BaseRenderActivity : BaseToolbarActivity() {
         mBaseShapeView.onPause()
     }
 
+    open fun setInitShape() {
+
+    }
 }

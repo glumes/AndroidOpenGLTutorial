@@ -20,4 +20,8 @@ class TextureActivity : BaseRenderActivity() {
         setToolbarMenu(R.menu.basic_texture_menu)
     }
 
+    override fun setInitShape() {
+        super.setInitShape()
+        mRenderer.setShape(TriangleTexture::class.java)
+    }
 }

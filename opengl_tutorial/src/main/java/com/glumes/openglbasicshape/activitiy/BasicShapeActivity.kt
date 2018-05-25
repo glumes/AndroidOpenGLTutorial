@@ -9,8 +9,8 @@ class BasicShapeActivity : BaseRenderActivity() {
 
 
     override fun initShapeClass() {
-        shapeClazzArray.put(R.id.sphere,Sphere::class.java)
-        shapeClazzArray.put(R.id.cube,Cube::class.java)
+        shapeClazzArray.put(R.id.sphere, Sphere::class.java)
+        shapeClazzArray.put(R.id.cube, Cube::class.java)
     }
 
 
@@ -18,5 +18,8 @@ class BasicShapeActivity : BaseRenderActivity() {
         setToolbarMenu(R.menu.basic_shape_menu)
     }
 
-
+    override fun setInitShape() {
+        super.setInitShape()
+        mRenderer.setShape(Cube::class.java)
+    }
 }
