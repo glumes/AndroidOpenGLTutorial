@@ -52,19 +52,24 @@ public class TextureHelper {
      * @return
      */
     public static int loadTexture(Context context, int resourceId) {
-        final int[] textureObjectIds = new int[1];
-        glGenTextures(1, textureObjectIds, 0);
-        if (textureObjectIds[0] == 0) {
-            Timber.d("Could not generate a new OpenGL texture object.");
-            return 0;
-        }
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inScaled = false;
         final Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resourceId, options);
 
         if (bitmap == null) {
             Timber.d("resource Id could not be decoded");
-            glDeleteTextures(1, textureObjectIds, 0);
+            return 0;
+        }
+
+        return loadTextureByBitmap(bitmap);
+    }
+
+
+    public static int loadTextureByBitmap(Bitmap bitmap) {
+        final int[] textureObjectIds = new int[1];
+        glGenTextures(1, textureObjectIds, 0);
+        if (textureObjectIds[0] == 0) {
+            Timber.d("Could not generate a new OpenGL texture object.");
             return 0;
         }
 
@@ -90,6 +95,7 @@ public class TextureHelper {
 
         return textureObjectIds[0];
     }
+
 
     /**
      * 立方体纹理 生成多个纹理贴图

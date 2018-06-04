@@ -1,8 +1,7 @@
-package com.glumes.openglbasicshape.draw.texture
+package com.glumes.openglbasicshape.draw.text
 
 import android.content.Context
 import android.opengl.GLES20
-import android.opengl.GLES20.glUseProgram
 import android.opengl.Matrix
 import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.draw.BaseShape
@@ -14,10 +13,9 @@ import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
 /**
- * Created by glumes on 28/04/2018
+ * Created by glumes on 04/06/2018
  */
-class RectangleTexture(context: Context) : BaseShape(context) {
-
+class TextRect(context: Context) : BaseShape(context) {
 
     private val U_VIEW_MATRIX = "u_ViewMatrix"
     private val U_MODEL_MATRIX = "u_ModelMatrix"
@@ -66,7 +64,7 @@ class RectangleTexture(context: Context) : BaseShape(context) {
 
         mProgram = ShaderHelper.buildProgram(mContext, R.raw.texture_vertex_shader, R.raw.texture_fragment_shader)
 
-        glUseProgram(mProgram)
+        GLES20.glUseProgram(mProgram)
 
         mVertexArray = VertexArray(vertexArrayData)
         mTextureArray = VertexArray(textureArrayData)

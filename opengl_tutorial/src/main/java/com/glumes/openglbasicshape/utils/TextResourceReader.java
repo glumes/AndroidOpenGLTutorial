@@ -33,7 +33,6 @@ public class TextResourceReader {
             e.printStackTrace();
         }
 
-        LogUtil.d(body.toString());
         return body.toString();
     }
 

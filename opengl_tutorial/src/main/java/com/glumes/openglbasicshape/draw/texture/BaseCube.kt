@@ -141,6 +141,9 @@ open class BaseCube(context: Context) : BaseShape(context) {
         byteBuffer!!.position(0)
     }
 
+    var mWidth: Int = 0
+    var mHeight: Int = 0
+
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
         super.onSurfaceChanged(gl, width, height)
         GLES20.glViewport(0, 0, width, height)
@@ -151,6 +154,9 @@ open class BaseCube(context: Context) : BaseShape(context) {
         val top = 1.0f
         val near = 1.0f
         val far = 6.0f
+
+        mWidth = width
+        mHeight = height
 
         MatrixState.setCamera(eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ)
 
@@ -179,6 +185,11 @@ open class BaseCube(context: Context) : BaseShape(context) {
         GLES20.glUniformMatrix4fv(uViewMatrixAttr, 1, false, MatrixState.getVMatrix(), 0)
 
         onDrawCubePre()
+
+        mWidth = mWidth - 2
+        mHeight = mHeight - 2
+        GLES20.glViewport(0, 0, mWidth, mHeight)
+
 
         MatrixState.pushMatrix()
 

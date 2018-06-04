@@ -37,12 +37,10 @@ abstract class BaseRenderActivity : BaseToolbarActivity() {
         if (savedInstanceState != null) {
             mRenderer.setShape(savedInstanceState.getSerializable(RENDERER_SHAPE) as Class<out BaseShape>)
         } else {
-            mRenderer.setShape(Cube2::class.java)
+            setInitShape()
         }
 
         initShapeClass()
-
-        setInitShape()
 
         setContentView(mBaseShapeView)
     }
@@ -62,6 +60,7 @@ abstract class BaseRenderActivity : BaseToolbarActivity() {
 
     private fun updateShape(itemId: Int) {
         clazz = shapeClazzArray.get(itemId)
+        LogUtil.d("recreate")
         recreate()
     }
 
