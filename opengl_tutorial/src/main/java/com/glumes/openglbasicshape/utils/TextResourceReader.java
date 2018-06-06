@@ -2,8 +2,6 @@ package com.glumes.openglbasicshape.utils;
 
 import android.content.Context;
 
-import com.glumes.openglbasicshape.base.LogUtil;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

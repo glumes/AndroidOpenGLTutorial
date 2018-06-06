@@ -2,12 +2,10 @@ package com.glumes.openglbasicshape.draw.shape;
 
 import android.content.Context;
 import android.opengl.GLES20;
-import android.opengl.GLES30;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 
 import com.glumes.openglbasicshape.R;
-import com.glumes.openglbasicshape.base.LogUtil;
 import com.glumes.openglbasicshape.draw.BaseShape;
 import com.glumes.openglbasicshape.utils.Constants;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
@@ -19,7 +17,6 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import static android.opengl.GLES20.GL_TRIANGLES;
-import static android.opengl.GLES20.GL_TRIANGLE_STRIP;
 import static android.opengl.GLES20.GL_UNSIGNED_BYTE;
 import static android.opengl.GLES20.glDrawElements;
 import static android.opengl.GLES20.glGetAttribLocation;

@@ -5,12 +5,13 @@ import android.graphics.SurfaceTexture
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
+import android.view.SurfaceView
+import android.view.TextureView
 import android.view.TextureView.SurfaceTextureListener
 import com.glumes.camera.Camera2
 import com.glumes.camera.CameraUtil
 import com.glumes.openglbasicshape.R
 import com.orhanobut.logger.Logger
-import kotlinx.android.synthetic.main.activity_camera_info.*
 
 
 /**
@@ -31,7 +32,7 @@ class CameraInfoActivity : AppCompatActivity() {
 
     private val REQUEST_CAMERA_PERMISSION = 1
 
-
+    lateinit var mCameraView: TextureView
     private val mSurfaceTextureListener = object : SurfaceTextureListener {
 
         override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture?, width: Int, height: Int) {
@@ -61,7 +62,9 @@ class CameraInfoActivity : AppCompatActivity() {
             Logger.d("open camera failed")
         }
 
+
         setContentView(R.layout.activity_camera_info)
+        mCameraView = findViewById(R.id.mCameraView)
     }
 
 

@@ -9,10 +9,11 @@ import com.glumes.databindingadapter.DataBindingAdapter;
 import com.glumes.databindingadapter.Items;
 import com.glumes.openglbasicshape.activitiy.BasicGraphActivity;
 import com.glumes.openglbasicshape.activitiy.BasicShapeActivity;
+import com.glumes.openglbasicshape.activitiy.ImageProcessingActivity;
+import com.glumes.openglbasicshape.activitiy.ImportObjectActivity;
 import com.glumes.openglbasicshape.activitiy.RotateAndMoveActivity;
 import com.glumes.openglbasicshape.activitiy.TextureActivity;
 import com.glumes.openglbasicshape.filter.GLSurfaceViewFilterActivity;
-import com.glumes.openglbasicshape.touch.TouchActivity;
 import com.glumes.openglbasicshape.utils.RenderType;
 import com.glumes.openglbasicshape.viewholderitem.RenderBinder;
 import com.glumes.openglbasicshape.viewholderitem.RenderModel;
@@ -47,7 +48,9 @@ public class MainActivity extends AppCompatActivity {
         items.add(new RenderModel("绘制篇", RenderType.RENDER_TYPE_TITLE));
 
         items.add(new RenderModel("基本图形的绘制", RenderType.RENDER_TYPE_JUMP_ACTIVITY, BasicGraphActivity.class));
+
         items.add(new RenderModel("基本形状的绘制", RenderType.RENDER_TYPE_JUMP_ACTIVITY, BasicShapeActivity.class));
+
         items.add(new RenderModel("绘制纹理", RenderType.RENDER_TYPE_JUMP_ACTIVITY, TextureActivity.class));
 
         items.add(new RenderModel("旋转与移动篇", RenderType.RENDER_TYPE_JUMP_ACTIVITY, RotateAndMoveActivity.class));
@@ -56,10 +59,14 @@ public class MainActivity extends AppCompatActivity {
 
         items.add(new RenderModel("基于GLSurfaceView的滤镜", RenderType.RENDER_TYPE_JUMP_ACTIVITY, GLSurfaceViewFilterActivity.class));
 
-
         items.add(new RenderModel("图像处理篇", RenderType.RENDER_TYPE_TITLE));
 
-        
+        items.add(new RenderModel("着色器图像处理", RenderType.RENDER_TYPE_JUMP_ACTIVITY, ImageProcessingActivity.class));
+
+        items.add(new RenderModel("模型导入偏", RenderType.RENDER_TYPE_TITLE));
+
+        items.add(new RenderModel("3D 模型导入", RenderType.RENDER_TYPE_JUMP_ACTIVITY, ImportObjectActivity.class));
+
 //        items.add(new RenderModel("基于EGL的滤镜", RenderType.RENDER_TYPE_JUMP_ACTIVITY));
 //        items.add(new RenderModel("组合滤镜效果实现", RenderType.RENDER_TYPE_JUMP_ACTIVITY));
 //        items.add(new RenderModel("多个滤镜切换", RenderType.RENDER_TYPE_JUMP_ACTIVITY));

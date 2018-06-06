@@ -4,16 +4,13 @@ import android.content.Context
 import android.opengl.GLES20
 import android.opengl.GLES30
 import com.glumes.openglbasicshape.R
-import com.glumes.openglbasicshape.base.LogUtil
 import com.glumes.openglbasicshape.draw.BaseShape
 import com.glumes.openglbasicshape.utils.Constants
 import com.glumes.openglbasicshape.utils.MatrixState
 import com.glumes.openglbasicshape.utils.ShaderHelper
 import com.glumes.openglbasicshape.utils.TextureHelper
-import io.reactivex.Observable
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
-import java.util.concurrent.TimeUnit
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 

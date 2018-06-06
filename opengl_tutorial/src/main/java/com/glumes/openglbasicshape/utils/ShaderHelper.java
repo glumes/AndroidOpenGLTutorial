@@ -119,19 +119,11 @@ public class ShaderHelper {
 
 
     public static int buildProgram(Context context, int vertexShaderSource, int fragmentShaderSource) {
-        int program;
 
-        int vertexShader = compileVertexShader(
-                TextResourceReader.readTextFileFromResource(context, vertexShaderSource));
+        String vertexString = TextResourceReader.readTextFileFromResource(context, vertexShaderSource);
+        String textureString = TextResourceReader.readTextFileFromResource(context, fragmentShaderSource);
 
-        int fragmentShader = compleFragmentShader(
-                TextResourceReader.readTextFileFromResource(context, fragmentShaderSource));
-
-        program = linkProgram(vertexShader, fragmentShader);
-
-        validateProgram(program);
-
-        return program;
+        return buildProgram(vertexString, textureString);
     }
 
     public static void checkGlError(String glOperation) {

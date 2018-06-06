@@ -1,7 +1,7 @@
 package com.glumes.openglbasicshape
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.widget.ImageView
 import com.glumes.openglbasicshape.utils.FontUtil
 

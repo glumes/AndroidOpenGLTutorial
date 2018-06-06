@@ -17,8 +17,8 @@ abstract class BaseToolbarActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base_toolbar)
-        mToolbar = findViewById(R.id.toolbar) as Toolbar
-        mContainer = findViewById(R.id.baseContainer) as FrameLayout
+        mToolbar = findViewById(R.id.toolbar)
+        mContainer = findViewById(R.id.baseContainer)
         updateToolbar()
 
 

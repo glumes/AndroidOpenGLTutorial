@@ -42,8 +42,15 @@
         <activity
             android:name=".activitiy.RotateAndMoveActivity"
             android:theme="@style/NoActionBarTheme" />
-        <activity android:name=".TestActivity"></activity>
-        <activity android:name=".activitiy.ImageHandleActivity"></activity>
+
+        <activity android:name=".TestActivity" />
+
+        <activity
+            android:name=".activitiy.ImageProcessingActivity"
+            android:theme="@style/NoActionBarTheme" />
+        <activity
+            android:name=".activitiy.ImportObjectActivity"
+            android:theme="@style/NoActionBarTheme" />
     </application>
 
 </manifest>

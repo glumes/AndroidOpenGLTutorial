@@ -7,4 +7,14 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
+    <string name="glsl_image_process">着色器图像处理</string>
+
+
+    <!--着色器图像处理相关-->
+    <string name="filter_1">平滑过滤</string>
+    <string name="filter_2">边缘检测</string>
+    <string name="filter_3">锐化处理</string>
+    <string name="filter_4">浮雕效果</string>
+    <string name="filter_5">图像渐变</string>
+
 </resources>

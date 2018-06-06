@@ -1,6 +1,5 @@
 package com.glumes.openglbasicshape.activitiy
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.base.BaseFragmentToolbarActivity

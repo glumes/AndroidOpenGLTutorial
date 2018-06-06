@@ -7,7 +7,6 @@ import android.opengl.GLSurfaceView
 import com.glumes.camera.Camera2
 import com.glumes.gpuimage.GPUImageFilter
 import com.glumes.gpuimage.utils.OpenGlUtils
-import com.glumes.openglbasicshape.base.LogUtil
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 

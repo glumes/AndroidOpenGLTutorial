@@ -3,7 +3,6 @@ package com.glumes.openglbasicshape.draw.texture
 import android.content.Context
 import android.opengl.GLES20
 import android.opengl.GLES30
-import android.os.SystemClock
 import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.base.LogUtil
 import com.glumes.openglbasicshape.draw.BaseShape
