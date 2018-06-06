@@ -11,10 +11,11 @@
 
 
     <!--着色器图像处理相关-->
+    <string name="filter_0">原始图像</string>
     <string name="filter_1">平滑过滤</string>
     <string name="filter_2">边缘检测</string>
     <string name="filter_3">锐化处理</string>
     <string name="filter_4">浮雕效果</string>
     <string name="filter_5">图像渐变</string>
-
+    <string name="filter_haha">哈哈镜效果</string>
 </resources>

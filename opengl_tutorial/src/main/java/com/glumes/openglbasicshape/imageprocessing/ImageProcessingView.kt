@@ -5,6 +5,8 @@ import android.opengl.GLSurfaceView
 import android.util.AttributeSet
 import com.glumes.openglbasicshape.base.LogUtil
 import com.glumes.openglbasicshape.imageprocessing.processor.ImageHaHaProcess
+import com.glumes.openglbasicshape.imageprocessing.processor.ImageProcess
+import com.glumes.openglbasicshape.imageprocessing.processor.ImageSmoothFilterProcess
 
 /**
  * Created by glumes on 06/06/2018
@@ -33,7 +35,7 @@ class ImageProcessingView : GLSurfaceView {
         renderMode = RENDERMODE_CONTINUOUSLY
     }
 
-    fun changeFilter() {
-        mRenderer.changeImageProcess(ImageHaHaProcess())
+    fun changeFilter(processor: ImageProcess) {
+        mRenderer.changeImageProcess(processor)
     }
 }

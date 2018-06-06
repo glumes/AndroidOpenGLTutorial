@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item
-        android:id="@+id/filter_1"
+        android:id="@+id/filter_origin"
+        android:title="@string/filter_0" />
+
+    <item
+        android:id="@+id/filter_haha"
+        android:title="@string/filter_haha" />
+
+    <item
+        android:id="@+id/filter_smooth_filter"
         android:title="@string/filter_1" />
 
     <item
-        android:id="@+id/filter_2"
+        android:id="@+id/edge_detect"
         android:title="@string/filter_2" />
 
     <item
-        android:id="@+id/filter_3"
+        android:id="@+id/sharpen_handle"
         android:title="@string/filter_3" />
 
     <item
-        android:id="@+id/filter_4"
+        android:id="@+id/relief_effect"
         android:title="@string/filter_4" />
+
 </menu>
