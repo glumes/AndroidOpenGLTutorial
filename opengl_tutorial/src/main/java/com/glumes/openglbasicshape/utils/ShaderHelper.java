@@ -4,6 +4,8 @@ import android.content.Context;
 import android.opengl.GLES20;
 import android.util.Log;
 
+import com.glumes.openglbasicshape.base.LogUtil;
+
 import timber.log.Timber;
 
 import static android.opengl.GLES20.GL_COMPILE_STATUS;
@@ -107,6 +109,7 @@ public class ShaderHelper {
     public static int buildProgram(String vertexShaderSource, String fragmentShaderSource) {
         int program;
 
+        LogUtil.d("vertex is " + vertexShaderSource + " frag is " + fragmentShaderSource);
         int vertexShader = compileVertexShader(vertexShaderSource);
         int fragmentShader = compleFragmentShader(fragmentShaderSource);
 
@@ -124,6 +127,15 @@ public class ShaderHelper {
         String textureString = TextResourceReader.readTextFileFromResource(context, fragmentShaderSource);
 
         return buildProgram(vertexString, textureString);
+    }
+
+    public static int buildProgramFromAssetFile(Context context, String vertexFileName, String fragmentFileName) {
+        String vertexString = TextResourceReader.readTextFileFromAsset(context, vertexFileName);
+        String fragmentString = TextResourceReader.readTextFileFromAsset(context, fragmentFileName);
+
+        LogUtil.d("vertex is " + vertexString + " frag is " + fragmentString);
+
+        return buildProgram(vertexString, fragmentString);
     }
 
     public static void checkGlError(String glOperation) {

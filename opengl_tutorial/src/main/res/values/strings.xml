@@ -18,4 +18,6 @@
     <string name="filter_4">浮雕效果</string>
     <string name="filter_5">图像渐变</string>
     <string name="filter_haha">哈哈镜效果</string>
+
+    <string name="obj_import">模型导入</string>
 </resources>

@@ -2,7 +2,10 @@ package com.glumes.openglbasicshape.utils;
 
 import android.content.Context;
 
+import com.glumes.openglbasicshape.base.LogUtil;
+
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -33,5 +36,29 @@ public class TextResourceReader {
 
         return body.toString();
     }
+
+    public static String readTextFileFromAsset(Context context, String filename) {
+        String result = null;
+        try {
+            InputStream in = context.getAssets().open(filename);
+            int ch = 0;
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            while ((ch = in.read()) != -1) {
+                baos.write(ch);
+            }
+            byte[] buff = baos.toByteArray();
+            baos.close();
+            in.close();
+            result = new String(buff, "UTF-8");
+            result = result.replaceAll("\\r\\n", "\n");
+            LogUtil.d("read result is " + result);
+        } catch (IOException e) {
+            LogUtil.d("exception");
+            LogUtil.e(e.getMessage(), e);
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 
 }

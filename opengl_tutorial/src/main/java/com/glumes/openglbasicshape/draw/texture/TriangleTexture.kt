@@ -137,8 +137,6 @@ class TriangleTexture(context: Context) : BaseShape(context) {
         GLES20.glDisableVertexAttribArray(aTextureCoordinateAttr)
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0)
 
-        LogUtil.d("draw triangle")
-
     }
 
     override fun onSurfaceDestroyed() {

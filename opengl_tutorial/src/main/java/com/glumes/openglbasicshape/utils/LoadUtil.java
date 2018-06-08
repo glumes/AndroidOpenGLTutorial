@@ -16,12 +16,10 @@ import java.util.ArrayList;
  */
 public class LoadUtil {
 
-    public static LoadedObjectVertexOnly loadFromFile(String fname, Context context) {
-        LoadedObjectVertexOnly lo = null;
-
+    public static float[] loadFromFile(String fname, Context context) {
         ArrayList<Float> alv = new ArrayList<>();
         ArrayList<Float> alvResult = new ArrayList<>();
-
+        float[] vXYZ;
         try {
             InputStream in = context.getResources().getAssets().open(fname);
 
@@ -55,14 +53,13 @@ public class LoadUtil {
                 }
             }
             int size = alvResult.size();
-            float[] vXYZ = new float[size];
+            vXYZ = new float[size];
             for (int i = 0; i < size; i++) {
                 vXYZ[i] = alvResult.get(i);
             }
-            lo = new LoadedObjectVertexOnly(context, vXYZ);
+            return vXYZ;
         } catch (IOException e) {
-            e.printStackTrace();
+            return null;
         }
-        return lo;
     }
 }
