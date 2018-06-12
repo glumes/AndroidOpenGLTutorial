@@ -42,15 +42,14 @@
         <activity
             android:name=".activitiy.RotateAndMoveActivity"
             android:theme="@style/NoActionBarTheme" />
-
         <activity android:name=".TestActivity" />
-
         <activity
             android:name=".activitiy.ImageProcessingActivity"
             android:theme="@style/NoActionBarTheme" />
         <activity
             android:name=".activitiy.ImportObjectActivity"
             android:theme="@style/NoActionBarTheme" />
+        <activity android:name=".CameraRawDataCodecActivity"></activity>
     </application>
 
 </manifest>

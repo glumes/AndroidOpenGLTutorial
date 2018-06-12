@@ -23,7 +23,7 @@ class GLSurfaceViewFilterActivity : AppCompatActivity() {
                     } else {
                         val tipsView = TextView(this)
                         tipsView.text = "请打开相机权限"
-                        setContentView(mView)
+                        setContentView(tipsView)
                     }
                 }
 

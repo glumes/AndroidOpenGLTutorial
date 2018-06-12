@@ -67,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
 
         items.add(new RenderModel("3D 模型导入", RenderType.RENDER_TYPE_JUMP_ACTIVITY, ImportObjectActivity.class));
 
+
+        items.add(new RenderModel("编解码篇", RenderType.RENDER_TYPE_TITLE));
+
+        items.add(new RenderModel("相机录制", RenderType.RENDER_TYPE_JUMP_ACTIVITY, CameraRawDataCodecActivity.class));
+        
 //        items.add(new RenderModel("基于EGL的滤镜", RenderType.RENDER_TYPE_JUMP_ACTIVITY));
 //        items.add(new RenderModel("组合滤镜效果实现", RenderType.RENDER_TYPE_JUMP_ACTIVITY));
 //        items.add(new RenderModel("多个滤镜切换", RenderType.RENDER_TYPE_JUMP_ACTIVITY));
