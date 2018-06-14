@@ -7,6 +7,7 @@ import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.base.LogUtil
 import com.glumes.openglbasicshape.draw.BaseShape
 import com.glumes.openglbasicshape.utils.MatrixState
+import com.glumes.openglbasicshape.utils.MatrixStateOnly
 import com.glumes.openglbasicshape.utils.ShaderHelper
 import com.glumes.openglbasicshape.utils.TextureHelper
 import io.reactivex.Observable
@@ -19,7 +20,7 @@ import javax.microedition.khronos.opengles.GL10
 /**
  * Created by glumes on 09/05/2018
  */
-open class CubeTexture(context: Context) : BaseShape(context) {
+class CubeTexture(context: Context) : BaseShape(context) {
 
     private val U_VIEW_MATRIX = "u_ViewMatrix"
     private val U_MODEL_MATRIX = "u_ModelMatrix"
@@ -58,7 +59,7 @@ open class CubeTexture(context: Context) : BaseShape(context) {
     var eyeZ = 2.0f
 
 
-    val eyeDistance = 2.0f
+    val eyeDistance = 3.0f
 
     val lookX = 0.0f
     val lookY = 0.0f
@@ -67,6 +68,9 @@ open class CubeTexture(context: Context) : BaseShape(context) {
     val upX = 0.0f
     val upY = 1.0f
     val upZ = 0.0f
+
+
+    private val mMatrixStateOnly: MatrixStateOnly
 
     init {
 
@@ -80,6 +84,9 @@ open class CubeTexture(context: Context) : BaseShape(context) {
         initTextureData()
 
         POSITION_COMPONENT_COUNT = 2
+
+
+        mMatrixStateOnly = MatrixStateOnly()
 
     }
 
@@ -145,26 +152,30 @@ open class CubeTexture(context: Context) : BaseShape(context) {
         val bottom = -1.0f
         val top = 1.0f
         val near = 1.0f
-        val far = 6.0f
+        val far = 12.0f
 
-        Observable.interval(30, TimeUnit.MILLISECONDS)
-                .subscribe {
-                    eyeX = eyeDistance * Math.sin((radian * num).toDouble()).toFloat()
-                    eyeZ = eyeDistance * Math.cos((radian * num).toDouble()).toFloat()
-                    num++
-                    if (num > 360) {
-                        num = 0
-                    }
-                }
+//        Observable.interval(30, TimeUnit.MILLISECONDS)
+//                .subscribe {
+//                    eyeX = eyeDistance * Math.sin((radian * num).toDouble()).toFloat()
+//                    eyeZ = eyeDistance * Math.cos((radian * num).toDouble()).toFloat()
+//                    num++
+//                    if (num > 360) {
+//                        num = 0
+//                    }
+//                }
 
 
-        MatrixState.setCamera(eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ)
+        mMatrixStateOnly.setCamera(eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ)
 
-        MatrixState.setProjectFrustum(left, ratio, bottom, top, near, far)
+        mMatrixStateOnly.setProjectFrustum(left, ratio, bottom, top, near, far)
 
-        MatrixState.setInitStack()
+        mMatrixStateOnly.setInitStack()
 
-        MatrixState.rotate(-30f, 0f, 0f, 1f)
+        mMatrixStateOnly.rotate(-30f, 0f, 0f, 1f)
+
+        mMatrixStateOnly.scale(0.398f, 0.555f, 0f)
+
+        mMatrixStateOnly.translate(0.5f, 0.8f, 0f)
     }
 
     var num = 0
@@ -174,8 +185,10 @@ open class CubeTexture(context: Context) : BaseShape(context) {
 
     override fun onDrawFrame(gl: GL10?) {
         super.onDrawFrame(gl)
-        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
-        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT or GLES20.GL_DEPTH_BUFFER_BIT)
+//        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
+//        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT or GLES20.GL_DEPTH_BUFFER_BIT)
+
+        GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT)
 
         vertexFloatBuffer.position(0)
         GLES20.glVertexAttribPointer(aPositionAttr, POSITION_COMPONENT_COUNT, GLES20.GL_FLOAT, false, 0, vertexFloatBuffer)
@@ -188,14 +201,14 @@ open class CubeTexture(context: Context) : BaseShape(context) {
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0)
 
         // 控制调整相机来观察不同的面
-        MatrixState.setCamera(eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ)
+        mMatrixStateOnly.setCamera(eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ)
 
 
-        GLES20.glUniformMatrix4fv(uProjectionMatrixAttr, 1, false, MatrixState.getProMatrix(), 0)
-        GLES20.glUniformMatrix4fv(uViewMatrixAttr, 1, false, MatrixState.getVMatrix(), 0)
+        GLES20.glUniformMatrix4fv(uProjectionMatrixAttr, 1, false, mMatrixStateOnly.getProMatrix(), 0)
+        GLES20.glUniformMatrix4fv(uViewMatrixAttr, 1, false, mMatrixStateOnly.getVMatrix(), 0)
 
 
-        MatrixState.pushMatrix()
+        mMatrixStateOnly.pushMatrix()
 
 //        val time = SystemClock.uptimeMillis() % 10000L
 //        val angleInDegrees = 360.0f / 10000.0f * time.toInt()
@@ -206,64 +219,64 @@ open class CubeTexture(context: Context) : BaseShape(context) {
 
         // 开始绘制立方体的每个面
         // 前面
-        MatrixState.pushMatrix()
-        MatrixState.translate(0f, 0f, HalfCubeSize)
-        GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, MatrixState.getMMatrix(), 0)
+        mMatrixStateOnly.pushMatrix()
+        mMatrixStateOnly.translate(0f, 0f, HalfCubeSize)
+        GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, mMatrixStateOnly.getMMatrix(), 0)
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureId!![0])
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
-        MatrixState.popMatrix()
+        mMatrixStateOnly.popMatrix()
 
         // 后面
-        MatrixState.pushMatrix()
-        MatrixState.translate(0f, 0f, -HalfCubeSize)
-        MatrixState.rotate(180f, 0f, 1f, 0f)
-        GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, MatrixState.getMMatrix(), 0)
+        mMatrixStateOnly.pushMatrix()
+        mMatrixStateOnly.translate(0f, 0f, -HalfCubeSize)
+        mMatrixStateOnly.rotate(180f, 0f, 1f, 0f)
+        GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, mMatrixStateOnly.getMMatrix(), 0)
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureId!![1])
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
-        MatrixState.popMatrix()
+        mMatrixStateOnly.popMatrix()
 
         // 上面
-        MatrixState.pushMatrix()
-        MatrixState.translate(0f, HalfCubeSize, 0f)
-        MatrixState.rotate(-90f, 1f, 0f, 0f)
-        GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, MatrixState.getMMatrix(), 0)
+        mMatrixStateOnly.pushMatrix()
+        mMatrixStateOnly.translate(0f, HalfCubeSize, 0f)
+        mMatrixStateOnly.rotate(-90f, 1f, 0f, 0f)
+        GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, mMatrixStateOnly.getMMatrix(), 0)
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureId!![2])
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
-        MatrixState.popMatrix()
+        mMatrixStateOnly.popMatrix()
 
 
         //下面
-        MatrixState.pushMatrix()
-        MatrixState.translate(0f, -HalfCubeSize, 0f)
-        MatrixState.rotate(90f, 1f, 0f, 0f)
-        GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, MatrixState.getMMatrix(), 0)
+        mMatrixStateOnly.pushMatrix()
+        mMatrixStateOnly.translate(0f, -HalfCubeSize, 0f)
+        mMatrixStateOnly.rotate(90f, 1f, 0f, 0f)
+        GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, mMatrixStateOnly.getMMatrix(), 0)
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureId!![3])
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
-        MatrixState.popMatrix()
+        mMatrixStateOnly.popMatrix()
 
 
         // 左面
-        MatrixState.pushMatrix()
-        MatrixState.translate(HalfCubeSize, 0f, 0f)
-        MatrixState.rotate(-90f, 1f, 0f, 0f)
-        MatrixState.rotate(90f, 0f, 1f, 0f)
-        GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, MatrixState.getMMatrix(), 0)
+        mMatrixStateOnly.pushMatrix()
+        mMatrixStateOnly.translate(HalfCubeSize, 0f, 0f)
+        mMatrixStateOnly.rotate(-90f, 1f, 0f, 0f)
+        mMatrixStateOnly.rotate(90f, 0f, 1f, 0f)
+        GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, mMatrixStateOnly.getMMatrix(), 0)
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureId!![4])
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
-        MatrixState.popMatrix()
+        mMatrixStateOnly.popMatrix()
 
         // 右面
-        MatrixState.pushMatrix()
-        MatrixState.translate(-HalfCubeSize, 0f, 0f)
-        MatrixState.rotate(90f, 1f, 0f, 0f)
-        MatrixState.rotate(-90f, 0f, 1f, 0f)
-        GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, MatrixState.getMMatrix(), 0)
+        mMatrixStateOnly.pushMatrix()
+        mMatrixStateOnly.translate(-HalfCubeSize, 0f, 0f)
+        mMatrixStateOnly.rotate(90f, 1f, 0f, 0f)
+        mMatrixStateOnly.rotate(-90f, 0f, 1f, 0f)
+        GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, mMatrixStateOnly.getMMatrix(), 0)
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureId!![5])
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
-        MatrixState.popMatrix()
+        mMatrixStateOnly.popMatrix()
 
 
-        MatrixState.popMatrix()
+        mMatrixStateOnly.popMatrix()
 
         GLES20.glDisableVertexAttribArray(aPositionAttr)
         GLES20.glDisableVertexAttribArray(aTextureCoordinateAttr)
@@ -274,5 +287,9 @@ open class CubeTexture(context: Context) : BaseShape(context) {
     override fun onSurfaceDestroyed() {
         super.onSurfaceDestroyed()
         GLES20.glDeleteProgram(mProgram)
+    }
+
+    fun getMatrixStateOnly(): MatrixStateOnly {
+        return mMatrixStateOnly
     }
 }

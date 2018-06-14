@@ -1,4 +1,4 @@
-package com.glumes.openglbasicshape.fragment
+package com.glumes.openglbasicshape.move.movefrags
 
 import android.content.Context
 import android.opengl.GLES20
@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import com.glumes.openglbasicshape.draw.BaseShapeView
 import com.glumes.openglbasicshape.draw.texture.BaseCube
 import com.glumes.openglbasicshape.renderers.BaseRenderer
+import com.glumes.openglbasicshape.renderers.BasicShapeRender
 import com.glumes.openglbasicshape.utils.MatrixState
 import io.reactivex.Observable
 import java.util.concurrent.TimeUnit
@@ -24,10 +25,11 @@ import javax.microedition.khronos.opengles.GL10
 class RotateFragment : Fragment() {
 
     lateinit var surfaceView: BaseShapeView
-    lateinit var renderder: RotateRenderer
+    lateinit var renderder: BasicShapeRender
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        renderder = RotateRenderer(context!!)
+        renderder = BasicShapeRender(context!!)
+        renderder.setShape(RotateCube::class.java)
         surfaceView = BaseShapeView(context, renderder)
         surfaceView.renderMode = GLSurfaceView.RENDERMODE_CONTINUOUSLY
         surfaceView.requestFocus()
@@ -46,25 +48,6 @@ class RotateFragment : Fragment() {
     }
 }
 
-
-class RotateRenderer(context: Context) : BaseRenderer(context) {
-
-    lateinit var cube: RotateCube
-
-    override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
-        cube = RotateCube(mContext)
-        cube.onSurfaceCreated(gl, config)
-    }
-
-    override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
-        cube.onSurfaceChanged(gl, width, height)
-    }
-
-    override fun onDrawFrame(gl: GL10?) {
-        cube.onDrawFrame(gl)
-    }
-
-}
 
 class RotateCube(context: Context) : BaseCube(context) {
 

@@ -101,7 +101,7 @@ class RectangleTexture(context: Context) : BaseShape(context) {
         GLES20.glUniform1i(uTextureUnitAttr, 0)
 
         Matrix.setIdentityM(modelMatrix, 0)
-        Matrix.scaleM(modelMatrix, 0, 0.5f, 0.5f, 0f)
+//        Matrix.scaleM(modelMatrix, 0, 0.5f, 0.5f, 0f)
 
         Matrix.setIdentityM(viewMatrix, 0)
         Matrix.setIdentityM(projectionMatrix, 0)

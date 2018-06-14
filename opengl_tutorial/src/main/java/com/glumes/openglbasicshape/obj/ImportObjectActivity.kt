@@ -1,12 +1,7 @@
-package com.glumes.openglbasicshape.activitiy
+package com.glumes.openglbasicshape.obj
 
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.base.BaseRenderActivity
-import com.glumes.openglbasicshape.draw.shape.Sphere
-import com.glumes.openglbasicshape.draw.texture.TriangleTexture
-import com.glumes.openglbasicshape.obj.LoadedObjectVertexOnly
 
 class ImportObjectActivity : BaseRenderActivity() {
 

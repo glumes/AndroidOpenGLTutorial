@@ -1,4 +1,4 @@
-package com.glumes.openglbasicshape.activitiy
+package com.glumes.openglbasicshape.imageprocessing
 
 import android.os.Bundle
 import android.support.v7.widget.Toolbar

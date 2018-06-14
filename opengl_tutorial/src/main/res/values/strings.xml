@@ -22,4 +22,6 @@
     <string name="filter_haha">哈哈镜效果</string>
 
     <string name="obj_import">模型导入</string>
+
+    <string name="scissor_test">裁剪测试</string>
 </resources>

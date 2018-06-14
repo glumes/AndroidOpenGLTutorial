@@ -1,9 +1,9 @@
-package com.glumes.openglbasicshape.activitiy
+package com.glumes.openglbasicshape.move
 
 import android.os.Bundle
 import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.base.BaseFragmentToolbarActivity
-import com.glumes.openglbasicshape.fragment.RotateFragment
+import com.glumes.openglbasicshape.move.movefrags.RotateFragment
 
 class RotateAndMoveActivity : BaseFragmentToolbarActivity() {
 

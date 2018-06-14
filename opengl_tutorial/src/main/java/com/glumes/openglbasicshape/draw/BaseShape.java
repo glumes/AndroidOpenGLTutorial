@@ -2,6 +2,7 @@ package com.glumes.openglbasicshape.draw;
 
 import android.content.Context;
 
+import com.glumes.openglbasicshape.utils.MatrixState;
 import com.glumes.openglbasicshape.utils.VertexArray;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -26,7 +27,6 @@ public abstract class BaseShape {
     protected float[] viewMatrix = new float[16];
     protected float[] projectionMatrix = new float[16];
     protected float[] mvpMatrix = new float[16];
-
 
     protected int POSITION_COMPONENT_COUNT;
 

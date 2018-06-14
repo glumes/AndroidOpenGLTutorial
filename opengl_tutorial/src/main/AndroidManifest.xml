@@ -40,16 +40,25 @@
         <activity android:name=".write.GLWriteActivity" />
         <activity android:name=".offscreen.EglDemoActivity" />
         <activity
-            android:name=".activitiy.RotateAndMoveActivity"
+            android:name=".move.RotateAndMoveActivity"
             android:theme="@style/NoActionBarTheme" />
         <activity android:name=".TestActivity" />
         <activity
-            android:name=".activitiy.ImageProcessingActivity"
+            android:name=".imageprocessing.ImageProcessingActivity"
             android:theme="@style/NoActionBarTheme" />
         <activity
-            android:name=".activitiy.ImportObjectActivity"
+            android:name=".obj.ImportObjectActivity"
             android:theme="@style/NoActionBarTheme" />
-        <activity android:name=".CameraRawDataCodecActivity"></activity>
+        <activity
+            android:name=".CameraRawDataCodecActivity"
+            android:theme="@style/NoActionBarTheme" />
+        <activity
+            android:name=".fbo.FrameBufferObjectActivity"
+            android:theme="@style/NoActionBarTheme" />
+        <activity
+            android:name=".scissor.ScissorAndTestActivity"
+            android:theme="@style/NoActionBarTheme" />
+
     </application>
 
 </manifest>

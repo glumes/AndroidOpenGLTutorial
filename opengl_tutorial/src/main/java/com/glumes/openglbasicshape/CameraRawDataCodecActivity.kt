@@ -165,11 +165,16 @@ class CameraRawDataCodecActivity : AppCompatActivity(), SurfaceHolder.Callback, 
         private var outputStream: BufferedOutputStream? = null
 
         init {
+            /**
+             * 指定视频的宽高、帧率、码率、I 帧间隔等基本信息。
+             * 还要指定 YUV 的颜色格式
+             * 相机输出的 YUV 帧格式选择 NV21 格式，但是 NV21 并不是所有机器的 MediaCodec 都支持作为编码器的输入格式
+             */
             val mediaFormat = MediaFormat.createVideoFormat("video/avc", mWidth, mHeight)
-            mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420SemiPlanar)
             mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, mWidth * mHeight * 5)
             mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, 30)
             mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 1)
+            mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420SemiPlanar)
 
             mediaCodec = MediaCodec.createEncoderByType("video/avc")
             mediaCodec.configure(mediaFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE)
@@ -216,10 +221,10 @@ class CameraRawDataCodecActivity : AppCompatActivity(), SurfaceHolder.Callback, 
 
                         try {
 
-
                             var inputBuffers = mediaCodec.inputBuffers
                             var outputBuffers = mediaCodec.outputBuffers
                             var inputBufferIndex = mediaCodec.dequeueInputBuffer(-1)
+
                             if (inputBufferIndex >= 0) {
                                 pts = computePresentationTime(generateIndex)
                                 var inputBuffer = inputBuffers[inputBufferIndex]
@@ -292,5 +297,4 @@ class CameraRawDataCodecActivity : AppCompatActivity(), SurfaceHolder.Callback, 
             }
         }
     }
-
 }
