@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/blend"
+        android:title="@string/color_blend" />
+    <item
+        android:id="@+id/etc_texture"
+        android:title="ETC 压缩纹理" />
+
+    <item
+        android:id="@+id/etc2_texture"
+        android:title="ETC2 压缩纹理" />
+</menu>

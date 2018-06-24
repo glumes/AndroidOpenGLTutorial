@@ -1,4 +1,4 @@
-package com.glumes.openglbasicshape.scissor.scissorfrags
+package com.glumes.openglbasicshape.multitest.testfragment
 
 import android.content.Context
 import android.opengl.GLES20
@@ -12,7 +12,6 @@ import com.glumes.openglbasicshape.base.LogUtil
 import com.glumes.openglbasicshape.draw.BaseShapeView
 import com.glumes.openglbasicshape.draw.texture.CubeTexture
 import com.glumes.openglbasicshape.draw.texture.RectangleTexture
-import com.glumes.openglbasicshape.obj.LoadedObjectVertexOnly
 import com.glumes.openglbasicshape.renderers.BaseRenderer
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
@@ -39,12 +38,11 @@ class ScissorTestFragment : Fragment() {
 class ScissorRenderer(mContext: Context) : BaseRenderer(mContext) {
 
     lateinit var mRectangle: RectangleTexture
-    //    lateinit var mCube: CubeTexture
-    var mImportShape: LoadedObjectVertexOnly = LoadedObjectVertexOnly(mContext)
 
     lateinit var mCube: CubeTexture
 
-
+    private var mWidth: Int = 0
+    private var mHeight: Int = 0
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
         super.onSurfaceCreated(gl, config)
 
@@ -62,6 +60,10 @@ class ScissorRenderer(mContext: Context) : BaseRenderer(mContext) {
         mRectangle.onSurfaceChanged(gl, width, height)
         mCube.onSurfaceChanged(gl, width, height)
 
+        mWidth = width
+        mHeight = height
+
+        LogUtil.d("width is $mWidth height is $mHeight")
     }
 
 
@@ -70,15 +72,13 @@ class ScissorRenderer(mContext: Context) : BaseRenderer(mContext) {
         mRectangle.onDrawFrame(gl)
 
 
-//        GLES20.glEnable(GLES20.GL_SCISSOR_TEST)
-//        GLES20.glScissor(0, 1080 - 300, 430, 600)
-//        GLES20.glClearColor(1f, 0f, 0f, 1f)
-//        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT or GLES20.GL_DEPTH_BUFFER_BIT)
-//
-////        mCube.getMatrixStateOnly().setProjectFrustum(ratio, ratio, bottom, top, near, far)
-//
-//        GLES20.glDisable(GLES20.GL_SCISSOR_TEST)
+        GLES20.glEnable(GLES20.GL_SCISSOR_TEST)
+        GLES20.glScissor((mWidth / 3.2).toInt(), (mHeight / 2.3).toInt(), 430, 400)
+        GLES20.glClearColor(1f, 0f, 0f, 1f)
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT or GLES20.GL_DEPTH_BUFFER_BIT)
         mCube.onDrawFrame(gl)
+        GLES20.glDisable(GLES20.GL_SCISSOR_TEST)
+
     }
 
     override fun onSurfaceDestroyed() {
@@ -86,4 +86,6 @@ class ScissorRenderer(mContext: Context) : BaseRenderer(mContext) {
         mRectangle.onSurfaceDestroyed()
     }
 }
+
+
 

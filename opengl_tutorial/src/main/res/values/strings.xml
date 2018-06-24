@@ -24,4 +24,5 @@
     <string name="obj_import">模型导入</string>
 
     <string name="scissor_test">裁剪测试</string>
+    <string name="color_blend">颜色混合</string>
 </resources>

@@ -154,15 +154,15 @@ class CubeTexture(context: Context) : BaseShape(context) {
         val near = 1.0f
         val far = 12.0f
 
-//        Observable.interval(30, TimeUnit.MILLISECONDS)
-//                .subscribe {
-//                    eyeX = eyeDistance * Math.sin((radian * num).toDouble()).toFloat()
-//                    eyeZ = eyeDistance * Math.cos((radian * num).toDouble()).toFloat()
-//                    num++
-//                    if (num > 360) {
-//                        num = 0
-//                    }
-//                }
+        Observable.interval(30, TimeUnit.MILLISECONDS)
+                .subscribe {
+                    eyeX = eyeDistance * Math.sin((radian * num).toDouble()).toFloat()
+                    eyeZ = eyeDistance * Math.cos((radian * num).toDouble()).toFloat()
+                    num++
+                    if (num > 360) {
+                        num = 0
+                    }
+                }
 
 
         mMatrixStateOnly.setCamera(eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ)
@@ -185,10 +185,10 @@ class CubeTexture(context: Context) : BaseShape(context) {
 
     override fun onDrawFrame(gl: GL10?) {
         super.onDrawFrame(gl)
-//        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
-//        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT or GLES20.GL_DEPTH_BUFFER_BIT)
+        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT or GLES20.GL_DEPTH_BUFFER_BIT)
 
-        GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT)
+//        GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT)
 
         vertexFloatBuffer.position(0)
         GLES20.glVertexAttribPointer(aPositionAttr, POSITION_COMPONENT_COUNT, GLES20.GL_FLOAT, false, 0, vertexFloatBuffer)

@@ -1,13 +1,11 @@
-package com.glumes.openglbasicshape.scissor
+package com.glumes.openglbasicshape.multitest
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.base.BaseFragmentToolbarActivity
-import com.glumes.openglbasicshape.move.movefrags.RotateFragment
-import com.glumes.openglbasicshape.scissor.scissorfrags.ScissorTestFragment
+import com.glumes.openglbasicshape.multitest.testfragment.ScissorTestFragment
 
-class ScissorAndTestActivity : BaseFragmentToolbarActivity() {
+class MultiTestActivity : BaseFragmentToolbarActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -35,10 +35,18 @@
         <activity
             android:name=".activitiy.TextureActivity"
             android:theme="@style/NoActionBarTheme" />
-        <activity android:name=".filter.GLSurfaceViewFilterActivity" />
-        <activity android:name=".info.CameraInfoActivity" />
-        <activity android:name=".write.GLWriteActivity" />
-        <activity android:name=".offscreen.EglDemoActivity" />
+        <activity
+            android:name=".filter.GLSurfaceViewFilterActivity"
+            android:theme="@style/NoActionBarTheme" />
+        <activity
+            android:name=".info.CameraInfoActivity"
+            android:theme="@style/NoActionBarTheme" />
+        <activity
+            android:name=".write.GLWriteActivity"
+            android:theme="@style/NoActionBarTheme" />
+        <activity
+            android:name=".offscreen.EglDemoActivity"
+            android:theme="@style/NoActionBarTheme" />
         <activity
             android:name=".move.RotateAndMoveActivity"
             android:theme="@style/NoActionBarTheme" />
@@ -56,9 +64,11 @@
             android:name=".fbo.FrameBufferObjectActivity"
             android:theme="@style/NoActionBarTheme" />
         <activity
-            android:name=".scissor.ScissorAndTestActivity"
+            android:name=".multitest.MultiTestActivity"
             android:theme="@style/NoActionBarTheme" />
-
+        <activity
+            android:name=".blend.BlendActivity"
+            android:theme="@style/NoActionBarTheme" />
     </application>
 
 </manifest>

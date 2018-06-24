@@ -9,12 +9,13 @@ import com.glumes.databindingadapter.DataBindingAdapter;
 import com.glumes.databindingadapter.Items;
 import com.glumes.openglbasicshape.activitiy.BasicGraphActivity;
 import com.glumes.openglbasicshape.activitiy.BasicShapeActivity;
+import com.glumes.openglbasicshape.blend.BlendActivity;
 import com.glumes.openglbasicshape.imageprocessing.ImageProcessingActivity;
 import com.glumes.openglbasicshape.obj.ImportObjectActivity;
 import com.glumes.openglbasicshape.move.RotateAndMoveActivity;
 import com.glumes.openglbasicshape.activitiy.TextureActivity;
 import com.glumes.openglbasicshape.filter.GLSurfaceViewFilterActivity;
-import com.glumes.openglbasicshape.scissor.ScissorAndTestActivity;
+import com.glumes.openglbasicshape.multitest.MultiTestActivity;
 import com.glumes.openglbasicshape.utils.RenderType;
 import com.glumes.openglbasicshape.viewholderitem.RenderBinder;
 import com.glumes.openglbasicshape.viewholderitem.RenderModel;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         items.add(new RenderModel("旋转与移动篇", RenderType.RENDER_TYPE_JUMP_ACTIVITY, RotateAndMoveActivity.class));
 
-        items.add(new RenderModel("滤镜篇", RenderType.RENDER_TYPE_TITLE));
+//        items.add(new RenderModel("滤镜篇", RenderType.RENDER_TYPE_TITLE));
 
 
         items.add(new RenderModel("FBO 使用", RenderType.RENDER_TYPE_JUMP_ACTIVITY));
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
 //        items.add(new RenderModel("模型导入偏", RenderType.RENDER_TYPE_TITLE));
 
-        items.add(new RenderModel("裁剪与测试", RenderType.RENDER_TYPE_JUMP_ACTIVITY, ScissorAndTestActivity.class));
+        items.add(new RenderModel("裁剪与测试", RenderType.RENDER_TYPE_JUMP_ACTIVITY, MultiTestActivity.class));
 
         items.add(new RenderModel("3D 模型导入", RenderType.RENDER_TYPE_JUMP_ACTIVITY, ImportObjectActivity.class));
 
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
         items.add(new RenderModel("相机录制", RenderType.RENDER_TYPE_JUMP_ACTIVITY, CameraRawDataCodecActivity.class));
 
+        items.add(new RenderModel("混合与纹理压缩", RenderType.RENDER_TYPE_JUMP_ACTIVITY, BlendActivity.class));
     }
 
 
