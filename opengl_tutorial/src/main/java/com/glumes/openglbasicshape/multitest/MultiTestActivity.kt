@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.base.BaseFragmentToolbarActivity
 import com.glumes.openglbasicshape.multitest.testfragment.AlphaTestFragment
+import com.glumes.openglbasicshape.multitest.testfragment.ClipFaceFragment
 import com.glumes.openglbasicshape.multitest.testfragment.ScissorTestFragment
 import com.glumes.openglbasicshape.multitest.testfragment.StencilTestFragment
 
@@ -24,6 +25,7 @@ class MultiTestActivity : BaseFragmentToolbarActivity() {
         mFragSparseArray.put(R.id.scissor_test, ScissorTestFragment())
         mFragSparseArray.put(R.id.alpha_test, AlphaTestFragment())
         mFragSparseArray.put(R.id.stencil_test, StencilTestFragment())
+        mFragSparseArray.put(R.id.clip_face_test, ClipFaceFragment())
     }
 
 }

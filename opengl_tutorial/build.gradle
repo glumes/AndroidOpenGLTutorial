@@ -65,4 +65,5 @@ dependencies {
 
     implementation 'com.jakewharton.timber:timber:4.5.1'
     implementation 'com.orhanobut:logger:2.1.1'
+
 }

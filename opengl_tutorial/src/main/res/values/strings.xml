@@ -27,4 +27,11 @@
     <string name="color_blend">颜色混合</string>
     <string name="alpha_test">Alpha测试</string>
     <string name="stencil_test">模板测试</string>
+    <string name="clip_face">任意屏幕裁剪</string>
+    <string name="environment_light">环境光</string>
+    <string name="scatter_light">散射光</string>
+    <string name="mirror_light">镜面光</string>
+    <string name="mix_light">混合光</string>
+    <string name="direction_light">定向光</string>
+    <string name="no_light">无光照</string>
 </resources>

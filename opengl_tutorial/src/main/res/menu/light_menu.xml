@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/no_light"
+        android:title="@string/no_light" />
+
+    <item
+        android:id="@+id/environment_light"
+        android:title="@string/environment_light" />
+
+    <item
+        android:id="@+id/scatter_light"
+        android:title="@string/scatter_light" />
+
+    <item
+        android:id="@+id/mirror_light"
+        android:title="@string/mirror_light" />
+
+    <item
+        android:id="@+id/mix_light"
+        android:title="@string/mix_light" />
+
+    <item
+        android:id="@+id/direction_light"
+        android:title="@string/direction_light" />
+</menu>

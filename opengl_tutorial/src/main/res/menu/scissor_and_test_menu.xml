@@ -12,4 +12,8 @@
     <item
         android:id="@+id/stencil_test"
         android:title="@string/stencil_test" />
+
+    <item
+        android:id="@+id/clip_face_test"
+        android:title="@string/clip_face" />
 </menu>
