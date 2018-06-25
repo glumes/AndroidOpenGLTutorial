@@ -1,6 +1,7 @@
 package com.glumes.openglbasicshape.utils;
 
 import android.content.Context;
+import android.content.res.Resources;
 
 import com.glumes.openglbasicshape.base.LogUtil;
 
@@ -38,9 +39,13 @@ public class TextResourceReader {
     }
 
     public static String readTextFileFromAsset(Context context, String filename) {
+        return readTextFileFromAsset(context.getResources(), filename);
+    }
+
+    public static String readTextFileFromAsset(Resources res, String filename) {
         String result = null;
         try {
-            InputStream in = context.getAssets().open(filename);
+            InputStream in = res.getAssets().open(filename);
             int ch = 0;
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             while ((ch = in.read()) != -1) {
@@ -59,6 +64,5 @@ public class TextResourceReader {
         }
         return result;
     }
-
 
 }

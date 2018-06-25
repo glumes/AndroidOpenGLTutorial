@@ -31,6 +31,7 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/camera'
         main.java.srcDirs += 'src/main/gpuimage'
+        main.java.srcDirs += 'src/main/importobject'
     }
 
     androidExtensions {

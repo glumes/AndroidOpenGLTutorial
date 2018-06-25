@@ -16,6 +16,12 @@ import java.util.ArrayList;
  */
 public class LoadUtil {
 
+    /**
+     * 从 obj 文件中加载物体的顶点信息
+     * @param fname
+     * @param context
+     * @return
+     */
     public static float[] loadFromFile(String fname, Context context) {
         ArrayList<Float> alv = new ArrayList<>();
         ArrayList<Float> alvResult = new ArrayList<>();

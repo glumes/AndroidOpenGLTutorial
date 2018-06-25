@@ -3,8 +3,13 @@ package com.glumes.openglbasicshape.utils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.opengl.ETC1Util;
+import android.opengl.GLES20;
 
 import com.glumes.openglbasicshape.R;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import timber.log.Timber;
 
@@ -59,6 +64,34 @@ public class TextureHelper {
         return loadTextureByBitmap(bitmap);
     }
 
+    public static int loadECTTexture(Context context, int resourceId) {
+        final int[] textureObjectIds = new int[1];
+        glGenTextures(1, textureObjectIds, 0);
+        if (textureObjectIds[0] == 0) {
+            Timber.d("Could not generate a new OpenGL texture object.");
+            return 0;
+        }
+
+
+        // 设置缩小的情况下过滤方式
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        // 设置放大的情况下过滤方式
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        InputStream is = context.getResources().openRawResource(resourceId);
+        try {
+            ETC1Util.loadTexture(GLES20.GL_TEXTURE_2D, 0, 0, GLES20.GL_RGB, GLES20.GL_UNSIGNED_BYTE, is);
+        } catch (Exception e) {
+            Timber.e(e.getMessage(), e);
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return textureObjectIds[0];
+    }
 
     public static int loadTextureByBitmap(Bitmap bitmap) {
         final int[] textureObjectIds = new int[1];
@@ -129,4 +162,6 @@ public class TextureHelper {
 
         return cubeTextureIds;
     }
+
+
 }

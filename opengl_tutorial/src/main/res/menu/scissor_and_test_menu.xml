@@ -4,4 +4,12 @@
     <item
         android:id="@+id/scissor_test"
         android:title="@string/scissor_test" />
+
+    <item
+        android:id="@+id/alpha_test"
+        android:title="@string/alpha_test" />
+
+    <item
+        android:id="@+id/stencil_test"
+        android:title="@string/stencil_test" />
 </menu>

@@ -4,13 +4,14 @@ import android.os.Bundle
 import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.base.BaseFragmentToolbarActivity
 import com.glumes.openglbasicshape.blend.blendfragment.BlendFragment
+import com.glumes.openglbasicshape.blend.blendfragment.ETCFragment
 
 class BlendActivity : BaseFragmentToolbarActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        updateFragment(R.id.scissor_test)
+        updateFragment(R.id.blend)
     }
 
     override fun setMenuId() {
@@ -19,7 +20,8 @@ class BlendActivity : BaseFragmentToolbarActivity() {
 
 
     override fun initFragments() {
-        mFragSparseArray.put(R.id.scissor_test, BlendFragment())
+        mFragSparseArray.put(R.id.blend, BlendFragment())
+        mFragSparseArray.put(R.id.etc_texture, ETCFragment())
     }
 
 }

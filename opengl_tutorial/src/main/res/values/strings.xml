@@ -25,4 +25,6 @@
 
     <string name="scissor_test">裁剪测试</string>
     <string name="color_blend">颜色混合</string>
+    <string name="alpha_test">Alpha测试</string>
+    <string name="stencil_test">模板测试</string>
 </resources>
