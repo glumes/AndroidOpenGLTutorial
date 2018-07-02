@@ -12,7 +12,6 @@ import com.glumes.importobject.BallForControl
 import com.glumes.importobject.BallTextureByVertex
 import com.glumes.importobject.TextureRect
 import com.glumes.openglbasicshape.R
-import com.glumes.openglbasicshape.renderers.BaseRenderer
 import com.glumes.openglbasicshape.utils.MatrixState
 import com.glumes.openglbasicshape.utils.TextureHelper
 import javax.microedition.khronos.egl.EGLConfig

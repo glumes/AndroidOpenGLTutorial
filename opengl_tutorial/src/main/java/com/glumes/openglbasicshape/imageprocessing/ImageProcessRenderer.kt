@@ -4,7 +4,6 @@ import android.content.Context
 import android.opengl.GLES20
 import android.opengl.GLSurfaceView
 import com.glumes.openglbasicshape.R
-import com.glumes.openglbasicshape.base.LogUtil
 import com.glumes.openglbasicshape.imageprocessing.processor.ImageProcess
 import com.glumes.openglbasicshape.utils.TextureHelper
 import java.nio.ByteBuffer

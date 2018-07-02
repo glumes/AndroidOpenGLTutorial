@@ -2,7 +2,6 @@ package com.glumes.openglbasicshape.multitest.testfragment
 
 import android.content.Context
 import android.opengl.GLES20
-import android.opengl.GLES30
 import android.opengl.GLSurfaceView
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -11,13 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.glumes.importobject.AlphaTextureRect
 import com.glumes.importobject.Desert
-import com.glumes.importobject.TextureRect
 import com.glumes.importobject.TreeGroup
 import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.utils.MatrixState
-import com.glumes.openglbasicshape.utils.ShaderHelper
 import com.glumes.openglbasicshape.utils.TextureHelper
-import java.util.*
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 

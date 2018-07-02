@@ -1,6 +1,5 @@
 package com.glumes.importobject;
 
-import android.content.Context;
 import android.content.res.Resources;
 import android.opengl.GLES20;
 

@@ -3,7 +3,6 @@ package com.glumes.openglbasicshape.imageprocessing.processor
 import android.graphics.PointF
 import android.opengl.GLES20
 import com.glumes.gpuimage.utils.OpenGlUtils
-import com.glumes.openglbasicshape.base.LogUtil
 import com.glumes.openglbasicshape.utils.ShaderHelper
 import java.nio.FloatBuffer
 import java.util.*

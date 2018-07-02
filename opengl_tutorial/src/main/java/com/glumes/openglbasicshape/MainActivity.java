@@ -9,14 +9,14 @@ import com.glumes.databindingadapter.DataBindingAdapter;
 import com.glumes.databindingadapter.Items;
 import com.glumes.openglbasicshape.activitiy.BasicGraphActivity;
 import com.glumes.openglbasicshape.activitiy.BasicShapeActivity;
+import com.glumes.openglbasicshape.activitiy.TextureActivity;
 import com.glumes.openglbasicshape.blend.BlendActivity;
+import com.glumes.openglbasicshape.filter.GLSurfaceViewFilterActivity;
 import com.glumes.openglbasicshape.imageprocessing.ImageProcessingActivity;
 import com.glumes.openglbasicshape.light.LightActivity;
-import com.glumes.openglbasicshape.obj.ImportObjectActivity;
 import com.glumes.openglbasicshape.move.RotateAndMoveActivity;
-import com.glumes.openglbasicshape.activitiy.TextureActivity;
-import com.glumes.openglbasicshape.filter.GLSurfaceViewFilterActivity;
 import com.glumes.openglbasicshape.multitest.MultiTestActivity;
+import com.glumes.openglbasicshape.obj.ImportObjectActivity;
 import com.glumes.openglbasicshape.utils.RenderType;
 import com.glumes.openglbasicshape.viewholderitem.RenderBinder;
 import com.glumes.openglbasicshape.viewholderitem.RenderModel;
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         items.add(new RenderModel("3D 模型导入", RenderType.RENDER_TYPE_JUMP_ACTIVITY, ImportObjectActivity.class));
 
-//        items.add(new RenderModel("光照", RenderType.RENDER_TYPE_JUMP_ACTIVITY, LightActivity.class));
+        items.add(new RenderModel("光照", RenderType.RENDER_TYPE_JUMP_ACTIVITY, LightActivity.class));
 
         items.add(new RenderModel("相机录制", RenderType.RENDER_TYPE_JUMP_ACTIVITY, CameraRawDataCodecActivity.class));
 

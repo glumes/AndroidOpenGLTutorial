@@ -1,9 +1,6 @@
 package com.glumes.openglbasicshape.utils;
 
-import com.glumes.openglbasicshape.obj.LoadedObjectVertexOnly;
-
 import android.content.Context;
-import android.content.res.Resources;
 
 import java.io.BufferedReader;
 import java.io.IOException;

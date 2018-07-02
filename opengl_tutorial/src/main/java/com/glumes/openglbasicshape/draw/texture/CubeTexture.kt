@@ -6,7 +6,6 @@ import android.opengl.GLES30
 import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.base.LogUtil
 import com.glumes.openglbasicshape.draw.BaseShape
-import com.glumes.openglbasicshape.utils.MatrixState
 import com.glumes.openglbasicshape.utils.MatrixStateOnly
 import com.glumes.openglbasicshape.utils.ShaderHelper
 import com.glumes.openglbasicshape.utils.TextureHelper

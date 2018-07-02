@@ -2,9 +2,7 @@ package com.glumes.openglbasicshape.obj;
 
 import android.content.Context;
 import android.opengl.GLES20;
-import android.opengl.Matrix;
 
-import com.glumes.openglbasicshape.base.LogUtil;
 import com.glumes.openglbasicshape.draw.BaseShape;
 import com.glumes.openglbasicshape.utils.LoadUtil;
 import com.glumes.openglbasicshape.utils.MatrixState;

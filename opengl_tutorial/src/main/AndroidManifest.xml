@@ -69,7 +69,9 @@
         <activity
             android:name=".blend.BlendActivity"
             android:theme="@style/NoActionBarTheme" />
-        <activity android:name=".light.LightActivity"></activity>
+        <activity
+            android:name=".light.LightActivity"
+            android:theme="@style/NoActionBarTheme" />
     </application>
 
 </manifest>

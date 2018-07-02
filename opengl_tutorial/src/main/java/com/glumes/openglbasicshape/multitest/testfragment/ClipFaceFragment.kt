@@ -10,8 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.glumes.importobject.LoadedObjectVertexNormal
 import com.glumes.importobject.utils.ObjectLoadUtil
-import com.glumes.openglbasicshape.obj.LoadedObjectVertexOnly
-import com.glumes.openglbasicshape.utils.LoadUtil
 import com.glumes.openglbasicshape.utils.MatrixState
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10

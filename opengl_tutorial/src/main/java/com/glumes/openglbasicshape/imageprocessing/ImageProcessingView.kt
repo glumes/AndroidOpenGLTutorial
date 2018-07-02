@@ -4,9 +4,7 @@ import android.content.Context
 import android.opengl.GLSurfaceView
 import android.util.AttributeSet
 import com.glumes.openglbasicshape.base.LogUtil
-import com.glumes.openglbasicshape.imageprocessing.processor.ImageHaHaProcess
 import com.glumes.openglbasicshape.imageprocessing.processor.ImageProcess
-import com.glumes.openglbasicshape.imageprocessing.processor.ImageSmoothFilterProcess
 
 /**
  * Created by glumes on 06/06/2018

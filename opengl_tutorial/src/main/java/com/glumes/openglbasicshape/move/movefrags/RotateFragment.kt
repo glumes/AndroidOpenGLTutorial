@@ -10,12 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.glumes.openglbasicshape.draw.BaseShapeView
 import com.glumes.openglbasicshape.draw.texture.BaseCube
-import com.glumes.openglbasicshape.renderers.BaseRenderer
 import com.glumes.openglbasicshape.renderers.BasicShapeRender
 import com.glumes.openglbasicshape.utils.MatrixState
 import io.reactivex.Observable
 import java.util.concurrent.TimeUnit
-import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
 /**

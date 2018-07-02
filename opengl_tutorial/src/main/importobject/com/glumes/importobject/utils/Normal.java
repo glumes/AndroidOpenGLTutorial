@@ -1,7 +1,5 @@
 package com.glumes.importobject.utils;
 
-import com.glumes.openglbasicshape.utils.LoadUtil;
-
 import java.util.Set;
 
 /**

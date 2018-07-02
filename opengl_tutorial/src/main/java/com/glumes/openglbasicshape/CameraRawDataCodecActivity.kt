@@ -2,25 +2,24 @@ package com.glumes.openglbasicshape
 
 import android.Manifest
 import android.graphics.ImageFormat
-import android.graphics.YuvImage
 import android.hardware.Camera
 import android.media.MediaCodec
 import android.media.MediaCodecInfo
 import android.media.MediaCodecList
 import android.media.MediaFormat
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.support.design.widget.FloatingActionButton
+import android.support.v7.app.AppCompatActivity
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.widget.Toast
 import com.glumes.openglbasicshape.base.LogUtil
 import com.tbruyelle.rxpermissions2.RxPermissions
-import java.util.concurrent.ArrayBlockingQueue
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.util.concurrent.ArrayBlockingQueue
 
 
 class CameraRawDataCodecActivity : AppCompatActivity(), SurfaceHolder.Callback, Camera.PreviewCallback {

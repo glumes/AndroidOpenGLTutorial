@@ -1,6 +1,5 @@
 package com.glumes.gpuimage;
 
-import android.content.Context;
 import android.graphics.PointF;
 import android.opengl.GLES11Ext;
 import android.opengl.GLES20;
@@ -8,7 +7,6 @@ import android.opengl.GLES20;
 import com.glumes.gpuimage.utils.OpenGlUtils;
 import com.glumes.gpuimage.utils.Rotation;
 import com.glumes.gpuimage.utils.TextureRotationUtil;
-import com.glumes.openglbasicshape.R;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

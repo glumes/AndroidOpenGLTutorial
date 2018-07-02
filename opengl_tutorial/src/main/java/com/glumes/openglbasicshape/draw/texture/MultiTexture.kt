@@ -2,7 +2,6 @@ package com.glumes.openglbasicshape.draw.texture
 
 import android.content.Context
 import com.glumes.openglbasicshape.draw.BaseShape
-import com.glumes.openglbasicshape.obj.LoadedObjectVertexOnly
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 

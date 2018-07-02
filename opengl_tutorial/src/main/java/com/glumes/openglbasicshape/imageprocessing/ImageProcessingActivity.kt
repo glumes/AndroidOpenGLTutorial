@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import com.glumes.openglbasicshape.R
 import com.glumes.openglbasicshape.base.BaseToolbarActivity
-import com.glumes.openglbasicshape.imageprocessing.ImageProcessingView
 import com.glumes.openglbasicshape.imageprocessing.processor.*
 
 class ImageProcessingActivity : BaseToolbarActivity() {

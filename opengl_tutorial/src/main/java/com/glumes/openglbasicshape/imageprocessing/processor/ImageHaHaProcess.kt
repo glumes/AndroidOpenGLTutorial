@@ -2,8 +2,6 @@ package com.glumes.openglbasicshape.imageprocessing.processor
 
 import android.graphics.PointF
 import android.opengl.GLES20
-import android.os.Parcel
-import android.os.Parcelable
 import com.glumes.openglbasicshape.base.LogUtil
 
 /**
