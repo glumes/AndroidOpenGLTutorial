@@ -1,10 +1,18 @@
-# AndroidOpenGLTutorial
 
-## 学习 OpenGL 的例子：
+# OpenGL 入门代码示例工程 
 
-输出文章：
+## 查看 OpenGL 相关博客内容：
+
+[https://glumes.com/categories/opengl/](https://glumes.com/categories/opengl/)
 
 
-1、[OpenGL 学习系列---基本绘制流程](http://www.glumes.com/android-opengl-tutorial-1/)
+## 共同交流分享
 
-2、[OpenGL 学习系列---基本形状的绘制](http://www.glumes.com/android-opengl-tutorial-2/)
+![](https://res.cloudinary.com/glumes-com/image/upload/c_scale,h_600/v1531236519/code/WechatIMG326.jpg)
+
+要是二维码过期了，加微信 ezglume 好友，备注 OpenGL ，拉你入群~
+
+## 微信公众号不断更新
+
+
+![扫码关注](https://user-gold-cdn.xitu.io/2018/6/2/163be9be334f4d35?w=780&h=568&f=gif&s=638874)
