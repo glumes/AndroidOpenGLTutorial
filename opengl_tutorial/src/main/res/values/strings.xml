@@ -34,4 +34,6 @@
     <string name="mix_light">混合光</string>
     <string name="direction_light">定向光</string>
     <string name="no_light">无光照</string>
+    <string name="glsl_replace">着色器替换</string>
+    <string name="blend_replace">颜色融合替换</string>
 </resources>
