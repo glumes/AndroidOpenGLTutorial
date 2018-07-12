@@ -60,8 +60,8 @@ public class ShaderHelper {
         glCompileShader(shaderObjectId);
         final int[] compileStatsu = new int[1];
         glGetShaderiv(shaderObjectId, GL_COMPILE_STATUS, compileStatsu, 0);
-        Timber.d("Result of compiling source:" + "\n" + shaderCode + "\n:"
-                + glGetShaderInfoLog(shaderObjectId));
+//        Timber.d("Result of compiling source:" + "\n" + shaderCode + "\n:"
+//                + glGetShaderInfoLog(shaderObjectId));
 
         if ((compileStatsu[0] == 0)) {
             glDeleteShader(shaderObjectId);
@@ -84,7 +84,7 @@ public class ShaderHelper {
         final int[] linkStatus = new int[1];
         glGetProgramiv(programObjectId, GL_LINK_STATUS, linkStatus, 0);
 
-//        Timber.d("Result of linking program:\n" + glGetProgramInfoLog(programObjectId));
+        Timber.d("Result of linking program:\n" + glGetProgramInfoLog(programObjectId));
 
         if (linkStatus[0] == 0) {
             glDeleteProgram(programObjectId);

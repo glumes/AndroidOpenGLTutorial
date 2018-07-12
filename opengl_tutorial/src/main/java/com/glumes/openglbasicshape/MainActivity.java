@@ -20,6 +20,7 @@ import com.glumes.openglbasicshape.obj.ImportObjectActivity;
 import com.glumes.openglbasicshape.utils.RenderType;
 import com.glumes.openglbasicshape.viewholderitem.RenderBinder;
 import com.glumes.openglbasicshape.viewholderitem.RenderModel;
+import com.glumes.video.FrameReplaceActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
         items.add(new RenderModel("相机录制", RenderType.RENDER_TYPE_JUMP_ACTIVITY, CameraRawDataCodecActivity.class));
 
         items.add(new RenderModel("混合与纹理压缩", RenderType.RENDER_TYPE_JUMP_ACTIVITY, BlendActivity.class));
+
+        items.add(new RenderModel("视频帧处理", RenderType.RENDER_TYPE_JUMP_ACTIVITY, FrameReplaceActivity.class));
+
+
     }
 
 

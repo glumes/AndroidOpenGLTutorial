@@ -72,7 +72,8 @@
         <activity
             android:name=".light.LightActivity"
             android:theme="@style/NoActionBarTheme" />
-        <activity android:name="com.glumes.video.FrameReplaceActivity"></activity>
+        <activity android:name="com.glumes.video.FrameReplaceActivity" />
+        <activity android:name="com.glumes.video.ReplaceTestActivity"></activity>
     </application>
 
 </manifest>
