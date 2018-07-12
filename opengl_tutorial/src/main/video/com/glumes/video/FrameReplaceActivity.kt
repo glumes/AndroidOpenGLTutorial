@@ -53,15 +53,11 @@ class FrameReplaceActivity : AppCompatActivity() {
     }
 
     private fun glslChange() {
-
-        mResultImage.setImageResource(R.drawable.waiting)
         replace(false)
     }
 
 
     private fun blendChange() {
-        mResultImage.setImageResource(R.drawable.waiting)
-
         replace(true)
     }
 
@@ -88,6 +84,9 @@ class FrameReplaceActivity : AppCompatActivity() {
                 })
     }
 
+    /**
+     * 把各种矩阵都设置为单位矩阵，这样就省去了计算物体投影到视口上的内容大小了
+     */
     private fun prepare(w: Int, h: Int) {
 
         mOriginImage = TextureRect(resources, 2.0f, 2.0f)
