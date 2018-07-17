@@ -99,6 +99,8 @@ class BlendSurfaceView(var mContext: Context) : GLSurfaceView(mContext) {
 
             MatrixState.pushMatrix()
             MatrixState.translate(0f, 0f, 25f)
+
+
             rect!!.drawSelf(textureId)
             MatrixState.popMatrix()
 

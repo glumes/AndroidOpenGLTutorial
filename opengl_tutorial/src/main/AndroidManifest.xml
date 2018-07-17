@@ -73,6 +73,11 @@
             android:name=".light.LightActivity"
             android:theme="@style/NoActionBarTheme" />
         <activity android:name="com.glumes.video.FrameReplaceActivity" />
+
+        <activity
+            android:name=".bufferusage.BufferUsageActivity"
+            android:theme="@style/NoActionBarTheme" />
+
     </application>
 
 </manifest>

@@ -11,6 +11,7 @@ import com.glumes.openglbasicshape.activitiy.BasicGraphActivity;
 import com.glumes.openglbasicshape.activitiy.BasicShapeActivity;
 import com.glumes.openglbasicshape.activitiy.TextureActivity;
 import com.glumes.openglbasicshape.blend.BlendActivity;
+import com.glumes.openglbasicshape.bufferusage.BufferUsageActivity;
 import com.glumes.openglbasicshape.filter.GLSurfaceViewFilterActivity;
 import com.glumes.openglbasicshape.imageprocessing.ImageProcessingActivity;
 import com.glumes.openglbasicshape.light.LightActivity;
@@ -75,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
         items.add(new RenderModel("混合与纹理压缩", RenderType.RENDER_TYPE_JUMP_ACTIVITY, BlendActivity.class));
 
         items.add(new RenderModel("视频帧处理", RenderType.RENDER_TYPE_JUMP_ACTIVITY, FrameReplaceActivity.class));
+
+        items.add(new RenderModel("缓冲区的使用", RenderType.RENDER_TYPE_JUMP_ACTIVITY, BufferUsageActivity.class));
+
+
 
 
     }
