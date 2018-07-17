@@ -3,6 +3,9 @@
 
     <item
         android:id="@+id/vertex_buffer_usage"
-        android:title="顶点缓冲区" />
+        android:title="VBO 使用" />
 
+    <item
+        android:id="@+id/vertex_array_object_usage"
+        android:title="VAO 使用" />
 </menu>

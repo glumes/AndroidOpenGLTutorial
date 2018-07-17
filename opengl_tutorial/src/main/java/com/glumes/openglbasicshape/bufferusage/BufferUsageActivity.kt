@@ -12,7 +12,8 @@ class BufferUsageActivity : BaseFragmentToolbarActivity() {
     }
 
     override fun initFragments() {
-        mFragSparseArray.put(R.id.vertex_buffer_usage, VertexBufferFragment())
+        mFragSparseArray.put(R.id.vertex_buffer_usage, VBOFragment())
+        mFragSparseArray.put(R.id.vertex_array_object_usage, VAOFragment())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
