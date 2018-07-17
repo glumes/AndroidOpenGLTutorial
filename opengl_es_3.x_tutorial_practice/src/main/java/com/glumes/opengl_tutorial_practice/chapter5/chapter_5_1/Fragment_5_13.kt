@@ -26,8 +26,8 @@ class Fragment_5_13 : Fragment() {
 
     lateinit var surfaceView: RendererSurface_5_13
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        surfaceView = RendererSurface_5_13(context)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        surfaceView = RendererSurface_5_13(context!!)
         surfaceView.requestFocus()
         surfaceView.isFocusableInTouchMode = true
         return surfaceView
@@ -84,7 +84,7 @@ class SceneRenderer_5_13(val mContext: Context) : GLSurfaceView.Renderer {
     var yAngle = 0f//总场景绕y轴旋转的角度
 
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
-        GLES30.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+        GLES30.glClearColor(0.5f, 0.5f, 0.5f, 1.0f)
         cube = Cube(mContext.resources)
         //打开深度检测
         GLES30.glEnable(GLES30.GL_DEPTH_TEST)

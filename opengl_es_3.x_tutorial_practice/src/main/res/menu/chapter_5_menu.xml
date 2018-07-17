@@ -3,14 +3,14 @@
 
     <item
         android:id="@+id/chapter_1"
-        android:title="chapter_1" />
+        android:title="六角形" />
 
     <item
         android:id="@+id/chapter_2"
-        android:title="chapter_2" />
+        android:title="立方体" />
 
     <item
         android:id="@+id/chapter_3"
-        android:title="chapter_3" />
+        android:title="属性" />
 
 </menu>

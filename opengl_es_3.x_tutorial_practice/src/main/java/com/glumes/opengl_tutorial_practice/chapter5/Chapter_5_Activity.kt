@@ -3,6 +3,7 @@ package com.glumes.opengl_tutorial_practice.chapter5
 import android.os.Bundle
 import com.glumes.opengl_tutorial_practice.R
 import com.glumes.opengl_tutorial_practice.base.BaseFragmentToolbarActivity
+import com.glumes.opengl_tutorial_practice.chapter5.chapter_5_1.AttributeMatFragment
 import com.glumes.opengl_tutorial_practice.chapter5.chapter_5_1.Fragment_5_1
 import com.glumes.opengl_tutorial_practice.chapter5.chapter_5_1.Fragment_5_13
 import com.glumes.opengl_tutorial_practice.utils.ActivityUtils
@@ -35,6 +36,6 @@ class Chapter_5_Activity : BaseFragmentToolbarActivity() {
     override fun initFragments() {
         mFragSparseArray.put(R.id.chapter_1, Fragment_5_1())
         mFragSparseArray.put(R.id.chapter_2, Fragment_5_13())
-        mFragSparseArray.put(R.id.chapter_3, ContentFragment())
+        mFragSparseArray.put(R.id.chapter_3, AttributeMatFragment())
     }
 }

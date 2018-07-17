@@ -24,8 +24,8 @@ class Fragment_5_1 : Fragment() {
 
     lateinit var surfaceView: RendererSurface
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        surfaceView = RendererSurface(context)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        surfaceView = RendererSurface(context!!)
         surfaceView.requestFocus()
         surfaceView.isFocusableInTouchMode = true
         return surfaceView
@@ -86,9 +86,11 @@ class SceneRenderer(val mContext: Context) : GLSurfaceView.Renderer {
 
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
         GLES30.glClearColor(0.5f, 0.5f, 0.5f, 1.0f)
+
         for (it in 0..5) {
             shape[it] = SixPointedStar(mContext.resources, 0.2f, 0.5f, -0.3f * it)
         }
+//
         GLES30.glEnable(GLES30.GL_DEPTH_TEST)
     }
 
