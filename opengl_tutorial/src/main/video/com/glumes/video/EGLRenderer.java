@@ -56,6 +56,7 @@ public class EGLRenderer {
         EGLConfig config = getEGLConfig(mEGL, mEGLDisplay);
         mEGLContext = mEGL.eglCreateContext(mEGLDisplay, config, EGL10.EGL_NO_CONTEXT, EGL_ATTRIBUTE);
         mEGLSurface = mEGL.eglCreatePbufferSurface(mEGLDisplay, config, surfaceAttr);
+//        mEGL.eglCreateWindowSurface()
         mEGL.eglMakeCurrent(mEGLDisplay, mEGLSurface, mEGLSurface, mEGLContext);
     }
 

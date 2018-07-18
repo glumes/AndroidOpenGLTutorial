@@ -59,27 +59,27 @@ public class VAOTextureRect {
     public void initVertexData() {
         vCount = 6;//每个格子两个三角形，每个三角形3个顶点
 
-//        float vertices[] = {
-//
-//                -width / 2, height / 2, 0,
-//
-//                -width / 2, -height / 2, 0,
-//
-//                width / 2, height / 2, 0,
-//
-//                width / 2, -height / 2, 0,
-//        };
+        float vertices[] = {
 
-        float vertices[] =
-                {
-                        -width / 2, height / 2, 0,
-                        -width / 2, -height / 2, 0,
-                        width / 2, height / 2, 0,
+                -width / 2, height / 2, 0,
 
-                        -width / 2, -height / 2, 0,
-                        width / 2, -height / 2, 0,
-                        width / 2, height / 2, 0
-                };
+                -width / 2, -height / 2, 0,
+
+                width / 2, height / 2, 0,
+
+                width / 2, -height / 2, 0,
+        };
+
+//        float vertices[] =
+//                {
+//                        -width / 2, height / 2, 0,
+//                        -width / 2, -height / 2, 0,
+//                        width / 2, height / 2, 0,
+//
+//                        -width / 2, -height / 2, 0,
+//                        width / 2, -height / 2, 0,
+//                        width / 2, height / 2, 0
+//                };
 
         //创建顶点坐标数据缓冲
         //vertices.length*4是因为一个整数四个字节
@@ -90,17 +90,17 @@ public class VAOTextureRect {
         mVertexBuffer.position(0);//设置缓冲区起始位置
 
 
-//        float textures[] =
-//                {
-//                        0f, 0f, 0f, 1, 1, 0f, 1, 1
-//                };
-
-
         float textures[] =
                 {
-                        0f, 0f, 0f, 1f, 1f, 0f,
-                        0f, 1f, 1f, 1f, 1f, 0f,
+                        0f, 0f, 0f, 1, 1, 0f, 1, 1
                 };
+
+//
+//        float textures[] =
+//                {
+//                        0f, 0f, 0f, 1f, 1f, 0f,
+//                        0f, 1f, 1f, 1f, 1f, 0f,
+//                };
 
         //创建顶点纹理数据缓冲
         ByteBuffer tbb = ByteBuffer.allocateDirect(textures.length * 4);
@@ -144,14 +144,14 @@ public class VAOTextureRect {
         GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, 0);
 
 
-//        // 索引缓冲
-//        mIndicesBufferId = bufferIds[2];
-//
-//        GLES30.glBindBuffer(GLES30.GL_ELEMENT_ARRAY_BUFFER, mIndicesBufferId);
-//
-//        GLES30.glBufferData(GLES30.GL_ELEMENT_ARRAY_BUFFER, indices.length, mIndicesBuffer, GLES30.GL_STATIC_DRAW);
-//
-//        GLES30.glBindBuffer(GLES30.GL_ELEMENT_ARRAY_BUFFER, 0);
+        // 索引缓冲
+        mIndicesBufferId = bufferIds[2];
+
+        GLES30.glBindBuffer(GLES30.GL_ELEMENT_ARRAY_BUFFER, mIndicesBufferId);
+
+        GLES30.glBufferData(GLES30.GL_ELEMENT_ARRAY_BUFFER, indices.length, mIndicesBuffer, GLES30.GL_STATIC_DRAW);
+
+        GLES30.glBindBuffer(GLES30.GL_ELEMENT_ARRAY_BUFFER, 0);
 
         initVAO();
     }
@@ -176,6 +176,11 @@ public class VAOTextureRect {
         GLES30.glEnableVertexAttribArray(maTexCoorHandle);
         GLES30.glVertexAttribPointer(maTexCoorHandle, 2, GLES30.GL_FLOAT, false, 2 * 4, 0);
         GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, 0);
+
+
+//        GLES30.glBindBuffer(GLES30.GL_ELEMENT_ARRAY_BUFFER, mIndicesBufferId);
+//        GLES30.glBindBuffer(GLES30.GL_ELEMENT_ARRAY_BUFFER, 0);
+
 
         GLES30.glBindVertexArray(0);
 
@@ -210,14 +215,16 @@ public class VAOTextureRect {
 
         GLES30.glBindVertexArray(mVAOId);
 
-//        GLES30.glBindBuffer(GLES30.GL_ELEMENT_ARRAY_BUFFER, mIndicesBufferId);
+        GLES30.glBindBuffer(GLES30.GL_ELEMENT_ARRAY_BUFFER, mIndicesBufferId);
+
 
         //绑定纹理
-//        GLES30.glDrawElements(GLES30.GL_TRIANGLES, vCount, GLES30.GL_UNSIGNED_BYTE, 0);
+        GLES30.glDrawElements(GLES30.GL_TRIANGLES, vCount, GLES30.GL_UNSIGNED_BYTE, 0);
 
-        GLES30.glDrawArrays(GLES30.GL_TRIANGLES, 0, vCount);
+//        GLES30.glDrawArrays(GLES30.GL_TRIANGLES, 0, vCount);
 
-//        GLES30.glBindBuffer(GLES30.GL_ELEMENT_ARRAY_BUFFER, 0);
+        GLES30.glBindBuffer(GLES30.GL_ELEMENT_ARRAY_BUFFER, 0);
+
 
         GLES30.glBindVertexArray(0);
 

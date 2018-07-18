@@ -71,7 +71,9 @@
             android:theme="@style/NoActionBarTheme" />
         <activity
             android:name=".light.LightActivity"
+            android:screenOrientation="landscape"
             android:theme="@style/NoActionBarTheme" />
+
         <activity android:name="com.glumes.video.FrameReplaceActivity" />
 
         <activity
