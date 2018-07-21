@@ -9,6 +9,11 @@
         android:id="@+id/alpha_test"
         android:title="@string/alpha_test" />
 
+
+    <item
+        android:id="@+id/depth_test"
+        android:title="@string/depth_test" />
+
     <item
         android:id="@+id/stencil_test"
         android:title="@string/stencil_test" />

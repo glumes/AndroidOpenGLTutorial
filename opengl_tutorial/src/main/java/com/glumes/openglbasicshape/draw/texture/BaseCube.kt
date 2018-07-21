@@ -118,9 +118,9 @@ open class BaseCube(context: Context) : BaseShape(context) {
         GLES20.glClearColor(0f, 0f, 0f, 1.0f)
 
         //打开深度检测
-        GLES30.glEnable(GLES30.GL_DEPTH_TEST)
+//        GLES30.glEnable(GLES30.GL_DEPTH_TEST)
         //打开背面剪裁，面剔除，优化显示速度
-        GLES30.glEnable(GLES30.GL_CULL_FACE)
+//        GLES30.glEnable(GLES30.GL_CULL_FACE)
 
         aPositionAttr = GLES20.glGetAttribLocation(mProgram, A_POSITION)
         uModelMatrixAttr = GLES20.glGetUniformLocation(mProgram, U_MODEL_MATRIX)
@@ -130,7 +130,7 @@ open class BaseCube(context: Context) : BaseShape(context) {
         aTextureCoordinateAttr = GLES20.glGetAttribLocation(mProgram, A_TEXTURE_COORDINATE)
         uTextureUnitAttr = GLES20.glGetUniformLocation(mProgram, U_TEXTURE_UNIT)
 
-        mTextureId = TextureHelper.loadCubeTexture(mContext, TextureHelper.ANIMAL)
+        mTextureId = TextureHelper.loadCubeTexture(mContext, TextureHelper.CUBE)
 
         GLES20.glUniform1i(uTextureUnitAttr, 0)
 

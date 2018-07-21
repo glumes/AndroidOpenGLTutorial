@@ -64,6 +64,7 @@ class VBOUsage(var mContext: Context) : GLSurfaceView(mContext) {
             GLES20.glClearColor(0.3f, 0.3f, 0.3f, 1.0f)
 //            GLES20.glEnable(GLES20.GL_DEPTH_TEST)
 //            GLES20.glEnable(GLES20.GL_CULL_FACE)
+
             MatrixState.setInitStack()
             mShape = VBOTextureRect(mContext.resources, 2.0f, 2.0f)
 

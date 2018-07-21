@@ -123,7 +123,7 @@ public class Cube extends BaseShape {
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 //        GLES20.glEnable(GLES20.GL_CULL_FACE);
-        GLES20.glEnable(GLES20.GL_DEPTH_TEST);
+//        GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 
         // Position the eye behind the origin.
         final float eyeX = 0.0f;
