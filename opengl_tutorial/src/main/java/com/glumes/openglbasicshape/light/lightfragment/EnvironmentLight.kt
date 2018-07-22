@@ -14,7 +14,6 @@ import android.widget.SeekBar
 import com.glumes.importobject.Ball
 import com.glumes.importobject.utils.BallTypeHelper
 import com.glumes.openglbasicshape.R
-import com.glumes.openglbasicshape.blend.blendfragment.BlendSurfaceView
 import com.glumes.openglbasicshape.utils.MatrixState
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
@@ -32,19 +31,19 @@ class EnvironmentLight : Fragment() {
         surfaceView.isFocusableInTouchMode = true
 
         return inflater.inflate(R.layout.fragment_light, container, false).also {
-            it.findViewById<LinearLayout>(R.id.rootview).addView(surfaceView)
-//            it.findViewById<SeekBar>(R.id.seekBar).setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-//                override fun onStartTrackingTouch(seekBar: SeekBar?) {
-//                }
-//
-//                override fun onStopTrackingTouch(seekBar: SeekBar?) {
-//                }
-//
-//                override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-//                    surfaceView.lightOffset = (seekBar.max / 2.0f - progress) / (seekBar.max / 2.0f * -4)
-//                }
-//
-//            })
+            it.findViewById<LinearLayout>(R.id.main_liner).addView(surfaceView)
+            it.findViewById<SeekBar>(R.id.SeekBar).setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                }
+
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                }
+
+                override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                    surfaceView.lightOffset = (seekBar.max / 2.0f - progress) / (seekBar.max / 2.0f * -4)
+                }
+
+            })
         }
     }
 

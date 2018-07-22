@@ -1,7 +1,6 @@
 package com.glumes.openglbasicshape.light.lightfragment
 
 import android.content.Context
-import android.opengl.GLES20
 import android.opengl.GLES30
 import android.opengl.GLSurfaceView
 import android.os.Bundle
@@ -12,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.glumes.importobject.Ball
 import com.glumes.importobject.utils.BallTypeHelper
-import com.glumes.openglbasicshape.blend.blendfragment.BlendSurfaceView
 import com.glumes.openglbasicshape.utils.MatrixState
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
