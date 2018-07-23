@@ -21,7 +21,4 @@
         android:id="@+id/mix_light"
         android:title="@string/mix_light" />
 
-    <item
-        android:id="@+id/direction_light"
-        android:title="@string/direction_light" />
 </menu>

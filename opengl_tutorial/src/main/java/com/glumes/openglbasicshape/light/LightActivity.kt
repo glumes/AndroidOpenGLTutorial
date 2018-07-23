@@ -24,7 +24,7 @@ class LightActivity : BaseFragmentToolbarActivity() {
         mFragSparseArray.put(R.id.scatter_light, ScatterLight())
         mFragSparseArray.put(R.id.mirror_light, MirrorLight())
         mFragSparseArray.put(R.id.mix_light, MixLight())
-        mFragSparseArray.put(R.id.direction_light, DirectionLight())
+//        mFragSparseArray.put(R.id.direction_light, DirectionLight())
     }
 
 }
