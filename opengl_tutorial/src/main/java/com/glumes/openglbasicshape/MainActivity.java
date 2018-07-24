@@ -12,6 +12,7 @@ import com.glumes.openglbasicshape.activitiy.BasicShapeActivity;
 import com.glumes.openglbasicshape.activitiy.TextureActivity;
 import com.glumes.openglbasicshape.blend.BlendActivity;
 import com.glumes.openglbasicshape.bufferusage.BufferUsageActivity;
+import com.glumes.openglbasicshape.collision.CollisionActivity;
 import com.glumes.openglbasicshape.filter.GLSurfaceViewFilterActivity;
 import com.glumes.openglbasicshape.imageprocessing.ImageProcessingActivity;
 import com.glumes.openglbasicshape.light.LightActivity;
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         items.add(new RenderModel("缓冲区的使用", RenderType.RENDER_TYPE_JUMP_ACTIVITY, BufferUsageActivity.class));
 
-
+        items.add(new RenderModel("碰撞检测", RenderType.RENDER_TYPE_JUMP_ACTIVITY, CollisionActivity.class));
 
 
     }
