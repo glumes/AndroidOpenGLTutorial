@@ -33,7 +33,9 @@ public class RigidBody {
     }
 
     public void go(ArrayList<RigidBody> al) {
-        if (isStatic) return;
+        if (isStatic) {
+            return;
+        }
         currLocation.add(currV);
         for (int i = 0; i < al.size(); i++) {
 
@@ -51,6 +53,7 @@ public class RigidBody {
     {
         float[] over = calOverTotal
                 (
+                        // 两个物体的 AABB 包围盒
                         ra.collObject.getCurrAABBBox(ra.currLocation),
                         rb.collObject.getCurrAABBBox(rb.currLocation)
                 );
