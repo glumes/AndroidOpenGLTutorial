@@ -43,6 +43,8 @@ public class EGLRenderer {
     private EGLSurface mEGLSurface = EGL10.EGL_NO_SURFACE;
 
     public void create(int w, int h) {
+
+        // 使用 eglCreatePbufferSurface 就需要指定宽和高
         int[] surfaceAttr = {
                 EGL10.EGL_WIDTH, w,
                 EGL10.EGL_HEIGHT, h,
@@ -72,6 +74,7 @@ public class EGLRenderer {
     }
 
     private static EGLConfig getEGLConfig(EGL10 egl, EGLDisplay display) {
+        // eglChooseConfig 用于获取满足所有 attribute 的 Config
         int[] configCount = {0};
         if (!egl.eglChooseConfig(display, EGL_CONFIGS, null, 0, configCount)) {
             return null;

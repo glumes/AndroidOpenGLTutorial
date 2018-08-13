@@ -13,6 +13,7 @@ import com.glumes.openglbasicshape.activitiy.TextureActivity;
 import com.glumes.openglbasicshape.blend.BlendActivity;
 import com.glumes.openglbasicshape.bufferusage.BufferUsageActivity;
 import com.glumes.openglbasicshape.collision.CollisionActivity;
+import com.glumes.openglbasicshape.egl.EglActivity;
 import com.glumes.openglbasicshape.filter.GLSurfaceViewFilterActivity;
 import com.glumes.openglbasicshape.imageprocessing.ImageProcessingActivity;
 import com.glumes.openglbasicshape.light.LightActivity;
@@ -61,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
         items.add(new RenderModel("旋转与移动篇", RenderType.RENDER_TYPE_JUMP_ACTIVITY, RotateAndMoveActivity.class));
 
         items.add(new RenderModel("FBO 使用", RenderType.RENDER_TYPE_JUMP_ACTIVITY));
+
+        items.add(new RenderModel("EGL 使用", RenderType.RENDER_TYPE_JUMP_ACTIVITY, EglActivity.class));
 
         items.add(new RenderModel("相机滤镜", RenderType.RENDER_TYPE_JUMP_ACTIVITY, GLSurfaceViewFilterActivity.class));
 
