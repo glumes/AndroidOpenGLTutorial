@@ -5,4 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".fbo.FrameBufferObjectActivity">
 
+    <SurfaceView
+        android:id="@+id/fboview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </android.support.constraint.ConstraintLayout>

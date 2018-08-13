@@ -1,5 +1,4 @@
-package com.glumes.openglbasicshape.egl;
-
+package com.glumes.openglbasicshape.fbo;
 
 import android.content.Context;
 import android.opengl.EGL14;
@@ -8,19 +7,20 @@ import android.opengl.EGLContext;
 import android.opengl.EGLDisplay;
 import android.opengl.EGLSurface;
 import android.opengl.GLES20;
-import android.util.Log;
 import android.view.Surface;
 
 import com.glumes.importobject.TextureRect;
 import com.glumes.openglbasicshape.R;
 import com.glumes.openglbasicshape.base.LogUtil;
+import com.glumes.openglbasicshape.utils.FBOHelper;
 import com.glumes.openglbasicshape.utils.MatrixState;
 import com.glumes.openglbasicshape.utils.TextureHelper;
 
-import javax.microedition.khronos.egl.EGL;
 
-
-public class EglDemo {
+/**
+ * @Author glumes
+ */
+public class FBORenderer {
 
 
     private static final int CFG_RED_SIZE = 8;
@@ -35,10 +35,7 @@ public class EglDemo {
     private EGLContext mEGLContext = EGL14.EGL_NO_CONTEXT;
     private EGLConfig mEGLConfig;
 
-    // EGL 的主版本号
-    private int[] mMajorVersion = new int[1];
-    // EGL 的次版本号
-    private int[] mMinorVersion = new int[1];
+    private int[] version = new int[2];
 
     private TextureRect mTextureRect;
 
@@ -62,54 +59,55 @@ public class EglDemo {
             EGL14.EGL_NONE,
     };
 
-    public void initEgl() {
-        // 创建与本地窗口系统的连接
+    public void init() {
         mEGLDisplay = EGL14.eglGetDisplay(EGL14.EGL_DEFAULT_DISPLAY);
         if (mEGLDisplay == EGL14.EGL_NO_DISPLAY) {
-            // failed
+            LogUtil.d("get egl display failed");
         }
 
-        boolean result = EGL14.eglInitialize(mEGLDisplay, mMajorVersion, 0, mMinorVersion, 0);
+        boolean result = EGL14.eglInitialize(mEGLDisplay, version, 0, version, 1);
         if (!result) {
-            // failed
+            LogUtil.d("init egl failed");
         }
 
-        // 所有符合配置的 EGLConfig 个数
         int[] numConfigs = new int[1];
-        // 所有符合配置的 EGLConfig
         EGLConfig[] configs = new EGLConfig[1];
 
-        // configs 参数为 null,会在 numConfigs 中输出所有满足 EGL_CONFIG 的 config 个数
         EGL14.eglChooseConfig(mEGLDisplay, EGL_CONFIG, 0, null, 0, 0, numConfigs, 0);
-        // 得到满足条件的个数
         int num = numConfigs[0];
         if (num != 0) {
-            // 会获取所有满足 EGL_CONFIG 的 config
             EGL14.eglChooseConfig(mEGLDisplay, EGL_CONFIG, 0, configs, 0, configs.length, numConfigs, 0);
-            // 去第一个
             mEGLConfig = configs[0];
         }
 
-        // 创建上下文
         mEGLContext = EGL14.eglCreateContext(mEGLDisplay, mEGLConfig, EGL14.EGL_NO_CONTEXT, EGL_ATTRIBUTE, 0);
-
         if (mEGLContext == EGL14.EGL_NO_CONTEXT) {
-            // failed
+            LogUtil.d("create context failed");
         }
 
     }
 
-
-    int textureId = 0;
-
     public void render(Surface surface, int width, int height, Context context) {
         mEGLSurface = EGL14.eglCreateWindowSurface(mEGLDisplay, mEGLConfig, surface, EGL_SURFACE, 0);
-
         EGL14.eglMakeCurrent(mEGLDisplay, mEGLSurface, mEGLSurface, mEGLContext);
+
+        // 绘制操作
+
+        int fboId = FBOHelper.loadFBO();
+        GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fboId);
+
+        int fboTextureId = TextureHelper.loadTexture(width, height);
+        int renderbufferId = TextureHelper.loadRenderBuffer();
+
+        GLES20.glFramebufferTexture2D(GLES20.GL_FRAMEBUFFER, GLES20.GL_COLOR_ATTACHMENT0, GLES20.GL_TEXTURE_2D, fboTextureId, 0);
+
+        if (GLES20.glCheckFramebufferStatus(GLES20.GL_FRAMEBUFFER) != GLES20.GL_FRAMEBUFFER_COMPLETE) {
+            LogUtil.d("Framebuffer error");
+        }
 
         mTextureRect = new TextureRect(context.getResources(), 2, 2);
 
-        textureId = TextureHelper.loadTexture(context, R.drawable.lgq);
+        int textureId = TextureHelper.loadTexture(context, R.drawable.lgq);
 
         GLES20.glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
@@ -127,9 +125,18 @@ public class EglDemo {
 
         mTextureRect.drawSelf(textureId);
 
-        LogUtil.d("thread name is " + Thread.currentThread().getName());
+        GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0);
 
-        // 交换显存
+        GLES20.glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+        GLES20.glEnable(GLES20.GL_DEPTH_TEST);
+        GLES20.glEnable(GLES20.GL_CULL_FACE);
+
+        GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT | GLES20.GL_COLOR_BUFFER_BIT);
+
+        GLES20.glViewport(0, 0, width, height);
+
+        mTextureRect.drawSelf(fboTextureId);
+
         EGL14.eglSwapBuffers(mEGLDisplay, mEGLSurface);
     }
 
@@ -143,13 +150,5 @@ public class EglDemo {
         mEGLContext = EGL14.EGL_NO_CONTEXT;
         mEGLDisplay = EGL14.EGL_NO_DISPLAY;
         mEGLConfig = null;
-    }
-
-    // 获得 Config 的某个属性值
-    private void printEglAttribute(EGLDisplay display, EGLConfig config, int attribute) {
-        int[] value = new int[1];
-
-        EGL14.eglGetConfigAttrib(display, config, attribute, value, 0);
-
     }
 }

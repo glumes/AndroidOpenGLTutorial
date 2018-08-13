@@ -33,7 +33,7 @@ public class EglActivity extends AppCompatActivity {
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
-
+                mEglDemo.release();
             }
         });
     }

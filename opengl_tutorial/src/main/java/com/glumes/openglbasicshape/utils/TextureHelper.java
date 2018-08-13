@@ -164,4 +164,24 @@ public class TextureHelper {
     }
 
 
+    public static int loadTexture(int width, int height) {
+        int[] textures = new int[1];
+        GLES20.glGenTextures(1, textures, 0);
+        int textureId = textures[0];
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId);
+        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
+        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
+        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_MIRRORED_REPEAT);
+        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_MIRRORED_REPEAT);
+        GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGB, width, height,
+                0, GLES20.GL_RGB, GLES20.GL_UNSIGNED_SHORT_5_6_5, null);
+        return textureId;
+    }
+
+
+    public static int loadRenderBuffer() {
+        int[] renderbuffer = new int[1];
+        GLES20.glGenRenderbuffers(1, renderbuffer, 0);
+        return renderbuffer[0];
+    }
 }
