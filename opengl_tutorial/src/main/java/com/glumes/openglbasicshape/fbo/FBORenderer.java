@@ -94,12 +94,21 @@ public class FBORenderer {
         // 绘制操作
 
         int fboId = FBOHelper.loadFBO();
+
         GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, fboId);
 
         int fboTextureId = TextureHelper.loadTexture(width, height);
+
         int renderbufferId = TextureHelper.loadRenderBuffer();
 
         GLES20.glFramebufferTexture2D(GLES20.GL_FRAMEBUFFER, GLES20.GL_COLOR_ATTACHMENT0, GLES20.GL_TEXTURE_2D, fboTextureId, 0);
+
+
+        GLES20.glBindRenderbuffer(GLES20.GL_RENDERBUFFER, renderbufferId);
+
+        GLES20.glRenderbufferStorage(GLES20.GL_RENDERBUFFER, GLES20.GL_DEPTH_ATTACHMENT, width, height);
+
+        GLES20.glFramebufferRenderbuffer(GLES20.GL_FRAMEBUFFER, GLES20.GL_DEPTH_ATTACHMENT, GLES20.GL_RENDERBUFFER, renderbufferId);
 
         if (GLES20.glCheckFramebufferStatus(GLES20.GL_FRAMEBUFFER) != GLES20.GL_FRAMEBUFFER_COMPLETE) {
             LogUtil.d("Framebuffer error");
