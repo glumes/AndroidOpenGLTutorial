@@ -81,7 +81,8 @@
             android:name=".collision.CollisionActivity"
             android:screenOrientation="landscape"
             android:theme="@style/NoActionBarTheme" />
-        <activity android:name=".egl.EglActivity"></activity>
+        <activity android:name=".egl.EglActivity" />
+        <activity android:name=".texturemix.TextureMixActivity"></activity>
     </application>
 
 </manifest>

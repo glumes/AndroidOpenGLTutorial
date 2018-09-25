@@ -31,7 +31,14 @@ public class Point extends BaseShape {
     private int aPositionLocation;
 
     float[] pointVertex = {
-            0f, 0f
+            0f, 0f,
+            0.01f, 0.01f,
+            -0.1f, -0.1f,
+            0.02f, 0.02f,
+            0.03f, 0.03f,
+            0.04f, 0.04f,
+            0.05f, 0.05f,
+            0.06f, 0.06f,
     };
 
     public Point(Context context) {
@@ -67,7 +74,7 @@ public class Point extends BaseShape {
     public void onDrawFrame(GL10 gl) {
         // 给绑定的值赋值
         glUniform4f(aColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
-        glDrawArrays(GL_POINTS, 0, 1);
+        glDrawArrays(GL_POINTS, 0, pointVertex.length / POSITION_COMPONENT_COUNT);
     }
 
     @Override

@@ -95,10 +95,10 @@ class RectangleTexture(context: Context) : BaseShape(context) {
 
         var bitmap = FontUtil.generateWLT(content, width, height)
 
-        mTextureId = TextureHelper.loadTexture(mContext, R.drawable.texture)
+        mTextureId = TextureHelper.loadTexture(mContext, R.drawable.yanjing_012)
 //        mTextureId = TextureHelper.loadTextureByBitmap( bitmap)
 
-        GLES20.glUniform1i(uTextureUnitAttr, 0)
+//        GLES20.glUniform1i(uTextureUnitAttr, 0)
 
         Matrix.setIdentityM(modelMatrix, 0)
 //        Matrix.scaleM(modelMatrix, 0, 0.5f, 0.5f, 0f)
@@ -107,20 +107,27 @@ class RectangleTexture(context: Context) : BaseShape(context) {
         Matrix.setIdentityM(projectionMatrix, 0)
     }
 
+    val textureWidth = 245
+    val textureHeight = 116
+
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
         super.onSurfaceChanged(gl, width, height)
         GLES20.glViewport(0, 0, width, height)
 
         val aspectRatio = if (width > height) width.toFloat() / height.toFloat() else height.toFloat() / width.toFloat()
 
-        if (width > height) {
-            Matrix.orthoM(projectionMatrix, 0, -aspectRatio, aspectRatio, -1f, 1f, 0f, 10f)
-        } else {
-            Matrix.orthoM(projectionMatrix, 0, -1f, 1f, -aspectRatio, aspectRatio, 0f, 10f)
-        }
+//        if (width > height) {
+//            Matrix.orthoM(projectionMatrix, 0, -aspectRatio, aspectRatio, -1f, 1f, 0f, 10f)
+//        } else {
+//            Matrix.orthoM(projectionMatrix, 0, -1f, 1f, -aspectRatio, aspectRatio, 0f, 10f)
+//        }
 
+        val widthAspect = textureWidth * 1.0f / width
+        val heightAspect = textureHeight * 1.0f / height
 
+        Matrix.scaleM(modelMatrix, 0, widthAspect, heightAspect, 0f)
     }
+
 
     override fun onDrawFrame(gl: GL10?) {
         super.onDrawFrame(gl)

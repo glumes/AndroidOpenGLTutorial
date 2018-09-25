@@ -192,121 +192,6 @@ public class BasicGameView extends GLSurfaceView implements MessageSender, OnSte
 
     }
 
-	/*public boolean onTouchEvent2(final MotionEvent event) {
-
-		CmdStr = null;	//reset the CmdStr;
-		
-		float x = event.getX();
-		float y = event.getY();
-		
-		
-		float Point[] = new float[2];
-		Point[0] = x;
-		Point[1] = y;
-		
-		int [] Pos = null;
-		
-		int opcode = event.getAction() & MotionEvent.ACTION_MASK;
-		
-		if(opcode==MotionEvent.ACTION_DOWN)
-		{
-			Point1[0] = x;
-			Point1[1] = y;
-			Log.e("down","down");
-			FaceIndex = render.IsInCubeArea(Point);
-			if(FaceIndex1>=0 && CanMove)
-			{
-				RotateOrMove1 = MagicCubeRender.MOVE;
-				//Log.e("move", render.rx+ " " + render.ry);
-			}
-			else
-			{
-				RotateOrMove1 = MagicCubeRender.ROTATE;
-				//Log.e("rotate", render.rx+ " " + render.ry);
-			}
-			if( RotateOrMove1  == MagicCubeRender.ROTATE )
-			{
-				LastPos[0] = x;
-				LastPos[1] = y;
-			}
-			else
-			{
-				LastPos[0] = x;
-				LastPos[1] = y;
-			}
-			
-		}
-		else if(opcode == MotionEvent.ACTION_POINTER_DOWN)
-		{
-			Point2[0] = x;
-			Point2[1] = y;
-			Log.e("2down","2down");
-		}
-		else if(opcode==MotionEvent.ACTION_MOVE)
-		{
-			//Log.e("move","move");
-			if(RotateOrMove1 == MagicCubeRender.MOVE)
-				return false;
-        	float dx = x - LastPos[0];
-        	float dy = y - LastPos[1];
-			if(RotateOrMove1 == MagicCubeRender.ROTATE && this.CanRotate)
-			{
-	        	if(Math.abs(dy)<Math.abs(dx))
-	        	{
-	        		if(render.rx<90 && render.rx >-90)
-	        			render.ry += dx * Sensitivity;
-	        		else
-	        			render.ry -= dx*Sensitivity;
-	        		if(render.ry>180)
-	        			render.ry -= 360;
-	        		else if(render.ry<-180)
-	        			render.ry += 360;
-	        	}
-	        	
-	        	else
-	        	{
-	        		float tmp = render.rx;
-	        		render.rx += dy * Sensitivity;
-	        		
-	        		if(render.rx>180)
-	        			render.rx -= 360;
-	        		else if(render.rx<-180)
-	        			render.rx += 360;
-	        	}
-	        	//render.AdjustFace();
-				LastPos[0] = x;
-				LastPos[1] = y;
-	    		//requestRender();		
-			}
-		}
-		else if(opcode == MotionEvent.ACTION_UP)
-		{
-			Log.e("up","up");
-			if(RotateOrMove1 == MagicCubeRender.MOVE && render.IsMoveValid(LastPos, Point) && this.CanMove)
-			{
-				//CmdStr = render.CalcCommand(LastPos, Point, FaceIndex);
-				String cmdstr = render.CalcCommand(LastPos, Point, FaceIndex);
-				if(cmdstr != null)
-				{
-					if( this.stepListener != null)
-					{
-						//this.stepListener.SetStep(++nStep);
-					}
-					if( this.messageSender != null)
-					{
-						//this.messageSender.SendMessage(cmdstr);
-					}
-				}
-				//mediaPlayer.start();
-			}
-		}
-		else if(opcode == MotionEvent.ACTION_POINTER_UP)
-		{
-			Log.e("2up","2up");
-		}
-		return true;
-	}*/
-
     public boolean onTouchEvent(final MotionEvent event) {
 
         if (event.getPointerCount() > 2) {
@@ -338,7 +223,7 @@ public class BasicGameView extends GLSurfaceView implements MessageSender, OnSte
             LastPos1[0] = Point1[0];
             LastPos1[1] = Point1[1];
 
-
+            // 判断是不是在面上
             FaceIndex1 = render.IsInCubeArea(Point1);
             LogUtil.d("faceIndex is " + FaceIndex1);
 

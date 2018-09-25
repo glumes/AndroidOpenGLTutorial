@@ -100,6 +100,45 @@ public class TextureRect {
         muMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");
     }
 
+
+    public void drawSelf(int texId, float[] mvpmatrix) {
+        //指定使用某套着色器程序
+        GLES20.glUseProgram(mProgram);
+        //将最终变换矩阵传入渲染管线
+        GLES20.glUniformMatrix4fv(muMVPMatrixHandle, 1, false, mvpmatrix, 0);
+        //将顶点位置数据传入渲染管线
+        GLES20.glVertexAttribPointer
+                (
+                        maPositionHandle,
+                        3,
+                        GLES20.GL_FLOAT,
+                        false,
+                        3 * 4,
+                        mVertexBuffer
+                );
+        //将纹理数据传入渲染管线
+        GLES20.glVertexAttribPointer
+                (
+                        maTexCoorHandle,
+                        2,
+                        GLES20.GL_FLOAT,
+                        false,
+                        2 * 4,
+                        mTextureBuffer
+                );
+        //启用顶点位置数据数组
+        GLES20.glEnableVertexAttribArray(maPositionHandle);
+        //启用顶点纹理坐标数据数组
+        GLES20.glEnableVertexAttribArray(maTexCoorHandle);
+
+        //绑定纹理
+        GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texId);
+
+        //绘制纹理矩形
+        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vCount);
+    }
+
     public void drawSelf(int texId) {
         //指定使用某套着色器程序
         GLES20.glUseProgram(mProgram);

@@ -21,6 +21,7 @@ import com.glumes.openglbasicshape.light.LightActivity;
 import com.glumes.openglbasicshape.move.RotateAndMoveActivity;
 import com.glumes.openglbasicshape.multitest.MultiTestActivity;
 import com.glumes.openglbasicshape.obj.ImportObjectActivity;
+import com.glumes.openglbasicshape.texturemix.TextureMixActivity;
 import com.glumes.openglbasicshape.utils.RenderType;
 import com.glumes.openglbasicshape.viewholderitem.RenderBinder;
 import com.glumes.openglbasicshape.viewholderitem.RenderModel;
@@ -85,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
         items.add(new RenderModel("缓冲区的使用", RenderType.RENDER_TYPE_JUMP_ACTIVITY, BufferUsageActivity.class));
 
         items.add(new RenderModel("碰撞检测", RenderType.RENDER_TYPE_JUMP_ACTIVITY, CollisionActivity.class));
+
+        items.add(new RenderModel("纹理混合", RenderType.RENDER_TYPE_JUMP_ACTIVITY, TextureMixActivity.class));
 
 
     }
