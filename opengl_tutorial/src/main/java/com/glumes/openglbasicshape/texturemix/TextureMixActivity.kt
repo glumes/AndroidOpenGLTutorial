@@ -17,10 +17,13 @@ class TextureMixActivity : AppCompatActivity() {
 
 
     lateinit var mGLSurfaceView: GLSurfaceView
+    lateinit var mGLSurfaceView2: GLSurfaceView
     lateinit var mRenderer: MixRenderer
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_texture_mix)
+
+
         mGLSurfaceView = findViewById(R.id.texturemix)
 
         mRenderer = MixRenderer(this)
@@ -28,6 +31,16 @@ class TextureMixActivity : AppCompatActivity() {
         mGLSurfaceView.setEGLContextClientVersion(2)
 
         mGLSurfaceView.setRenderer(mRenderer)
+        mGLSurfaceView.renderMode = GLSurfaceView.RENDERMODE_CONTINUOUSLY
+
+        mGLSurfaceView = findViewById(R.id.texturemix2)
+
+//        mRenderer = MixRenderer(this)
+
+
+        mGLSurfaceView.setEGLContextClientVersion(2)
+
+        mGLSurfaceView.setRenderer(MixRenderer(this))
         mGLSurfaceView.renderMode = GLSurfaceView.RENDERMODE_CONTINUOUSLY
 
     }
@@ -64,7 +77,7 @@ class TextureMixActivity : AppCompatActivity() {
 
 //            Matrix.scaleM(mvpMatrix, 0, 0.5f, 0f, 0f)
 
-//            Matrix.rotateM(mvpMatrix, 0, 90f, 1f, 0f, 0f)
+//            Matrix.rotateM(mvpMatrix, 0, 40f, 1f, 0f, 0f)
         }
 
     }

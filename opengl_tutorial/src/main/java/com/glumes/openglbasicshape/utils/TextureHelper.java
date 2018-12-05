@@ -72,7 +72,6 @@ public class TextureHelper {
             return 0;
         }
 
-
         // 设置缩小的情况下过滤方式
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         // 设置放大的情况下过滤方式

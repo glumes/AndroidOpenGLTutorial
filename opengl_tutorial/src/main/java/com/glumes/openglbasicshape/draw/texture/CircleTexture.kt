@@ -115,9 +115,9 @@ class CircleTexture(context: Context) : BaseShape(context) {
         GLES20.glUniform1i(uTextureUnitAttr, 0)
 
         Matrix.setIdentityM(modelMatrix, 0)
-        Matrix.rotateM(modelMatrix,0,180f,1f,0f,0f)
-        Matrix.scaleM(modelMatrix,0,0.5f,0.5f,0f)
-        Matrix.translateM(modelMatrix,0,1.0f,1.0f,0f)
+        Matrix.rotateM(modelMatrix, 0, 180f, 1f, 0f, 0f)
+        Matrix.scaleM(modelMatrix, 0, 0.5f, 0.5f, 0f)
+        Matrix.translateM(modelMatrix, 0, 1.0f, 1.0f, 0f)
 
         Matrix.setIdentityM(viewMatrix, 0)
         Matrix.setIdentityM(projectionMatrix, 0)
@@ -140,7 +140,9 @@ class CircleTexture(context: Context) : BaseShape(context) {
 
     override fun onDrawFrame(gl: GL10?) {
         super.onDrawFrame(gl)
-        GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT)
+        GLES20.glClearColor(0f, 0f, 0f, 1f)
+
+        GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT or GLES20.GL_COLOR_BUFFER_BIT)
 
         GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, modelMatrix, 0)
         GLES20.glUniformMatrix4fv(uViewMatrixAttr, 1, false, viewMatrix, 0)

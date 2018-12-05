@@ -4,6 +4,7 @@ import android.content.Context
 import android.opengl.GLES20
 import android.opengl.GLES30
 import com.glumes.openglbasicshape.R
+import com.glumes.openglbasicshape.base.LogUtil
 import com.glumes.openglbasicshape.draw.BaseShape
 import com.glumes.openglbasicshape.utils.Constants
 import com.glumes.openglbasicshape.utils.MatrixState
@@ -118,7 +119,7 @@ open class BaseCube(context: Context) : BaseShape(context) {
         GLES20.glClearColor(0f, 0f, 0f, 1.0f)
 
         //打开深度检测
-//        GLES30.glEnable(GLES30.GL_DEPTH_TEST)
+        GLES30.glEnable(GLES30.GL_DEPTH_TEST)
         //打开背面剪裁，面剔除，优化显示速度
 //        GLES30.glEnable(GLES30.GL_CULL_FACE)
 

@@ -1,6 +1,7 @@
 package com.glumes.openglbasicshape.draw.texture;
 
 import android.content.Context;
+import android.opengl.GLES20;
 
 import com.glumes.openglbasicshape.R;
 import com.glumes.openglbasicshape.base.LogUtil;
@@ -138,6 +139,11 @@ public class SphereTexture extends BaseShape {
     @Override
     public void onDrawFrame(GL10 gl) {
 
+
+        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+        GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT | GLES20.GL_COLOR_BUFFER_BIT);
+
         glUniformMatrix4fv(uMatrixLocation, 1, false, modelMatrix, 0);
 //        glUniform4f(uColorLocation, 0.0f, 1.0f, 0.0f, 1.0f);
 
@@ -148,6 +154,9 @@ public class SphereTexture extends BaseShape {
     @Override
     public void onDrawFrame(GL10 gl, float[] mvpMatrix) {
         super.onDrawFrame(gl, mvpMatrix);
+
+
+        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
         glUniformMatrix4fv(uMatrixLocation, 1, false, mvpMatrix, 0);
 //        glUniform4f(uColorLocation, 0.0f, 1.0f, 0.0f, 1.0f);

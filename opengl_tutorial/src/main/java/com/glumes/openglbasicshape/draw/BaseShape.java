@@ -1,6 +1,7 @@
 package com.glumes.openglbasicshape.draw;
 
 import android.content.Context;
+import android.opengl.GLES20;
 
 import com.glumes.openglbasicshape.utils.VertexArray;
 
@@ -48,12 +49,16 @@ public abstract class BaseShape {
     }
 
     public void onDrawFrame(GL10 gl) {
+        GLES20.glClearColor(0f, 0f, 0f, 1f);
 
+        GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT | GLES20.GL_COLOR_BUFFER_BIT);
     }
 
 
     public void onDrawFrame(GL10 gl, float[] mvpMatrix) {
+        GLES20.glClearColor(0f, 0f, 0f, 1f);
 
+        GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT | GLES20.GL_COLOR_BUFFER_BIT);
     }
 
 

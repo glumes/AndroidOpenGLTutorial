@@ -118,7 +118,9 @@ class TriangleTexture(context: Context) : BaseShape(context) {
     override fun onDrawFrame(gl: GL10?) {
         super.onDrawFrame(gl)
 
-        glClear(GLES20.GL_DEPTH_BUFFER_BIT)
+        glClearColor(0f, 0f, 0f, 1.0f)
+
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT or GLES20.GL_DEPTH_BUFFER_BIT)
 
         glUniformMatrix4fv(uModelMatrixAttr, 1, false, modelMatrix, 0)
         glUniformMatrix4fv(uViewMatrixAttr, 1, false, viewMatrix, 0)

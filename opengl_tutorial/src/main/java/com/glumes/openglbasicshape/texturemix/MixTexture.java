@@ -188,7 +188,8 @@ public class MixTexture {
                 GLES20.GL_FLOAT,
                 false,
                 2 * 4,
-                mMipMapTextureBuffer
+//                mMipMapVertexBuffer
+                mMipMapVertexBuffer
         );
 
 

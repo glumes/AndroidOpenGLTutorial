@@ -111,6 +111,8 @@ public class MatrixState {
             float far       //far面与视点的距离
     ) {
         Matrix.frustumM(mProjMatrix, 0, left, right, bottom, top, near, far);
+
+//        Matrix.perspectiveM();
     }
 
     //设置正交投影参数

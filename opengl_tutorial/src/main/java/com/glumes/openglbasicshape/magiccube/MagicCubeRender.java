@@ -1078,6 +1078,8 @@ public class MagicCubeRender implements GLSurfaceView.Renderer {
         WinXY[1] = Win[1];
     }
 
+
+
     /**
      * matrix 两个投影矩阵相乘后的结果
      *

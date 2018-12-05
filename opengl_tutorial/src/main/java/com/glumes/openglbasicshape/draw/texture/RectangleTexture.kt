@@ -131,7 +131,9 @@ class RectangleTexture(context: Context) : BaseShape(context) {
 
     override fun onDrawFrame(gl: GL10?) {
         super.onDrawFrame(gl)
-        GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT)
+
+        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
+
 
         GLES20.glUniformMatrix4fv(uModelMatrixAttr, 1, false, modelMatrix, 0)
         GLES20.glUniformMatrix4fv(uViewMatrixAttr, 1, false, viewMatrix, 0)
