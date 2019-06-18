@@ -10,6 +10,7 @@ import com.glumes.databindingadapter.Items;
 import com.glumes.openglbasicshape.activitiy.BasicGraphActivity;
 import com.glumes.openglbasicshape.activitiy.BasicShapeActivity;
 import com.glumes.openglbasicshape.activitiy.TextureActivity;
+import com.glumes.openglbasicshape.bezier.BezierActivity;
 import com.glumes.openglbasicshape.blend.BlendActivity;
 import com.glumes.openglbasicshape.bufferusage.BufferUsageActivity;
 import com.glumes.openglbasicshape.collision.CollisionActivity;
@@ -56,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         items.add(new RenderModel("基本图形的绘制", RenderType.RENDER_TYPE_JUMP_ACTIVITY, BasicGraphActivity.class));
+
+        items.add(new RenderModel("贝塞尔曲线绘制",RenderType.RENDER_TYPE_JUMP_ACTIVITY, BezierActivity.class));
 
         items.add(new RenderModel("基本形状的绘制", RenderType.RENDER_TYPE_JUMP_ACTIVITY, BasicShapeActivity.class));
 

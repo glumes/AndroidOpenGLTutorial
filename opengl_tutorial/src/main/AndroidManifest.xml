@@ -66,6 +66,11 @@
         <activity
             android:name=".multitest.MultiTestActivity"
             android:theme="@style/NoActionBarTheme" />
+
+        <activity
+            android:name=".bezier.BezierActivity"
+            android:theme="@style/NoActionBarTheme" />
+
         <activity
             android:name=".blend.BlendActivity"
             android:theme="@style/NoActionBarTheme" />
