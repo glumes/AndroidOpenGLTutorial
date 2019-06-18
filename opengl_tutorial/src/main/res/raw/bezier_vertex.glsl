@@ -49,13 +49,8 @@ void main() {
 
     vec2 point = fun2(p0, p1, p2, p3, t);
 
-    if (t < -0.1){
-        pos.xy = vec2(0.0, 0.0);
-    } else {
-        pos.xy = point;
-    }
+    pos.xy = point;
 
-    //    gl_Position = u_MVPMatrix * pos;
     gl_Position = pos;
 
     gl_PointSize = 10.0;
