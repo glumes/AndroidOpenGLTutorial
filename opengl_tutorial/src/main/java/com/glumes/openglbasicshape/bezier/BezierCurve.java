@@ -58,14 +58,24 @@ public class BezierCurve {
 //
 //        mMvpHandle = glGetUniformLocation(mProgram,"u_MVPMatrix");
 //
+//        mStartEndPoints = new float[]{
+//                -1, 0,
+//                0, 0.244f,
+//        };
+//
+//        mControlPoints = new float[]{
+//                -0.8f, 0.1f,
+//                -0.24f, 0.244f
+//        };
+
         mStartEndPoints = new float[]{
                 -1, 0,
-                0, 0.244f,
+                1,0,
         };
 
         mControlPoints = new float[]{
-                -0.8f, 0.1f,
-                -0.24f, 0.244f
+                0,0.5f,
+                1,0,
         };
 
         mDataPoints = genTData();

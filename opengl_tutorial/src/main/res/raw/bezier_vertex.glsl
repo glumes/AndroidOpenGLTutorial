@@ -15,6 +15,7 @@ vec2 fun(in vec2 p0, in vec2 p1, in vec2 p2, in vec2 p3, in float t){
     3.0 * t *t *(1.0 -t) *p2 + t *t *t *p3;
 }
 
+// 三阶贝塞尔
 vec2 fun2(in vec2 p0, in vec2 p1, in vec2 p2, in vec2 p3, in float t)
 {
     vec2 q0 = mix(p0, p1, t);
@@ -26,6 +27,20 @@ vec2 fun2(in vec2 p0, in vec2 p1, in vec2 p2, in vec2 p3, in float t)
 
     return mix(r0, r1, t);
 }
+
+// 二阶贝塞尔
+vec2 fun3(in vec2 p0, in vec2 p1, in vec2 p2, in vec2 p3, in float t)
+{
+
+    float tt = (1.0 - t) * (1.0 -t);
+
+    return tt * p0 + 2.0 * t * (1.0 -t) * p1 + t * t * p2;
+
+}
+
+
+//(1-t)^2P0 + 2(1-t)tP1 + t^2*P2
+//(1-t)^3P0 + 3(1-t)^2tP1 + 3(1-t)t^2P2 + t^3*P3
 
 
 void main() {
@@ -47,12 +62,12 @@ void main() {
 
     float t = aData;
 
-    vec2 point = fun2(p0, p1, p2, p3, t);
+    vec2 point = fun3(p0, p1, p2, p3, t);
 
     pos.xy = point;
 
     gl_Position = pos;
 
-    gl_PointSize = 10.0;
+    gl_PointSize = 20.0;
 }
 
