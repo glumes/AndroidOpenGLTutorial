@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".bezier.curve.BezierActivity">
+    tools:context=".bezier.drawer.BezierDrawActivity">
 
-
-    <android.opengl.GLSurfaceView
-        android:id="@+id/glsurfaceview"
+    <com.glumes.openglbasicshape.bezier.drawer.BezierDrawView
+        android:id="@+id/bezierDraw"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

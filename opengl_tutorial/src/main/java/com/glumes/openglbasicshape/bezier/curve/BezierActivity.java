@@ -1,10 +1,11 @@
-package com.glumes.openglbasicshape.bezier;
+package com.glumes.openglbasicshape.bezier.curve;
 
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.glumes.openglbasicshape.R;
+import com.glumes.openglbasicshape.bezier.curve.BezierRenderer;
 
 public class BezierActivity extends AppCompatActivity {
 

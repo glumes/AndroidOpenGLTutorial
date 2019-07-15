@@ -18,6 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".bezier.beziertouch.BezierTouchActivity"></activity>
+        <activity android:name=".bezier.drawer.BezierDrawActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -68,7 +69,7 @@
             android:name=".multitest.MultiTestActivity"
             android:theme="@style/NoActionBarTheme" />
         <activity
-            android:name=".bezier.BezierActivity"
+            android:name=".bezier.curve.BezierActivity"
             android:theme="@style/NoActionBarTheme" />
         <activity
             android:name=".blend.BlendActivity"

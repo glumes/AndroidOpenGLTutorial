@@ -1,9 +1,11 @@
-package com.glumes.openglbasicshape.bezier;
+package com.glumes.openglbasicshape.bezier.curve;
 
 import android.content.Context;
 import android.opengl.GLES20;
 
 import com.glumes.openglbasicshape.R;
+import com.glumes.openglbasicshape.bezier.Buffers;
+import com.glumes.openglbasicshape.bezier.Const;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
 
 import java.nio.FloatBuffer;
@@ -45,7 +47,7 @@ public class BezierCurve {
     public BezierCurve(Context context) {
         mContext = context;
 
-        mProgram = ShaderHelper.buildProgram(mContext, R.raw.bezier_vertex, R.raw.bezier_fragment);
+        mProgram = ShaderHelper.buildProgram(mContext, R.raw.bezier_line_vertex, R.raw.bezier_fragment);
 
         glUseProgram(mProgram);
 
@@ -56,7 +58,7 @@ public class BezierCurve {
 
         mDataHandle = glGetAttribLocation(mProgram, "aData");
 //
-//        mMvpHandle = glGetUniformLocation(mProgram,"u_MVPMatrix");
+        mMvpHandle = glGetUniformLocation(mProgram, "u_MVPMatrix");
 //
 //        mStartEndPoints = new float[]{
 //                -1, 0,
@@ -70,12 +72,12 @@ public class BezierCurve {
 
         mStartEndPoints = new float[]{
                 -1, 0,
-                1,0,
+                1, 0,
         };
 
         mControlPoints = new float[]{
-                0,0.5f,
-                1,0,
+                0, 0.5f,
+                1, 0,
         };
 
         mDataPoints = genTData();
@@ -133,6 +135,43 @@ public class BezierCurve {
 
     }
 
+    public void draw(float[] mvp) {
+        GLES20.glClearColor(0.0f, 0f, 0f, 1f);
+        GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT | GLES20.GL_COLOR_BUFFER_BIT);
+
+        glUniform4f(mStartEndHandle,
+                mStartEndPoints[0],
+                mStartEndPoints[1],
+                mStartEndPoints[2],
+                mStartEndPoints[3]);
+
+        glUniform4f(mControlHandle,
+                mControlPoints[0],
+                mControlPoints[1],
+                mControlPoints[2],
+                mControlPoints[3]);
+
+        glUniform1f(mAmpsHandle, mAmps);
+
+        final int stride = Const.BYTES_PER_FLOAT * Const.T_DATA_SIZE;
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, mBufferId);
+        GLES20.glEnableVertexAttribArray(mDataHandle);
+        GLES20.glVertexAttribPointer(mDataHandle,
+                Const.T_DATA_SIZE,
+                GLES20.GL_FLOAT,
+                false,
+                stride,
+                0);
+
+        // Clear the currently bound buffer (so future OpenGL calls do not use this buffer).
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+
+        GLES20.glUniformMatrix4fv(mMvpHandle, 1, false, mvp, 0);
+
+        GLES20.glDrawArrays(GLES20.GL_POINTS, 0, Const.NUM_POINTS * Const.POINTS_PER_TRIANGLE);
+
+    }
 
     @SuppressWarnings("UnnecessaryLocalVariable")
     private float[] genTData() {
@@ -146,7 +185,7 @@ public class BezierCurve {
         for (int i = 0; i < tData.length; i += Const.POINTS_PER_TRIANGLE) {
             float t = (float) i / (float) tData.length;
             float t1 = (float) (i + 1) / (float) tData.length;
-            float t2 = (float) (i + 2) / (float)tData.length;
+            float t2 = (float) (i + 2) / (float) tData.length;
 
             tData[i] = t;
             tData[i + 1] = t1;
@@ -157,7 +196,7 @@ public class BezierCurve {
         return tData;
     }
 
-    public void setAmp(float amp){
+    public void setAmp(float amp) {
         mAmps = amp;
     }
 }

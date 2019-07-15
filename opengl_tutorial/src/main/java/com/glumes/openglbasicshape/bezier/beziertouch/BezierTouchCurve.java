@@ -2,10 +2,12 @@ package com.glumes.openglbasicshape.bezier.beziertouch;
 
 import android.content.Context;
 import android.opengl.GLES20;
+import android.opengl.Matrix;
 
 import com.glumes.openglbasicshape.R;
 import com.glumes.openglbasicshape.bezier.Buffers;
 import com.glumes.openglbasicshape.bezier.Const;
+import com.glumes.openglbasicshape.bezier.drawer.NormalSizeHelper;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
 
 import java.nio.FloatBuffer;
@@ -120,11 +122,27 @@ public class BezierTouchCurve {
         mBufferId = buffers[0];
 
         mBuffer = null;
+
+        Matrix.setIdentityM(mModelMatrix, 0);
+
     }
 
 
     public void onSurfaceChanged(int width, int height) {
+        final float aspectRatio = width > height ? (float) width / (float) height : (float) height / (float) width;
+        NormalSizeHelper.setAspectRatio(aspectRatio);
+        NormalSizeHelper.setSurfaceViewInfo(width, height);
 
+        if (width > height) {
+            NormalSizeHelper.setIsVertical(false);
+            Matrix.orthoM(mProjectionMatrix, 0, -aspectRatio, aspectRatio, -1f, 1f, 3, 7);
+        } else {
+            NormalSizeHelper.setIsVertical(true);
+            Matrix.orthoM(mProjectionMatrix, 0, -1f, 1f, -aspectRatio, aspectRatio, 3, 7);
+        }
+
+        Matrix.setLookAtM(mViewMatrix, 0, 0, 0, 3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
     }
 
     public void draw() {
