@@ -76,7 +76,7 @@ void main() {
 
     pos.xy = point;
 
-    gl_Position = pos;
+    gl_Position = u_MVPMatrix * pos;
 
     gl_PointSize = 20.0;
 }

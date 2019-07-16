@@ -78,6 +78,7 @@ public class BezierDrawView extends GLSurfaceView implements GLSurfaceView.Rende
 
     @Override
     public void onDrawFrame(GL10 gl) {
+//        mBezierTouchCurve.draw();
         mBezierTouchCurve.draw();
     }
 
@@ -103,9 +104,14 @@ public class BezierDrawView extends GLSurfaceView implements GLSurfaceView.Rende
 
             Bezier curve = mBezierCached.set(mPoints.get(1), c2, c3, mPoints.get(2));
 
-            TimedPoint startPoint = curve.startPoint;
-            TimedPoint endPoint = curve.endPoint;
+            mBezierTouchCurve.set(curve.startPoint,curve.control1,curve.control2,curve.endPoint);
 
+//            this.queueEvent(new Runnable() {
+//                @Override
+//                public void run() {
+//                    mBezierTouchCurve.draw();
+//                }
+//            });
 //            float velocity = endPoint.velocityFrom(startPoint);
 //            velocity = Float.isNaN(velocity) ? 0.0f : velocity;
 

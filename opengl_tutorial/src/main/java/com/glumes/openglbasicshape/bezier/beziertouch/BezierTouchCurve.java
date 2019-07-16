@@ -5,6 +5,7 @@ import android.opengl.GLES20;
 import android.opengl.Matrix;
 
 import com.glumes.openglbasicshape.R;
+import com.glumes.openglbasicshape.base.LogUtil;
 import com.glumes.openglbasicshape.bezier.Buffers;
 import com.glumes.openglbasicshape.bezier.Const;
 import com.glumes.openglbasicshape.bezier.drawer.NormalSizeHelper;
@@ -68,27 +69,17 @@ public class BezierTouchCurve {
         mStartEndHandle = glGetUniformLocation(mProgram, "uStartEndData");
         mControlHandle = glGetUniformLocation(mProgram, "uControlData");
 
-        mStartPointHandle = glGetUniformLocation(mProgram,"uStartPoint");
-        mEndPointHandle = glGetUniformLocation(mProgram,"uEndPoint");
-        mControlPoint1Handle = glGetUniformLocation(mProgram,"uControlPoint1");
-        mControlPoint2Handle = glGetUniformLocation(mProgram,"uControlPoint2");
-
+        mStartPointHandle = glGetUniformLocation(mProgram, "uStartPoint");
+        mEndPointHandle = glGetUniformLocation(mProgram, "uEndPoint");
+        mControlPoint1Handle = glGetUniformLocation(mProgram, "uControlPoint1");
+        mControlPoint2Handle = glGetUniformLocation(mProgram, "uControlPoint2");
 
         mAmpsHandle = glGetUniformLocation(mProgram, "u_Amp");
 
         mDataHandle = glGetAttribLocation(mProgram, "aData");
 //
-        mMvpHandle = glGetUniformLocation(mProgram,"u_MVPMatrix");
-//
-//        mStartEndPoints = new float[]{
-//                -1, 0,
-//                0, 0.244f,
-//        };
-//
-//        mControlPoints = new float[]{
-//                -0.8f, 0.1f,
-//                -0.24f, 0.244f
-//        };
+        mMvpHandle = glGetUniformLocation(mProgram, "u_MVPMatrix");
+
 
         mStartEndPoints = new float[]{
                 -1, 0,
@@ -100,11 +91,11 @@ public class BezierTouchCurve {
                 1, 0,
         };
 
-        startPoint = new TimedPoint().set(-1,0);
-        endPoint = new TimedPoint().set(1,0);
+        startPoint = new TimedPoint().set(-1, 0);
+        endPoint = new TimedPoint().set(1, 0);
 
-        control1 = new TimedPoint().set(0,0.5f);
-        control2 = new TimedPoint().set(1,0);
+        control1 = new TimedPoint().set(0, 0.5f);
+        control2 = new TimedPoint().set(1, 0);
 
         mDataPoints = genTData();
 
@@ -162,10 +153,21 @@ public class BezierTouchCurve {
                 mControlPoints[3]);
 
 
-        glUniform2f(mStartPointHandle,startPoint.x,startPoint.y);
-        glUniform2f(mEndPointHandle,endPoint.x,endPoint.y);
-        glUniform2f(mControlPoint1Handle,control1.x,control1.y);
-        glUniform2f(mControlPoint2Handle,control2.x,control2.y);
+        glUniform2f(mStartPointHandle,
+                NormalSizeHelper.convertNormalX(startPoint.x),
+                NormalSizeHelper.convertNormalY(startPoint.y));
+
+        glUniform2f(mEndPointHandle,
+                NormalSizeHelper.convertNormalX(endPoint.x),
+                NormalSizeHelper.convertNormalY(endPoint.y));
+
+        glUniform2f(mControlPoint1Handle,
+                NormalSizeHelper.convertNormalX(control1.x),
+                NormalSizeHelper.convertNormalY(control1.y));
+
+        glUniform2f(mControlPoint2Handle,
+                NormalSizeHelper.convertNormalX(control2.x),
+                NormalSizeHelper.convertNormalY(control2.y));
 
         glUniform1f(mAmpsHandle, mAmps);
 
@@ -183,10 +185,14 @@ public class BezierTouchCurve {
         // Clear the currently bound buffer (so future OpenGL calls do not use this buffer).
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
 
+        float[] resultMatrix = new float[16];
+
+        Matrix.multiplyMM(resultMatrix, 0, mMVPMatrix, 0, mModelMatrix, 0);
+        GLES20.glUniformMatrix4fv(mMvpHandle, 1, false, mMVPMatrix, 0);
+
         GLES20.glDrawArrays(GLES20.GL_POINTS, 0, Const.NUM_POINTS * Const.POINTS_PER_TRIANGLE);
 
     }
-
 
 
     public BezierTouchCurve set(TimedPoint startPoint, TimedPoint control1,
@@ -195,6 +201,12 @@ public class BezierTouchCurve {
         this.control1 = control1;
         this.control2 = control2;
         this.endPoint = endPoint;
+        LogUtil.d(
+                "start point x is " + startPoint.x + " start point y is " + startPoint.y +
+                        "end point x is " + endPoint.x + " end point y is " + endPoint.y +
+                        "control point 1 x is " + control1.x + " control point 1 y is " + control1.y +
+                        "control point 2 x is " + control2.x + " control point 2 y is " + control2.y
+        );
         return this;
     }
 
