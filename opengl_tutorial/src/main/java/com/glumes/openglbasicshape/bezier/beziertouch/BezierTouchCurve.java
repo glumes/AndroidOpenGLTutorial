@@ -4,17 +4,42 @@ import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 
+import com.glumes.importobject.TextureRect;
 import com.glumes.openglbasicshape.R;
 import com.glumes.openglbasicshape.base.LogUtil;
 import com.glumes.openglbasicshape.bezier.Buffers;
 import com.glumes.openglbasicshape.bezier.Const;
 import com.glumes.openglbasicshape.bezier.drawer.NormalSizeHelper;
+import com.glumes.openglbasicshape.bezier.shape.ScreenTexture;
+import com.glumes.openglbasicshape.utils.DebugUtil;
 import com.glumes.openglbasicshape.utils.ShaderHelper;
+import com.glumes.openglbasicshape.utils.TextureHelper;
 
 import java.nio.FloatBuffer;
 
+import static android.opengl.GLES20.GL_CLAMP_TO_EDGE;
+import static android.opengl.GLES20.GL_COLOR_ATTACHMENT0;
+import static android.opengl.GLES20.GL_FRAMEBUFFER;
+import static android.opengl.GLES20.GL_LINEAR;
+import static android.opengl.GLES20.GL_NEAREST;
+import static android.opengl.GLES20.GL_RGBA;
+import static android.opengl.GLES20.GL_TEXTURE_2D;
+import static android.opengl.GLES20.GL_TEXTURE_MAG_FILTER;
+import static android.opengl.GLES20.GL_TEXTURE_MIN_FILTER;
+import static android.opengl.GLES20.GL_TEXTURE_WRAP_S;
+import static android.opengl.GLES20.GL_TEXTURE_WRAP_T;
+import static android.opengl.GLES20.GL_UNSIGNED_BYTE;
+import static android.opengl.GLES20.glBindFramebuffer;
+import static android.opengl.GLES20.glBindTexture;
+import static android.opengl.GLES20.glCheckFramebufferStatus;
+import static android.opengl.GLES20.glFramebufferTexture2D;
+import static android.opengl.GLES20.glGenFramebuffers;
+import static android.opengl.GLES20.glGenTextures;
 import static android.opengl.GLES20.glGetAttribLocation;
 import static android.opengl.GLES20.glGetUniformLocation;
+import static android.opengl.GLES20.glReadPixels;
+import static android.opengl.GLES20.glTexImage2D;
+import static android.opengl.GLES20.glTexParameteri;
 import static android.opengl.GLES20.glUniform1f;
 import static android.opengl.GLES20.glUniform2f;
 import static android.opengl.GLES20.glUniform4f;
@@ -58,6 +83,19 @@ public class BezierTouchCurve {
     public TimedPoint control2;
     public TimedPoint endPoint;
 
+    final int[] fboId = new int[1];
+    private final int[] textureId = new int[1];
+
+    private TextureRect mTextureDrawer;
+
+    private int mTextureId;
+
+    private float[] mMMatrix;
+
+    private int mWidth;
+    private int mHeight;
+
+    private ScreenTexture mScreenTexture;
 
     public BezierTouchCurve(Context context) {
         mContext = context;
@@ -91,11 +129,17 @@ public class BezierTouchCurve {
                 1, 0,
         };
 
-        startPoint = new TimedPoint().set(-1, 0);
-        endPoint = new TimedPoint().set(1, 0);
+//        startPoint = new TimedPoint().set(-1, 0);
+//        endPoint = new TimedPoint().set(1, 0);
+//
+//        control1 = new TimedPoint().set(0, 0.5f);
+//        control2 = new TimedPoint().set(1, 0);
 
-        control1 = new TimedPoint().set(0, 0.5f);
-        control2 = new TimedPoint().set(1, 0);
+        startPoint = new TimedPoint().set(706.346f, 893.91235f);
+        endPoint = new TimedPoint().set(706.346f, 895.959f);
+
+        control1 = new TimedPoint().set(706.3465f, 894.93567f);
+        control2 = new TimedPoint().set(706.346f, 894.93567f);
 
         mDataPoints = genTData();
 
@@ -116,29 +160,100 @@ public class BezierTouchCurve {
 
         Matrix.setIdentityM(mModelMatrix, 0);
 
+        mTextureDrawer = new TextureRect(mContext.getResources(), 2, 2);
+
+        mTextureId = TextureHelper.loadTexture(mContext, R.drawable.texture);
+
+        mMMatrix = new float[16];
+
+        Matrix.setIdentityM(mMMatrix, 0);
+//
+        mScreenTexture = new ScreenTexture();
+        mScreenTexture.createShape();
     }
 
 
     public void onSurfaceChanged(int width, int height) {
+
+        mWidth = width;
+        mHeight = height;
+
         final float aspectRatio = width > height ? (float) width / (float) height : (float) height / (float) width;
         NormalSizeHelper.setAspectRatio(aspectRatio);
         NormalSizeHelper.setSurfaceViewInfo(width, height);
 
         if (width > height) {
             NormalSizeHelper.setIsVertical(false);
-            Matrix.orthoM(mProjectionMatrix, 0, -aspectRatio, aspectRatio, -1f, 1f, 3, 7);
+//            Matrix.orthoM(mProjectionMatrix, 0, -aspectRatio, aspectRatio, -1f, 1f, 3, 7);
         } else {
             NormalSizeHelper.setIsVertical(true);
-            Matrix.orthoM(mProjectionMatrix, 0, -1f, 1f, -aspectRatio, aspectRatio, 3, 7);
+//            Matrix.orthoM(mProjectionMatrix, 0, -1f, 1f, -aspectRatio, aspectRatio, 3, 7);
         }
 
-        Matrix.setLookAtM(mViewMatrix, 0, 0, 0, 3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
-        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
+//        Matrix.setLookAtM(mViewMatrix, 0, 0, 0, 3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+//        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
+
+        Matrix.setIdentityM(mMVPMatrix,0);
+
+        initFBO(width, height);
+    }
+
+
+    private void initFBO(int width, int height) {
+        glGenFramebuffers(1, fboId, 0);
+        glGenTextures(1, textureId, 0);
+
+        glBindTexture(GL_TEXTURE_2D, textureId[0]);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, null);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+        glBindFramebuffer(GL_FRAMEBUFFER, fboId[0]);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureId[0], 0);
+
+        int status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+    }
+
+
+    public void drawTextureAndScreen() {
+
+        drawFBOTexture();
+
+        drawScreenTexture(mMVPMatrix);
+    }
+
+    private void drawFBOTexture() {
+        glBindFramebuffer(GL_FRAMEBUFFER,fboId[0]);
+        draw();
+
+//        DebugUtil.readPixelDebug(mWidth, mHeight);
+    }
+
+    private void drawScreenTexture(float[] mvpMatrix) {
+
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        GLES20.glClearColor(0.0f, 0f, 0f, 1f);
+        GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT | GLES20.GL_COLOR_BUFFER_BIT);
+
+
+        float[] resultMatrix = new float[16];
+//
+        Matrix.multiplyMM(resultMatrix, 0, mMVPMatrix, 0, mModelMatrix, 0);
+//
+        GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, textureId[0]);
+//        glBindTexture(GL_TEXTURE_2D, mTextureId);
+//
+        mScreenTexture.draw(resultMatrix);
     }
 
     public void draw() {
-        GLES20.glClearColor(0.0f, 0f, 0f, 1f);
-        GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT | GLES20.GL_COLOR_BUFFER_BIT);
+//        GLES20.glClearColor(0.0f, 0f, 0f, 1f);
+//        GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT | GLES20.GL_COLOR_BUFFER_BIT);
+
+        glUseProgram(mProgram);
 
         glUniform4f(mStartEndHandle,
                 mStartEndPoints[0],
@@ -233,5 +348,10 @@ public class BezierTouchCurve {
 
         return tData;
     }
+
+    public void setAmp(float amp) {
+        mAmps = amp;
+    }
+
 
 }

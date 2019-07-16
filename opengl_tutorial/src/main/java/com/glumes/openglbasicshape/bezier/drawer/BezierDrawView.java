@@ -18,7 +18,4 @@ public class BezierDrawView extends GLSurfaceView {
         setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
     }
 
-    private float currentX;
-    private float currentY;
-
 }

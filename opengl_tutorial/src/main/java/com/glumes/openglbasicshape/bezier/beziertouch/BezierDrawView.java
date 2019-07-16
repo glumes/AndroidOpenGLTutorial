@@ -22,6 +22,9 @@ public class BezierDrawView extends GLSurfaceView implements GLSurfaceView.Rende
     private List<TimedPoint> mPoints;
     private Bezier mBezierCached = new Bezier();
 
+    private float num = 0f;
+    private int delta = 200;
+
     public BezierDrawView(Context context) {
         super(context);
         init();
@@ -79,7 +82,11 @@ public class BezierDrawView extends GLSurfaceView implements GLSurfaceView.Rende
     @Override
     public void onDrawFrame(GL10 gl) {
 //        mBezierTouchCurve.draw();
-        mBezierTouchCurve.draw();
+        num++;
+
+//        mBezierTouchCurve.setAmp((float) (3.0 * (num % delta) / delta));
+//        mBezierTouchCurve.
+        mBezierTouchCurve.drawTextureAndScreen();
     }
 
 

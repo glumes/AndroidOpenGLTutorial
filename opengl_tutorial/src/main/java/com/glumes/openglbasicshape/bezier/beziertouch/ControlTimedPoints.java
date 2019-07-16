@@ -13,5 +13,4 @@ public class ControlTimedPoints {
         this.c2 = c2;
         return this;
     }
-
 }

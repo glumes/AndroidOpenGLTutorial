@@ -74,6 +74,7 @@ public class BezierDrawRenderer implements GLSurfaceView.Renderer {
         Matrix.multiplyMM(resultMatrix, 0, mMVPMatrix, 0, mModelMatrix, 0);
 
         mBezierLine.draw(resultMatrix);
+//        mBezierLine.draw(resultMatrix);
 //        mBezierLine.draw();
     }
 
