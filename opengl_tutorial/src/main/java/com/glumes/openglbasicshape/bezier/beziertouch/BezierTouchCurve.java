@@ -44,6 +44,7 @@ import static android.opengl.GLES20.glUniform1f;
 import static android.opengl.GLES20.glUniform2f;
 import static android.opengl.GLES20.glUniform4f;
 import static android.opengl.GLES20.glUseProgram;
+import static android.opengl.GLES20.glViewport;
 
 public class BezierTouchCurve {
     private final Context mContext;
@@ -97,8 +98,14 @@ public class BezierTouchCurve {
 
     private ScreenTexture mScreenTexture;
 
-    public BezierTouchCurve(Context context) {
+    private BezierTextureDrawer mTextureRect;
+
+    private BezierDrawView mDrawView;
+
+    public BezierTouchCurve(Context context,BezierDrawView bezierDrawView) {
         mContext = context;
+
+        mDrawView = bezierDrawView;
 
         mProgram = ShaderHelper.buildProgram(mContext, R.raw.bezier_touch_vertex, R.raw.bezier_touch_fragment);
 
@@ -170,6 +177,8 @@ public class BezierTouchCurve {
 //
         mScreenTexture = new ScreenTexture();
         mScreenTexture.createShape();
+
+        mTextureRect = new BezierTextureDrawer(mContext.getResources(),2,2);
     }
 
 
@@ -177,6 +186,7 @@ public class BezierTouchCurve {
 
         mWidth = width;
         mHeight = height;
+        glViewport(0,0,width,mHeight);
 
         final float aspectRatio = width > height ? (float) width / (float) height : (float) height / (float) width;
         NormalSizeHelper.setAspectRatio(aspectRatio);
@@ -184,16 +194,16 @@ public class BezierTouchCurve {
 
         if (width > height) {
             NormalSizeHelper.setIsVertical(false);
-//            Matrix.orthoM(mProjectionMatrix, 0, -aspectRatio, aspectRatio, -1f, 1f, 3, 7);
+            Matrix.orthoM(mProjectionMatrix, 0, -aspectRatio, aspectRatio, -1f, 1f, 3, 7);
         } else {
             NormalSizeHelper.setIsVertical(true);
-//            Matrix.orthoM(mProjectionMatrix, 0, -1f, 1f, -aspectRatio, aspectRatio, 3, 7);
+            Matrix.orthoM(mProjectionMatrix, 0, -1f, 1f, -aspectRatio, aspectRatio, 3, 7);
         }
 
-//        Matrix.setLookAtM(mViewMatrix, 0, 0, 0, 3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
-//        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
+        Matrix.setLookAtM(mViewMatrix, 0, 0, 0, 3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
 
-        Matrix.setIdentityM(mMVPMatrix,0);
+//        Matrix.setIdentityM(mMVPMatrix,0);
 
         initFBO(width, height);
     }
@@ -219,13 +229,16 @@ public class BezierTouchCurve {
 
     public void drawTextureAndScreen() {
 
+        glBindFramebuffer(GL_FRAMEBUFFER,fboId[0]);
+
         drawFBOTexture();
 
         drawScreenTexture(mMVPMatrix);
     }
 
     private void drawFBOTexture() {
-        glBindFramebuffer(GL_FRAMEBUFFER,fboId[0]);
+//        glBindFramebuffer(GL_FRAMEBUFFER,fboId[0]);
+//        glBindFramebuffer(GL_FRAMEBUFFER,0);
         draw();
 
 //        DebugUtil.readPixelDebug(mWidth, mHeight);
@@ -241,12 +254,20 @@ public class BezierTouchCurve {
         float[] resultMatrix = new float[16];
 //
         Matrix.multiplyMM(resultMatrix, 0, mMVPMatrix, 0, mModelMatrix, 0);
+        GLES20.glUniformMatrix4fv(mMvpHandle, 1, false, mMVPMatrix, 0);
+
+
+//        mTextureRect.drawSelf(mTextureId,resultMatrix);
 //
-        GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, textureId[0]);
+        mTextureRect.drawSelf(textureId[0],mModelMatrix);
+
+//
+//        GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+//        glBindTexture(GL_TEXTURE_2D, textureId[0]);
 //        glBindTexture(GL_TEXTURE_2D, mTextureId);
 //
-        mScreenTexture.draw(resultMatrix);
+
+//        mScreenTexture.draw(resultMatrix);
     }
 
     public void draw() {
@@ -322,6 +343,9 @@ public class BezierTouchCurve {
                         "control point 1 x is " + control1.x + " control point 1 y is " + control1.y +
                         "control point 2 x is " + control2.x + " control point 2 y is " + control2.y
         );
+
+        mDrawView.requestRender();
+
         return this;
     }
 

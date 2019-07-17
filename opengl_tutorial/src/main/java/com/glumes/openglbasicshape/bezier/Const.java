@@ -8,5 +8,5 @@ public class Const {
 
     public static final int T_DATA_SIZE = 1;
 
-    public static final int NUM_POINTS = 40;
+    public static final int NUM_POINTS = 40000;
 }

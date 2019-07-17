@@ -38,7 +38,7 @@ public class BezierDrawView extends GLSurfaceView implements GLSurfaceView.Rende
     private void init() {
         setEGLContextClientVersion(2);
         setRenderer(this);
-        setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+        setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
         mPoints = new ArrayList<>();
     }
 
@@ -61,6 +61,7 @@ public class BezierDrawView extends GLSurfaceView implements GLSurfaceView.Rende
                 break;
             case MotionEvent.ACTION_UP:
                 addPoint(getNewPoint(eventX, eventY));
+
                 break;
         }
 
@@ -71,7 +72,7 @@ public class BezierDrawView extends GLSurfaceView implements GLSurfaceView.Rende
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         GLES20.glClearColor(0f, 0f, 0f, 1.0f);
-        mBezierTouchCurve = new BezierTouchCurve(getContext());
+        mBezierTouchCurve = new BezierTouchCurve(getContext(),this);
     }
 
     @Override
