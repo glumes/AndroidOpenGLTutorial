@@ -337,12 +337,12 @@ public class BezierTouchCurve {
         this.control1 = control1;
         this.control2 = control2;
         this.endPoint = endPoint;
-        LogUtil.d(
-                "start point x is " + startPoint.x + " start point y is " + startPoint.y +
-                        "end point x is " + endPoint.x + " end point y is " + endPoint.y +
-                        "control point 1 x is " + control1.x + " control point 1 y is " + control1.y +
-                        "control point 2 x is " + control2.x + " control point 2 y is " + control2.y
-        );
+//        LogUtil.d(
+//                "start point x is " + startPoint.x + " start point y is " + startPoint.y +
+//                        "end point x is " + endPoint.x + " end point y is " + endPoint.y +
+//                        "control point 1 x is " + control1.x + " control point 1 y is " + control1.y +
+//                        "control point 2 x is " + control2.x + " control point 2 y is " + control2.y
+//        );
 
         mDrawView.requestRender();
 
