@@ -24,6 +24,7 @@ import com.glumes.openglbasicshape.move.RotateAndMoveActivity;
 import com.glumes.openglbasicshape.multitest.MultiTestActivity;
 import com.glumes.openglbasicshape.obj.ImportObjectActivity;
 import com.glumes.openglbasicshape.texturemix.TextureMixActivity;
+import com.glumes.openglbasicshape.transition.TransitionActivity;
 import com.glumes.openglbasicshape.utils.RenderType;
 import com.glumes.openglbasicshape.viewholderitem.RenderBinder;
 import com.glumes.openglbasicshape.viewholderitem.RenderModel;
@@ -58,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         items.add(new RenderModel("基本图形的绘制", RenderType.RENDER_TYPE_JUMP_ACTIVITY, BasicGraphActivity.class));
+
+        items.add(new RenderModel("仿视频转场效果", RenderType.RENDER_TYPE_JUMP_ACTIVITY, TransitionActivity.class));
 
         items.add(new RenderModel("贝塞尔曲线绘制",RenderType.RENDER_TYPE_JUMP_ACTIVITY, BezierActivity.class));
 

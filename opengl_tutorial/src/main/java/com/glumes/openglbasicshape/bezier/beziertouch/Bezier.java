@@ -7,8 +7,18 @@ public class Bezier {
     public TimedPoint control2;
     public TimedPoint endPoint;
 
+    public Bezier() {
+    }
+
+    public Bezier(TimedPoint startPoint, TimedPoint control1, TimedPoint control2, TimedPoint endPoint) {
+        this.startPoint = startPoint;
+        this.control1 = control1;
+        this.control2 = control2;
+        this.endPoint = endPoint;
+    }
+
     public Bezier set(TimedPoint startPoint, TimedPoint control1,
-                  TimedPoint control2, TimedPoint endPoint) {
+                      TimedPoint control2, TimedPoint endPoint) {
         this.startPoint = startPoint;
         this.control1 = control1;
         this.control2 = control2;

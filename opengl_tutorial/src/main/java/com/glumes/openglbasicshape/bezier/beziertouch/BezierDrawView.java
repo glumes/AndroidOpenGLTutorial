@@ -6,6 +6,8 @@ import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+import com.glumes.openglbasicshape.base.LogUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +22,7 @@ public class BezierDrawView extends GLSurfaceView implements GLSurfaceView.Rende
     private List<TimedPoint> mPointsCache = new ArrayList<>();
     private ControlTimedPoints mControlTimedPointsCached = new ControlTimedPoints();
     private List<TimedPoint> mPoints;
-    private Bezier mBezierCached = new Bezier();
+//    private Bezier mBezierCached = new Bezier();
 
     private float num = 0f;
     private int delta = 200;
@@ -60,8 +62,8 @@ public class BezierDrawView extends GLSurfaceView implements GLSurfaceView.Rende
                 addPoint(getNewPoint(eventX, eventY));
                 break;
             case MotionEvent.ACTION_UP:
-                addPoint(getNewPoint(eventX, eventY));
-
+//                addPoint(getNewPoint(eventX, eventY));
+                mBezierTouchCurve.touchUp();
                 break;
         }
 
@@ -110,9 +112,14 @@ public class BezierDrawView extends GLSurfaceView implements GLSurfaceView.Rende
             TimedPoint c3 = tmp.c1;
             recyclePoint(tmp.c2);
 
-            Bezier curve = mBezierCached.set(mPoints.get(1), c2, c3, mPoints.get(2));
+//            Bezier curve = mBezierCached.set(mPoints.get(1), c2, c3, mPoints.get(2));
 
-            mBezierTouchCurve.set(curve.startPoint,curve.control1,curve.control2,curve.endPoint);
+            list.add(new Bezier(mPoints.get(1), c2, c3, mPoints.get(2)));
+
+//            mBezierTouchCurve.addPoint(curve);
+
+
+//            mBezierTouchCurve.set(curve.startPoint,curve.control1,curve.control2,curve.endPoint);
 
 //            this.queueEvent(new Runnable() {
 //                @Override
@@ -155,41 +162,19 @@ public class BezierDrawView extends GLSurfaceView implements GLSurfaceView.Rende
 //        this.mHasEditState = true;
     }
 
+    private ArrayList<Bezier> list = new ArrayList<>();
 
-    private void addBezier(Bezier curve, float startWidth, float endWidth) {
-//        mSvgBuilder.append(curve, (startWidth + endWidth) / 2);
-//        ensureSignatureBitmap();
-//        float originalWidth = mPaint.getStrokeWidth();
-        float widthDelta = endWidth - startWidth;
-        float drawSteps = (float) Math.ceil(curve.length());
+    public void render(){
+//        mBezierTouchCurve.touchUp();
 
-        for (int i = 0; i < drawSteps; i++) {
-            // Calculate the Bezier (x, y) coordinate for this step.
-            float t = ((float) i) / drawSteps;
-            float tt = t * t;
-            float ttt = tt * t;
-            float u = 1 - t;
-            float uu = u * u;
-            float uuu = uu * u;
 
-            float x = uuu * curve.startPoint.x;
-            x += 3 * uu * t * curve.control1.x;
-            x += 3 * u * tt * curve.control2.x;
-            x += ttt * curve.endPoint.x;
-
-            float y = uuu * curve.startPoint.y;
-            y += 3 * uu * t * curve.control1.y;
-            y += 3 * u * tt * curve.control2.y;
-            y += ttt * curve.endPoint.y;
-
-            // Set the incremental stroke width and draw.
-//            mPaint.setStrokeWidth(startWidth + ttt * widthDelta);
-//            mSignatureBitmapCanvas.drawPoint(x, y, mPaint);
-//            expandDirtyRect(x, y);
+        for (int i = 0; i < list.size(); i++) {
+            LogUtil.d("before x is " + list.get(i).startPoint.x);
         }
-
-//        mPaint.setStrokeWidth(originalWidth);
+        mBezierTouchCurve.setBezier(list);
     }
+
+
 
     /**
      * 计算控制点

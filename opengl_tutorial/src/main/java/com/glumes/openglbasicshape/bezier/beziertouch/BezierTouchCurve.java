@@ -16,6 +16,9 @@ import com.glumes.openglbasicshape.utils.ShaderHelper;
 import com.glumes.openglbasicshape.utils.TextureHelper;
 
 import java.nio.FloatBuffer;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.opengl.GLES20.GL_CLAMP_TO_EDGE;
 import static android.opengl.GLES20.GL_COLOR_ATTACHMENT0;
@@ -102,7 +105,9 @@ public class BezierTouchCurve {
 
     private BezierDrawView mDrawView;
 
-    public BezierTouchCurve(Context context,BezierDrawView bezierDrawView) {
+    private ArrayList<Bezier> mBezierList = new ArrayList<>();
+
+    public BezierTouchCurve(Context context, BezierDrawView bezierDrawView) {
         mContext = context;
 
         mDrawView = bezierDrawView;
@@ -178,7 +183,7 @@ public class BezierTouchCurve {
         mScreenTexture = new ScreenTexture();
         mScreenTexture.createShape();
 
-        mTextureRect = new BezierTextureDrawer(mContext.getResources(),2,2);
+        mTextureRect = new BezierTextureDrawer(mContext.getResources(), 2, 2);
     }
 
 
@@ -186,7 +191,7 @@ public class BezierTouchCurve {
 
         mWidth = width;
         mHeight = height;
-        glViewport(0,0,width,mHeight);
+        glViewport(0, 0, width, mHeight);
 
         final float aspectRatio = width > height ? (float) width / (float) height : (float) height / (float) width;
         NormalSizeHelper.setAspectRatio(aspectRatio);
@@ -229,7 +234,8 @@ public class BezierTouchCurve {
 
     public void drawTextureAndScreen() {
 
-        glBindFramebuffer(GL_FRAMEBUFFER,fboId[0]);
+        LogUtil.d("actual draw");
+        glBindFramebuffer(GL_FRAMEBUFFER, fboId[0]);
 
         drawFBOTexture();
 
@@ -250,7 +256,6 @@ public class BezierTouchCurve {
         GLES20.glClearColor(0.0f, 0f, 0f, 1f);
         GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT | GLES20.GL_COLOR_BUFFER_BIT);
 
-
         float[] resultMatrix = new float[16];
 //
         Matrix.multiplyMM(resultMatrix, 0, mMVPMatrix, 0, mModelMatrix, 0);
@@ -259,7 +264,7 @@ public class BezierTouchCurve {
 
 //        mTextureRect.drawSelf(mTextureId,resultMatrix);
 //
-        mTextureRect.drawSelf(textureId[0],mModelMatrix);
+        mTextureRect.drawSelf(textureId[0], mModelMatrix);
 
 //
 //        GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
@@ -344,11 +349,65 @@ public class BezierTouchCurve {
 //                        "control point 2 x is " + control2.x + " control point 2 y is " + control2.y
 //        );
 
+        LogUtil.d("request render");
         mDrawView.requestRender();
 
         return this;
     }
 
+    int num = 0;
+
+    public void addPoint(Bezier bezier) {
+        LogUtil.d("add point start x " + bezier.startPoint.x + " end point is " + bezier.startPoint.y);
+        mBezierList.add(bezier);
+
+        LogUtil.d("start point x is " + mBezierList.get(num).startPoint.x + " end point is y" + mBezierList.get(num).endPoint.y);
+
+        num++;
+    }
+
+
+    public void touchUp() {
+        LogUtil.d("bezier num is " + mBezierList.size());
+//        for (Bezier bezier : mBezierList) {
+//            this.startPoint = bezier.startPoint;
+//            this.control1 = bezier.control1;
+//            this.control2 = bezier.control2;
+//            this.endPoint = bezier.endPoint;
+//            LogUtil.d("request render");
+//            mDrawView.requestRender();
+//        }
+
+        for (int i = 0; i < mBezierList.size(); i++) {
+            this.startPoint = mBezierList.get(i).startPoint;
+            this.control1 = mBezierList.get(i).control1;
+            this.control2 = mBezierList.get(i).control2;
+            this.endPoint = mBezierList.get(i).endPoint;
+
+            LogUtil.d("start point x is " + mBezierList.get(i).startPoint.x + " end point is y" + mBezierList.get(i).endPoint.y);
+
+            LogUtil.d(
+                    "start point x is " + startPoint.x + " start point y is " + startPoint.y +
+                            "end point x is " + endPoint.x + " end point y is " + endPoint.y +
+                            "control point 1 x is " + control1.x + " control point 1 y is " + control1.y +
+                            "control point 2 x is " + control2.x + " control point 2 y is " + control2.y
+            );
+            mDrawView.requestRender();
+        }
+    }
+
+    public void setBezier(List<Bezier> bezierList){
+        for (int i = 0; i < bezierList.size(); i++) {
+            this.startPoint = bezierList.get(i).startPoint;
+            this.control1 = bezierList.get(i).control1;
+            this.control2 = bezierList.get(i).control2;
+            this.endPoint = bezierList.get(i).endPoint;
+
+            LogUtil.d("start point x is " + bezierList.get(i).startPoint.x + " end point is y" + bezierList.get(i).endPoint.y);
+
+            mDrawView.requestRender();
+        }
+    }
 
     @SuppressWarnings("UnnecessaryLocalVariable")
     private float[] genTData() {
