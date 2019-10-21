@@ -17,7 +17,8 @@
         android:roundIcon="@drawable/study"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".transition.TransitionActivity"></activity>
+        <activity android:name=".transition_banner.TransitionBannerActivity"></activity>
+        <activity android:name=".transition.TransitionActivity" />
         <activity android:name=".bezier.beziertouch.BezierTouchActivity" />
         <activity android:name=".bezier.drawer.BezierDrawActivity" />
         <activity android:name=".MainActivity">
