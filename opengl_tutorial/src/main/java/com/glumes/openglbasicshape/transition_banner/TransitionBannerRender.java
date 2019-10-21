@@ -34,7 +34,6 @@ public class TransitionBannerRender implements GLSurfaceView.Renderer {
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         mTransitionDrawer = new TransitionBannerDrawer(mContext.getResources());
         mMMatrix = new float[16];
-
     }
 
     @Override

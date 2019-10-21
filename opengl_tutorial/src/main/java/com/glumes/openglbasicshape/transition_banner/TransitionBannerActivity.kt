@@ -25,11 +25,10 @@ class TransitionBannerActivity : AppCompatActivity() {
         mTransitionRender = TransitionBannerRender(this)
 
         mGLSurfaceView.setEGLContextClientVersion(2)
-        mGLSurfaceView.setRenderer(mTransitionRender)
-        mGLSurfaceView.renderMode = GLSurfaceView.RENDERMODE_WHEN_DIRTY
+        mGLSurfaceView.setRender(mTransitionRender)
 
-        mTransitionRender.setProgress(0.5f)
-        mGLSurfaceView.requestRender()
+//        mTransitionRender.setProgress(0.5f)
+//        mGLSurfaceView.requestRender()
 
     }
 }

@@ -9,6 +9,9 @@ import android.view.MotionEvent;
  * @Author glumes
  */
 public class BannerGLSurfaceView extends GLSurfaceView {
+
+    private TransitionBannerRender mRender;
+
     public BannerGLSurfaceView(Context context) {
         super(context);
     }
@@ -20,7 +23,27 @@ public class BannerGLSurfaceView extends GLSurfaceView {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        return super.onTouchEvent(event);
 
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+
+                break;
+            case MotionEvent.ACTION_MOVE:
+
+                break;
+            case MotionEvent.ACTION_UP:
+
+                break;
+            default:
+                break;
+        }
+        return super.onTouchEvent(event);
+    }
+
+    public void setRender(TransitionBannerRender render) {
+        this.mRender = render;
+        setRenderer(render);
+        setRenderMode(RENDERMODE_WHEN_DIRTY);
     }
 }
