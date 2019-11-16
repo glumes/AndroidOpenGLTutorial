@@ -29,6 +29,32 @@ class TransitionBannerActivity : AppCompatActivity() {
 
 //        mTransitionRender.setProgress(0.5f)
 //        mGLSurfaceView.requestRender()
+    }
 
+
+    private var mLastX: Float = 0.toFloat()
+    private var mLastY: Float = 0.toFloat()
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+
+
+        val x = event.getX()
+        val y = event.getY()
+
+        when (event.getAction()) {
+            MotionEvent.ACTION_DOWN -> {
+            }
+            MotionEvent.ACTION_MOVE -> {
+
+                mTransitionRender.setProgress(x)
+                mGLSurfaceView.requestRender()
+                LogUtil.d("distance is $x")
+            }
+            MotionEvent.ACTION_UP -> {
+            }
+            else -> {
+            }
+        }
+        return true
     }
 }

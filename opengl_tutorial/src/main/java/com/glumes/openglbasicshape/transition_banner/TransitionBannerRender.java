@@ -26,6 +26,9 @@ public class TransitionBannerRender implements GLSurfaceView.Renderer {
 
     private float mProgress = 0f;
 
+    private int mWidth;
+    private int mHeight;
+
     public TransitionBannerRender(Context context) {
         mContext = context;
     }
@@ -38,6 +41,9 @@ public class TransitionBannerRender implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
+
+        mWidth = width;
+        mHeight = height;
 
         mTextureId = TextureHelper.loadTexture(mContext, R.drawable.texture);
         mTextureId2 = TextureHelper.loadTexture(mContext, R.drawable.drawpen);
@@ -61,6 +67,9 @@ public class TransitionBannerRender implements GLSurfaceView.Renderer {
     }
 
     public void setProgress(float progress){
-        mProgress = progress;
+
+        progress = Math.abs(progress);
+        mProgress = progress / mWidth;
+
     }
 }
