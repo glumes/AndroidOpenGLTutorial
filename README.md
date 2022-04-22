@@ -10,7 +10,7 @@
 
 ![](https://res.cloudinary.com/glumes-com/image/upload/c_scale,h_600/v1531236519/code/WechatIMG326.jpg)
 
-要是二维码过期了，加微信 ezglume 好友，备注 OpenGL ，拉你入群~
+要是二维码过期了，加微信 ezglumes 好友，备注 OpenGL ，拉你入群~
 
 ## 微信公众号不断更新
 
